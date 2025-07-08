@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Curso Carregamento Logístico – ProCarga</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: #f0f2f5; }
+    header { background: #004aad; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    section { padding: 20px; max-width: 800px; margin: 20px auto; background: #fff; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+    h2 { color: #004aad; }
+    button { background: #0066cc; color: #fff; border: none; padding: 12px 24px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
+    button:hover { background: #005bb5; }
+    .hidden { display: none !important; }
+    #quizForm { background: #f9f9f9; }
+    #quizForm div { margin-bottom: 20px; }
+    input[type="radio"] { margin-right: 8px; }
+    #cert { text-align: center; }
+    #cert input { padding: 8px; width: 60%; font-size: 1rem; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ccc; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>ProCarga • Curso Carregamento Logístico</h1>
+  </header>
+
+  <section id="welcome">
+    <h2>Bem-vindo ao curso!</h2>
+    <p>Este curso irá te guiar pelos conceitos essenciais do carregamento logístico e boas práticas.</p>
+    <button id="startButton">Iniciar Curso</button>
+  </section>
+
+  <section id="lesson1" class="hidden">
+    <h2>Aula 1: O que é carregamento ineficiente?</h2>
+    <p>
+      Carregamento ineficiente acontece quando não aproveitamos de forma inteligente o
+      espaço disponível no veículo ou contêiner, resultando em desperdício. Pode gerar
+      tempos de carregamento maiores, custo de transporte elevado e aumento do risco
+      de danos à carga. Identificar ineficiências ajuda a otimizar volume, reduzir
+      viagens e melhorar a performance da operação logística.
+    </p>
+    <p>Vídeo recomendado: <a href="https://youtu.be/2lLqjzOgUBE?si=ZWMb9o8EcYIrFu5Q" target="_blank">Entenda o Carregamento Logístico</a></p>
+    <button onclick="nextLesson(2)">Próxima Aula</button>
+  </section>
+
+  <section id="lesson2" class="hidden">
+    <h2>Aula 2: Causas comuns</h2>
+    <p>
+      São frequentes fatores como falta de planejamento, onde não mapeamos bem o
+      perfil da carga nem a sequência de empilhamento. A desorganização no armazém
+      dificulta o acesso rápido e atrasa a operação. E a utilização de equipamentos
+      inadequados pode custar até 30% a mais no transporte, além de oferecer risco
+      de acidentes. Com organização e planejamento, esses problemas podem ser facilmente evitados.
+    </p>
+    <button onclick="nextLesson(3)">Próxima Aula</button>
+  </section>
+
+  <section id="lesson3" class="hidden">
+    <h2>Aula 3: Boas práticas</h2>
+    <p>
+      Inicie sempre com um plano: defina o tipo de carga, sequência de descarga
+      e métodos de fixação. Use corretamente EPIs para prevenir acidentes e garantir
+      segurança. Otimize o espaço com técnicas de "block stacking" e uso de pallets
+      adequados. Realize inspeções visuais antes de fechar a carga. Adotar essas práticas
+      gera redução de custos, agilidade e maior segurança na operação.
+    </p>
+    <button onclick="nextLesson(4)">Próxima Aula</button>
+  </section>
+
+  <section id="lesson4" class="hidden">
+    <h2>Aula 4: Tecnologias aplicadas</h2>
+    <p>
+      O uso de tecnologias como WMS, TMS, RFID e sensores de peso em tempo real otimizam
+      o processo de carregamento. Essas ferramentas permitem planejamento mais eficiente,
+      controle preciso e segurança operacional.
+    </p>
+    <p>Vídeo recomendado: <a href="https://youtu.be/BWvtrDnOcv8?si=s3Zxv9KCtzKB9EU2" target="_blank">Tecnologias na Logística</a></p>
+    <button onclick="nextLesson(5)">Próxima Aula</button>
+  </section>
+
+  <section id="lesson5" class="hidden">
+    <h2>Aula 5: Sustentabilidade na Logística</h2>
+    <p>
+      A sustentabilidade no carregamento envolve redução de CO₂, uso de materiais recicláveis,
+      reaproveitamento de pallets e planejamento inteligente para evitar viagens desnecessárias.
+      Além de reduzir o impacto ambiental, isso fortalece a imagem da empresa.
+    </p>
+    <p>Vídeo recomendado: <a href="https://youtu.be/qdTFt50LMKE?si=87KpTU4fHDCxb4OH" target="_blank">Logística Sustentável</a></p>
+    <button onclick="showQuiz()">Ir para Quiz</button>
+  </section>
+
+  <section id="quiz" class="hidden">
+    <h2 style="text-align:center;">Quiz Final (7 perguntas)</h2>
+    <form id="quizForm">
+      <div><strong>1. Carregamento ineficiente pode causar:</strong><br>
+        <label><input type="radio" name="q1" value="a"> A) Redução de custo</label><br>
+        <label><input type="radio" name="q1" value="b"> B) Atrasos</label><br>
+        <label><input type="radio" name="q1" value="c"> C) Otimização de tempo</label>
+      </div>
+      <div><strong>2. Causa comum de ineficiência é:</strong><br>
+        <label><input type="radio" name="q2" value="a"> A) Treinamento contínuo</label><br>
+        <label><input type="radio" name="q2" value="b"> B) Falta de planejamento</label><br>
+        <label><input type="radio" name="q2" value="c"> C) Checklist operacional</label>
+      </div>
+      <div><strong>3. Boa prática inclui:</strong><br>
+        <label><input type="radio" name="q3" value="a"> A) Ignorar EPIs</label><br>
+        <label><input type="radio" name="q3" value="b"> B) Otimizar espaço</label><br>
+        <label><input type="radio" name="q3" value="c"> C) Deixar a carga solta</label>
+      </div>
+      <div><strong>4. Organização do armazém influencia:</strong><br>
+        <label><input type="radio" name="q4" value="a"> A) Consumo de combustível</label><br>
+        <label><input type="radio" name="q4" value="b"> B) Tempo de carregamento</label><br>
+        <label><input type="radio" name="q4" value="c"> C) Tipo de caminhão</label>
+      </div>
+      <div><strong>5. EPIs servem para:</strong><br>
+        <label><input type="radio" name="q5" value="a"> A) Cumprir moda</label><br>
+        <label><input type="radio" name="q5" value="b"> B) Aumentar produtividade</label><br>
+        <label><input type="radio" name="q5" value="c"> C) Segurança do trabalhador</label>
+      </div>
+      <div><strong>6. Qual tecnologia contribui para carregamento eficiente?</strong><br>
+        <label><input type="radio" name="q6" value="a"> A) MP3 Player</label><br>
+        <label><input type="radio" name="q6" value="b"> B) WMS</label><br>
+        <label><input type="radio" name="q6" value="c"> C) Impressora</label>
+      </div>
+      <div><strong>7. A sustentabilidade no carregamento busca:</strong><br>
+        <label><input type="radio" name="q7" value="a"> A) Aumentar o consumo de energia</label><br>
+        <label><input type="radio" name="q7" value="b"> B) Reduzir CO₂ e otimizar processos</label><br>
+        <label><input type="radio" name="q7" value="c"> C) Usar mais plástico</label>
+      </div>
+      <div style="text-align:center;"><button type="button" onclick="checkQuiz()">Enviar</button></div>
+    </form>
+  </section>
+
+  <section id="cert" class="hidden">
+    <div style="max-width:700px; margin: auto; background: #fff; padding: 30px; border: 2px solid #004aad; border-radius: 8px;">
+      <h2 style="margin-bottom:10px; color:#004aad;">Certificado de Conclusão</h2>
+      <p style="font-size:1.2rem;">Certificamos que</p>
+      <p id="certName" style="font-size:1.4rem; font-weight:bold; margin:10px 0;">[NOME]</p>
+      <p style="font-size:1.2rem;">concluiu com êxito o curso</p>
+      <p style="font-size:1.4rem; font-weight:bold; margin:10px 0;">Carregamento Logístico – ProCarga</p>
+      <p style="margin-top:20px;">Com aproveitamento de <span id="score">0/7</span> pontos.</p>
+      <p style="margin-top:40px;">Data: <span id="certDate"></span></p>
+      <p style="margin-top:60px; border-top:1px solid #ccc; padding-top:10px;">_________________________________<br>Assinatura ProCarga</p>
+      <div style="text-align:center; margin-top:20px;">
+        <input id="studentName" type="text" placeholder="Digite seu nome completo">
+        <button onclick="generatePDF()">Gerar PDF</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    let score = 0;
+    document.getElementById('startButton').addEventListener('click', startCourse);
+
+    function startCourse() {
+      ['welcome','lesson1'].forEach(id => document.getElementById(id).classList.toggle('hidden'));
+    }
+    function nextLesson(n) {
+      ['lesson1','lesson2','lesson3','lesson4','lesson5'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      document.getElementById('lesson' + n).classList.remove('hidden');
+    }
+    function showQuiz() {
+      ['lesson1','lesson2','lesson3','lesson4','lesson5'].forEach(id => document.getElementById(id).classList.add('hidden'));
+      document.getElementById('quiz').classList.remove('hidden');
+    }
+    function checkQuiz() {
+      score = 0;
+      const answers = ['b','b','b','b','c','b','b'];
+      for(let i=1;i<=7;i++){
+        if(document.querySelector(`input[name="q${i}"]:checked`)?.value === answers[i-1]) score++;
+      }
+      document.getElementById('quiz').classList.add('hidden');
+      document.getElementById('cert').classList.remove('hidden');
+      document.getElementById('score').innerText = score + '/7';
+      document.getElementById('certDate').innerText = new Date().toLocaleDateString();
+    }
+    function generatePDF() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ format:'a4', unit:'mm' });
+      const name = document.getElementById('studentName').value || '[NOME]';
+      const date = document.getElementById('certDate').innerText;
+
+      doc.setFontSize(26);
+      doc.text('Certificado de Conclusão', 105, 40, null, null, 'center');
+      doc.setFontSize(16);
+      doc.text(`Certificamos que`, 105, 60, null, null, 'center');
+      doc.setFontSize(20).setFont(undefined, 'bold');
+      doc.text(name, 105, 72, null, null, 'center');
+      doc.setFontSize(16).setFont(undefined, 'normal');
+      doc.text(`concluiu com êxito o curso`, 105, 84, null, null, 'center');
+      doc.setFontSize(18).setFont(undefined, 'bold');
+      doc.text('Carregamento Logístico – ProCarga', 105, 98, null, null, 'center');
+      doc.setFontSize(16).setFont(undefined, 'normal');
+      doc.text(`Aproveitamento: ${score}/7`, 105, 112, null, null, 'center');
+      doc.text(`Data: ${date}`, 105, 126, null, null, 'center');
+      doc.setLineWidth(0.5);
+      doc.line(60, 140, 150, 140);
+      doc.text('Assinatura ProCarga', 105, 146, null, null, 'center');
+
+      doc.save('certificado-procarga.pdf');
+    }
+  </script>
+</body>
+</html
