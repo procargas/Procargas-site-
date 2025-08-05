@@ -1,197 +1,136 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <title>Curso Carregamento Logístico – ProCarga</title>
-  <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: #f0f2f5; }
-    header { background: #004aad; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    button { background: #0066cc; color: #fff; border: none; padding: 12px 24px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
-    button:hover { background: #005bb5; }
-    input[type="text"], input[type="password"], input[type="date"] {
-      padding: 10px; width: 100%; font-size: 1rem; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ccc;
-    }
-    .hidden { display: none !important; }
-    #mainContent { display: flex; min-height: calc(100vh - 80px); }
-    #sideMenu { width: 220px; background: #00397a; color: white; padding: 20px; }
-    #sideMenu h3 { margin-top: 0; }
-    #sideMenu button { display: block; width: 100%; background: transparent; color: #fff; border: none; padding: 10px 0; text-align: left; font-size: 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); }
-    #sideMenu button:hover { background: #004aad; }
-    #contentArea { flex: 1; padding: 20px; background: #fff; }
-    section { margin-bottom: 20px; }
-    h2 { color: #004aad; }
-    #quizForm { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-    #quizForm div { margin-bottom: 20px; }
-    input[type="radio"] { margin-right: 8px; }
-    #cert { text-align: center; }
-    /* login e registro estilo */
-    #authContainer { display: flex; height: 100vh; }
-    .auth-box { flex: 1; display: flex; align-items: center; justify-content: center; }
-    .auth-box .form-area { width: 80%; max-width: 400px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
-    .auth-box img { max-width: 80%; display: block; margin: 20px auto; }
-  </style>
-</head>
-<body>
+Claro! Abaixo está uma versão aprimorada das **aulas**, com **conteúdo mais detalhado**, **textos educativos** e **quiz ao final de cada aula** (com perguntas específicas). Além disso, o nome do quiz final foi alterado para **"Avaliação Final"**.
 
-<header>
-  <h1>ProCarga • Plataforma de Cursos Logísticos</h1>
-</header>
+---
 
-<!-- Login / Registro -->
-<div id="authContainer">
-  <div class="auth-box" id="loginSection">
-    <div class="form-area">
-      <h2 style="color:#004aad;">Bem-vindo de volta</h2>
-      <input type="text" id="loginUser" placeholder="Usuário">
-      <input type="password" id="loginPass" placeholder="Senha">
-      <button onclick="handleLogin()">Entrar</button>
-      <p style="margin-top: 15px;">Não tem conta? <a href="#" onclick="toggleAuth('registerSection')">Crie uma aqui</a></p>
-    </div>
-  </div>
-  <div class="auth-box hidden" id="registerSection">
-    <div class="form-area">
-      <h2 style="color:#004aad;">Criar conta</h2>
-      <input type="text" id="regUser" placeholder="Usuário">
-      <input type="password" id="regPass" placeholder="Senha">
-      <input type="date" id="regDob" placeholder="Data de Nascimento">
-      <input type="text" id="regCpf" placeholder="CPF">
-      <button onclick="handleRegister()">Criar Conta</button>
-      <p style="margin-top: 15px;">Já tem conta? <a href="#" onclick="toggleAuth('loginSection')">Voltar ao login</a></p>
-      <img src="https://img.freepik.com/vetores-gratis/caminhao-de-entrega-pequeno_52683-12040.jpg" alt="Caminhão pequeno">
-    </div>
-  </div>
-</div>
+### ✅ O que foi melhorado:
 
-<!-- Conteúdo Principal -->
-<div id="mainContent" class="hidden">
-  <div id="sideMenu">
-    <h3>Menu</h3>
-    <button onclick="showSection('welcome')">Início</button>
-    <button onclick="showSection('lesson1')">Aula 1</button>
-    <button onclick="showSection('lesson2')">Aula 2</button>
-    <button onclick="showSection('lesson3')">Aula 3</button>
-    <button onclick="showSection('lesson4')">Aula 4</button>
-    <button onclick="showSection('lesson5')">Aula 5</button>
-    <button onclick="showSection('quiz')">Quiz</button>
-    <button onclick="showSection('cert')">Certificado</button>
-  </div>
-  <div id="contentArea">
-    <section id="welcome">
-      <h2>Bem-vindo ao curso</h2>
-      <p>Este curso vai te guiar pelos conceitos essenciais do carregamento logístico e melhores práticas, com vídeos, quiz e certificado.</p>
-      <button id="startButton">Iniciar Curso</button>
-    </section>
-    <section id="lesson1" class="hidden">
-      <h2>Aula 1: O que é carregamento ineficiente?</h2>
-      <p>Carregamento ineficiente ocorre quando não aproveitamos bem o espaço no veículo, aumentando custos e risco de danos.</p>
-      <p>Vídeo: <a href="https://youtu.be/2lLqjzOgUBE" target="_blank">Entenda o Carregamento Logístico</a></p>
-    </section>
-    <section id="lesson2" class="hidden">
-      <h2>Aula 2: Causas comuns</h2>
-      <p>Causas frequentes incluem falta de planejamento, desorganização no armazém e equipamentos inadequados.</p>
-    </section>
-    <section id="lesson3" class="hidden">
-      <h2>Aula 3: Boas práticas</h2>
-      <p>Planejamento, uso de EPIs, block stacking, pallets adequados e inspeções visuais são essenciais.</p>
-    </section>
-    <section id="lesson4" class="hidden">
-      <h2>Aula 4: Tecnologias</h2>
-      <p>Ferramentas como WMS, TMS, RFID e sensores em tempo real otimizam o carregamento logístico.</p>
-      <p>Vídeo: <a href="https://youtu.be/BWvtrDnOcv8" target="_blank">Tecnologias na Logística</a></p>
-    </section>
-    <section id="lesson5" class="hidden">
-      <h2>Aula 5: Sustentabilidade</h2>
-      <p>Reduza CO₂, use pallets recicláveis e evite viagens desnecessárias para mais sustentabilidade.</p>
-      <p>Vídeo: <a href="https://youtu.be/qdTFt50LMKE" target="_blank">Logística Sustentável</a></p>
-    </section>
-    <section id="quiz" class="hidden">
-      <h2>Quiz Final (7 perguntas)</h2>
-      <form id="quizForm">
-        <div><strong>1. Carregamento ineficiente pode causar:</strong><br>
-          <label><input type="radio" name="q1" value="a"> A) Redução de custo</label><br>
-          <label><input type="radio" name="q1" value="b"> B) Atrasos</label><br>
-          <label><input type="radio" name="q1" value="c"> C) Otimização de tempo</label>
-        </div>
-        <!-- repita os demais 6 -->
-        <div style="text-align:center;"><button type="button" onclick="checkQuiz()">Enviar</button></div>
-      </form>
-    </section>
-    <section id="cert" class="hidden">
-      <div id="cert">
-        <h2>Certificado de Conclusão</h2>
-        <p>Certificamos que <br><strong id="certName">[NOME]</strong><br> concluiu o curso com aproveitamento de <span id="score">0/7</span></p>
-        <p>Data: <span id="certDate"></span></p>
-        <input id="studentName" type="text" placeholder="Digite seu nome completo"><br>
-        <button onclick="generatePDF()">Gerar PDF</button>
-      </div>
-    </section>
-  </div>
-</div>
+* Cada aula tem agora **conteúdo mais completo** e didático.
+* Cada aula termina com **um mini quiz (1 a 2 perguntas)** para reforçar o aprendizado.
+* A seção `Quiz` foi renomeada para `Avaliação Final`.
+* A lógica dos quizzes por aula pode ser expandida, mas deixei o exemplo com 1-2 perguntas para cada.
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-<script>
-  let score = 0;
-  function toggleAuth(id) {
-    document.getElementById('loginSection').classList.add('hidden');
-    document.getElementById('registerSection').classList.add('hidden');
-    document.getElementById(id).classList.remove('hidden');
-  }
-  function handleRegister() {
-    const u = document.getElementById('regUser').value;
-    const p = document.getElementById('regPass').value;
-    const d = document.getElementById('regDob').value;
-    const c = document.getElementById('regCpf').value;
-    if (!u||!p||!d||!c) { alert('Preencha todos os campos'); return; }
-    const users = JSON.parse(localStorage.getItem('users')||'[]');
-    if (users.find(x=>x.user===u)) { alert('Usuário já existe'); return; }
-    users.push({user:u,pass:p,dob:d,cpf:c});
-    localStorage.setItem('users', JSON.stringify(users));
-    alert('Conta criada com sucesso!');
-    toggleAuth('loginSection');
-  }
-  function handleLogin(){
-    const u=document.getElementById('loginUser').value;
-    const p=document.getElementById('loginPass').value;
-    const users=JSON.parse(localStorage.getItem('users')||'[]');
-    const ok=users.find(x=>x.user===u&&x.pass===p);
-    if(ok){ alert('Login bem‑sucedido!'); document.getElementById('authContainer').classList.add('hidden'); document.getElementById('mainContent').classList.remove('hidden'); showSection('welcome'); }
-    else alert('Usuário ou senha incorretos');
-  }
-  function showSection(id){
-    document.querySelectorAll('#contentArea section').forEach(s=>s.classList.add('hidden'));
-    document.getElementById(id).classList.remove('hidden');
-  }
-  document.addEventListener('DOMContentLoaded',()=>{
-    document.getElementById('startButton').onclick=()=> showSection('lesson1');
-  });
-  function checkQuiz(){
-    score=0;
-    const answers=['b','b','b','b','c','b','b'];
-    for(let i=1;i<=7;i++){
-      const sel=document.querySelector(`input[name="q${i}"]:checked`);
-      if(sel&&sel.value===answers[i-1]) score++;
-    }
-    showSection('cert');
-    document.getElementById('score').innerText=score+'/7';
-    document.getElementById('certDate').innerText=new Date().toLocaleDateString();
-    document.getElementById('certName').innerText='[NOME]';
-  }
-  function generatePDF(){
-    const { jsPDF }=window.jspdf;
-    const doc=new jsPDF({format:'a4',unit:'mm'});
-    const name=document.getElementById('studentName').value||'[NOME]';
-    const date=document.getElementById('certDate').innerText;
-    doc.setFontSize(26); doc.text('Certificado de Conclusão',105,40,null,null,'center');
-    doc.setFontSize(16); doc.text('Certificamos que',105,60,null,null,'center');
-    doc.setFontSize(20).setFont(undefined,'bold'); doc.text(name,105,72,null,null,'center');
-    doc.setFontSize(16).setFont(undefined,'normal'); doc.text('concluiu o curso',105,84,null,null,'center');
-    doc.setFontSize(18).setFont(undefined,'bold'); doc.text('Carregamento Logístico – ProCarga',105,98,null,null,'center');
-    doc.setFontSize(16); doc.text(`Aproveitamento: ${score}/7`,105,112,null,null,'center');
-    doc.text(`Data: ${date}`,105,126,null,null,'center');
-    doc.setLineWidth(0.5); doc.line(60,140,150,140); doc.text('Assinatura ProCarga',105,146,null,null,'center');
-    doc.save('certificado-procarga.pdf');
-  }
-</script>
+---
 
-</body>
-</html>
+### 🚧 Instruções técnicas:
+
+* A estrutura do HTML foi mantida.
+* A lógica JavaScript para os quizzes parciais pode ser incluída depois, caso queira registrar o progresso do aluno.
+* Para este exemplo, o conteúdo das aulas está atualizado, e os quizzes por aula são exibidos dentro da mesma seção.
+
+---
+
+### 🔧 **Aqui está o conteúdo HTML atualizado das aulas**:
+
+#### Substitua as seções `<section id="lesson1">` até `<section id="quiz">` pelas versões abaixo:
+
+```html
+<section id="lesson1" class="hidden">
+  <h2>Aula 1: O que é carregamento ineficiente?</h2>
+  <p>O carregamento ineficiente ocorre quando os veículos de transporte não são utilizados de forma plena. Isso inclui má distribuição de carga, excesso de espaço vazio, ou sobrecarga em pontos específicos.</p>
+  <p>Esse tipo de falha operacional gera custos extras com combustível, aumenta o tempo de entrega e pode até causar acidentes ou danificar mercadorias.</p>
+  <p>Impactos principais:</p>
+  <ul>
+    <li>Maior consumo de combustível por viagem.</li>
+    <li>Risco de avarias nas cargas.</li>
+    <li>Ineficiência no tempo de transporte.</li>
+  </ul>
+  <p>Vídeo recomendado: <a href="https://youtu.be/2lLqjzOgUBE" target="_blank">Entenda o Carregamento Logístico</a></p>
+  <hr>
+  <h3>Quiz da Aula 1</h3>
+  <form>
+    <p><strong>1. O que pode causar um carregamento ineficiente?</strong></p>
+    <label><input type="radio" name="q1a1" value="a"> Uso adequado de espaço</label><br>
+    <label><input type="radio" name="q1a1" value="b"> Excesso de espaço vazio no veículo</label><br>
+    <label><input type="radio" name="q1a1" value="c"> Escolha correta dos pallets</label>
+  </form>
+</section>
+
+<section id="lesson2" class="hidden">
+  <h2>Aula 2: Causas comuns do carregamento ineficiente</h2>
+  <p>As principais causas de carregamento ineficiente incluem a falta de planejamento, ausência de dados precisos, e desorganização no armazém.</p>
+  <p>Equipamentos mal ajustados ou danificados, e a não utilização de sistemas de gestão como WMS também contribuem para a má utilização dos veículos.</p>
+  <ul>
+    <li>Armazenamento desorganizado;</li>
+    <li>Falta de treinamento dos operadores;</li>
+    <li>Falta de comunicação entre setores.</li>
+  </ul>
+  <hr>
+  <h3>Quiz da Aula 2</h3>
+  <form>
+    <p><strong>1. Qual é uma causa comum do carregamento ineficiente?</strong></p>
+    <label><input type="radio" name="q2a1" value="a"> Uso de sensores inteligentes</label><br>
+    <label><input type="radio" name="q2a1" value="b"> Falta de planejamento logístico</label><br>
+    <label><input type="radio" name="q2a1" value="c"> Paletização correta</label>
+  </form>
+</section>
+
+<section id="lesson3" class="hidden">
+  <h2>Aula 3: Boas práticas no carregamento</h2>
+  <p>Algumas boas práticas incluem o uso de Equipamentos de Proteção Individual (EPIs), organização dos pallets, e o conceito de <em>block stacking</em> — empilhamento inteligente das cargas.</p>
+  <p>Além disso, o balanceamento do peso e a verificação da integridade dos produtos antes da viagem são fundamentais.</p>
+  <p>Dicas:</p>
+  <ul>
+    <li>Use checklists antes do carregamento;</li>
+    <li>Inspecione o veículo e os produtos;</li>
+    <li>Planeje rotas e horários.</li>
+  </ul>
+  <hr>
+  <h3>Quiz da Aula 3</h3>
+  <form>
+    <p><strong>1. O que é "block stacking"?</strong></p>
+    <label><input type="radio" name="q3a1" value="a"> Técnica de separação por cores</label><br>
+    <label><input type="radio" name="q3a1" value="b"> Empilhamento organizado de cargas</label><br>
+    <label><input type="radio" name="q3a1" value="c"> Agrupamento por peso</label>
+  </form>
+</section>
+
+<section id="lesson4" class="hidden">
+  <h2>Aula 4: Tecnologias aplicadas ao carregamento</h2>
+  <p>Ferramentas tecnológicas têm papel essencial na logística moderna. Softwares como WMS (Warehouse Management System) e TMS (Transportation Management System) ajudam a planejar e executar carregamentos de forma mais eficiente.</p>
+  <p>Outras tecnologias como sensores de peso, RFID e Internet das Coisas (IoT) possibilitam rastreamento em tempo real.</p>
+  <p>Benefícios:</p>
+  <ul>
+    <li>Maior controle sobre as operações;</li>
+    <li>Prevenção de erros humanos;</li>
+    <li>Redução de desperdícios.</li>
+  </ul>
+  <p>Vídeo recomendado: <a href="https://youtu.be/BWvtrDnOcv8" target="_blank">Tecnologias na Logística</a></p>
+  <hr>
+  <h3>Quiz da Aula 4</h3>
+  <form>
+    <p><strong>1. O que faz o sistema WMS?</strong></p>
+    <label><input type="radio" name="q4a1" value="a"> Garante entrega ao cliente</label><br>
+    <label><input type="radio" name="q4a1" value="b"> Gerencia o estoque e o armazém</label><br>
+    <label><input type="radio" name="q4a1" value="c"> Controla somente a frota</label>
+  </form>
+</section>
+
+<section id="lesson5" class="hidden">
+  <h2>Aula 5: Sustentabilidade no carregamento logístico</h2>
+  <p>A logística sustentável visa reduzir impactos ambientais durante os processos de transporte e armazenamento. Uma das ações mais eficazes é a otimização de rotas para evitar viagens desnecessárias.</p>
+  <p>O uso de materiais recicláveis, como pallets reutilizáveis, também contribui. Além disso, veículos elétricos estão ganhando espaço no setor.</p>
+  <p>Práticas sustentáveis:</p>
+  <ul>
+    <li>Reaproveitamento de materiais de embalagem;</li>
+    <li>Evitar transporte com carga ociosa;</li>
+    <li>Uso de energia renovável nos centros logísticos.</li>
+  </ul>
+  <p>Vídeo recomendado: <a href="https://youtu.be/qdTFt50LMKE" target="_blank">Logística Sustentável</a></p>
+  <hr>
+  <h3>Quiz da Aula 5</h3>
+  <form>
+    <p><strong>1. Qual prática contribui para uma logística sustentável?</strong></p>
+    <label><input type="radio" name="q5a1" value="a"> Viagens com veículos meio vazios</label><br>
+    <label><input type="radio" name="q5a1" value="b"> Uso de pallets recicláveis</label><br>
+    <label><input type="radio" name="q5a1" value="c"> Ignorar manutenção de veículos</label>
+  </form>
+</section>
+
+<section id="quiz" class="hidden">
+  <h2>Avaliação Final (7 perguntas)</h2>
+  <form id="quizForm">
+    <div><strong>1. Carregamento ineficiente pode causar:</strong><br>
+      <label><input type="radio" name="q1" value="a"> A) Redução de custo</label><br>
+      <label><input type="radio" name="q1" value="b"> B) Atrasos</label><br>
+      <label><input type="radio" name="q1" value="c"> C) Otimização de tempo</label>
+```
