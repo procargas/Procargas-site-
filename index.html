@@ -4,26 +4,25 @@
   <meta charset="UTF-8">
   <title>Curso Carregamento Logístico – ProCarga</title>
   <style>
+    * { box-sizing: border-box; }
     body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: #f0f2f5; }
     header { background: #004aad; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    button { background: #0066cc; color: #fff; border: none; padding: 12px 24px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
+    button { background: #0066cc; color: #fff; border: none; padding: 10px 16px; cursor: pointer; font-size: 1rem; border-radius: 4px; transition: background 0.3s; }
     button:hover { background: #005bb5; }
     input[type="text"], input[type="password"], input[type="date"] {
       padding: 10px; width: 100%; font-size: 1rem; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ccc;
     }
     .hidden { display: none !important; }
     #mainContent { display: flex; min-height: calc(100vh - 80px); }
-    #sideMenu { width: 220px; background: #00397a; color: white; padding: 20px; }
+    #sideMenu { width: 240px; background: #00397a; color: white; padding: 20px; }
     #sideMenu h3 { margin-top: 0; }
-    #sideMenu button { display: block; width: 100%; background: transparent; color: #fff; border: none; padding: 10px 0; text-align: left; font-size: 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); }
+    #sideMenu button { display: block; width: 100%; background: transparent; color: #fff; border: none; padding: 12px 0; text-align: left; font-size: 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); }
     #sideMenu button:hover { background: #004aad; }
     #contentArea { flex: 1; padding: 20px; background: #fff; overflow-y: auto; }
-    section { margin-bottom: 20px; }
-    h2 { color: #004aad; }
-    #quizForm { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-    #quizForm div { margin-bottom: 20px; }
-    input[type="radio"] { margin-right: 8px; }
-    #cert { text-align: center; }
+    section { margin-bottom: 30px; line-height: 1.6; }
+    h2 { color: #004aad; margin-bottom: 10px; }
+    h3 { margin-top: 20px; color: #00397a; }
+    ul { padding-left: 20px; }
     #authContainer { display: flex; height: 100vh; }
     .auth-box { flex: 1; display: flex; align-items: center; justify-content: center; }
     .auth-box .form-area { width: 80%; max-width: 400px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
@@ -34,6 +33,7 @@
   <header>
     <h1>ProCarga • Plataforma de Cursos Logísticos</h1>
   </header>
+
   <div id="authContainer">
     <div class="auth-box" id="loginSection">
       <div class="form-area">
@@ -57,56 +57,49 @@
       </div>
     </div>
   </div>
+
   <div id="mainContent" class="hidden">
     <div id="sideMenu">
       <h3>Menu</h3>
       <button onclick="showSection('welcome')">Início</button>
       <button onclick="showSection('lesson1')">Aula 1</button>
-      <button onclick="showSection('lesson2')">Aula 2</button>
-      <button onclick="showSection('lesson3')">Aula 3</button>
-      <button onclick="showSection('lesson4')">Aula 4</button>
-      <button onclick="showSection('lesson5')">Aula 5</button>
-      <button onclick="showSection('quiz')">Avaliação Final</button>
-      <button onclick="showSection('cert')">Certificado</button>
     </div>
     <div id="contentArea">
       <section id="welcome">
         <h2>Bem-vindo ao Curso Carregamento Logístico – ProCarga</h2>
-        <p>Este curso foi desenvolvido para capacitar profissionais da área de logística no processo de carregamento eficiente, seguro e otimizado de produtos. Cada aula possui conteúdo aprofundado com no mínimo duas páginas. Ao final, aplique seus conhecimentos na Avaliação Final com 15 questões e gere seu certificado.</p>
+        <p>Este curso foi desenvolvido para capacitar profissionais da área de logística no processo de carregamento eficiente, seguro e otimizado de produtos. Cada aula possui conteúdo aprofundado. Ao final, aplique seus conhecimentos na Avaliação Final e gere seu certificado.</p>
       </section>
+
       <section id="lesson1" class="hidden">
         <h2>Aula 1: Fundamentos da Logística de Carregamento</h2>
-        <p>Conteúdo completo da Aula 1 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson2" class="hidden">
-        <h2>Aula 2: Tipos de Cargas e Embalagens</h2>
-        <p>Conteúdo completo da Aula 2 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson3" class="hidden">
-        <h2>Aula 3: Equipamentos e Segurança no Carregamento</h2>
-        <p>Conteúdo completo da Aula 3 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson4" class="hidden">
-        <h2>Aula 4: Planejamento de Carga e Roteirização</h2>
-        <p>Conteúdo completo da Aula 4 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson5" class="hidden">
-        <h2>Aula 5: Sustentabilidade e Eficiência Logística</h2>
-        <p>Conteúdo completo da Aula 5 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="quiz" class="hidden">
-        <h2>Avaliação Final</h2>
-        <form id="quizForm">
-          <p>(15 questões serão inseridas aqui com alternativas)</p>
-        </form>
-      </section>
-      <section id="cert" class="hidden">
-        <h2>Certificado</h2>
-        <p>Seu certificado estará disponível após a conclusão da Avaliação Final.</p>
-        <button onclick="generateCertificate()">Gerar Certificado</button>
+        <h3>1. O que é logística de carregamento?</h3>
+        <p>É o conjunto de práticas que envolvem o preparo, organização e execução do carregamento de mercadorias para transporte. Envolve desde o planejamento até a distribuição correta no veículo, respeitando normas técnicas, segurança e otimização de espaço.</p>
+
+        <h3>2. Objetivos principais</h3>
+        <ul>
+          <li>Reduzir o tempo de carregamento</li>
+          <li>Evitar danos aos produtos</li>
+          <li>Melhorar a segurança operacional</li>
+          <li>Utilizar de forma eficiente o espaço do veículo</li>
+        </ul>
+
+        <h3>3. Problemas comuns</h3>
+        <p>Dentre os principais problemas enfrentados na logística de carregamento estão:</p>
+        <ul>
+          <li>Mau acondicionamento dos produtos</li>
+          <li>Desperdício de espaço no caminhão</li>
+          <li>Acidentes por sobrepeso ou má distribuição</li>
+          <li>Retrabalho por falhas no planejamento</li>
+        </ul>
+
+        <h3>4. Importância estratégica</h3>
+        <p>Empresas que investem na logística de carregamento reduzem custos, aumentam a satisfação do cliente e melhoram sua competitividade no mercado. Um carregamento eficiente também contribui para entregas mais rápidas e com menos avarias.</p>
+
+        <button onclick="showSection('welcome')">Voltar</button>
       </section>
     </div>
   </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
     function toggleAuth(sectionId) {
@@ -118,6 +111,7 @@
     function handleLogin() {
       document.getElementById('authContainer').classList.add('hidden');
       document.getElementById('mainContent').classList.remove('hidden');
+      showSection('welcome');
     }
 
     function handleRegister() {
@@ -127,11 +121,12 @@
 
     function showSection(sectionId) {
       document.querySelectorAll('#contentArea > section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(sectionId).classList.remove('hidden');
+      const section = document.getElementById(sectionId);
+      if (section) section.classList.remove('hidden');
     }
 
     function generateCertificate() {
-      const {{ jsPDF }} = window.jspdf;
+      const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       doc.setFontSize(22);
       doc.text("Certificado de Conclusão", 20, 30);
