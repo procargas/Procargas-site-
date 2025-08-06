@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ProCarga – Curso de Carregamento Logístico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
   <style>
     * {
       box-sizing: border-box;
@@ -14,59 +14,66 @@
     }
 
     body {
-      background-color: #f4f4f4;
-      color: #333;
+      background-color: #000000;
+      color: #d4af37; /* dourado */
     }
 
     header {
-      background-color: #005C99;
-      color: white;
-      padding: 20px 40px;
-      font-size: 24px;
-      font-weight: bold;
+      background-color: #121212;
+      color: #d4af37;
+      padding: 30px 40px;
+      font-size: 28px;
+      font-weight: 900;
       text-align: center;
+      letter-spacing: 3px;
+      border-bottom: 3px solid #d4af37;
+      text-transform: uppercase;
     }
 
     nav {
-      background-color: #ffffff;
+      background-color: #1c1c1c;
       display: flex;
       justify-content: center;
-      border-bottom: 1px solid #ccc;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      border-bottom: 1px solid #444;
+      box-shadow: 0 2px 4px rgba(212,175,55,0.4);
       position: sticky;
       top: 0;
       z-index: 1000;
     }
 
     nav button {
-      padding: 15px 20px;
+      padding: 15px 25px;
       border: none;
       background: none;
       cursor: pointer;
       font-size: 16px;
-      color: #333;
+      color: #d4af37;
       transition: 0.3s;
+      font-weight: 600;
+      letter-spacing: 1px;
     }
 
     nav button:hover,
     nav button.active {
-      border-bottom: 3px solid #005C99;
-      color: #005C99;
-      font-weight: bold;
+      border-bottom: 3px solid #d4af37;
+      color: #fff;
+      font-weight: 700;
     }
 
     .container {
       max-width: 1000px;
       margin: 30px auto;
-      padding: 20px;
-      background-color: white;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      padding: 20px 30px;
+      background-color: #121212;
+      border-radius: 10px;
+      box-shadow: 0 0 15px #d4af37aa;
     }
 
     h2 {
       margin-bottom: 15px;
-      color: #005C99;
+      color: #d4af37;
+      text-transform: uppercase;
+      letter-spacing: 2px;
     }
 
     .hidden {
@@ -75,50 +82,86 @@
 
     .tabs button {
       margin: 5px;
-      padding: 10px 15px;
-      background-color: #eee;
+      padding: 10px 20px;
+      background-color: #333333;
       border: none;
       cursor: pointer;
+      color: #d4af37;
+      font-weight: 600;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+      letter-spacing: 1px;
     }
 
     .tabs button.active {
-      background-color: #005C99;
-      color: white;
+      background-color: #d4af37;
+      color: #000;
+      font-weight: 700;
     }
 
     .tab-content {
       margin-top: 15px;
+      color: #eee;
+      line-height: 1.5;
     }
 
     a {
-      color: #005C99;
+      color: #d4af37;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #fff;
     }
 
     form div {
       margin-bottom: 15px;
+      color: #eee;
     }
 
     input[type="radio"] {
-      margin-right: 5px;
-    }
-
-    button {
-      background-color: #005C99;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
+      margin-right: 8px;
       cursor: pointer;
     }
 
-    button:hover {
-      background-color: #004477;
+    button {
+      background-color: #d4af37;
+      color: #000;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 16px;
+      transition: background-color 0.3s;
+      letter-spacing: 1px;
     }
+
+    button:hover {
+      background-color: #b48f1a;
+      color: #fff;
+    }
+
+    /* Scrollbar customizado para melhor estética */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #121212;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #d4af37;
+      border-radius: 4px;
+    }
+
   </style>
 </head>
 <body>
 
-  <header>ProCarga • Curso de Carregamento Logístico</header>
+  <header>
+    <span style="color:#d4af37;">ProCarga</span> &mdash; Curso de Carregamento Logístico
+  </header>
 
   <nav>
     <button onclick="showSection('welcome')" class="active">Início</button>
@@ -308,6 +351,7 @@
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       doc.setFontSize(18);
+      doc.setTextColor(212, 175, 55); // dourado
       doc.text("Certificado de Conclusão", 20, 30);
       doc.setFontSize(14);
       doc.text("Certificamos que o(a) aluno(a) concluiu o curso:", 20, 50);
