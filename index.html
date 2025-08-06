@@ -1,156 +1,169 @@
-Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com os seguintes requisitos atendidos:
-
----
-
-### ✅ **Funcionalidades incluídas:**
-
-* Login e Cadastro com validação de campos
-* Página inicial com conteúdo sobre **carregamento ineficiente de produtos na logística**
-* Abas funcionais de **Aula 1 até Aula 5**
-* Menu lateral para navegação entre Início, Aulas, Avaliação e Certificado
-* Geração de certificado com **jsPDF**
-* Totalmente responsiva
-
----
-
-### ✅ **Código HTML COMPLETO** (coloque isso em um arquivo `.html`):
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Curso Carregamento Logístico – ProCarga</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProCarga – Curso de Carregamento Logístico</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      font-family: 'Segoe UI', Tahoma, sans-serif;
-      background: #f4f6f8;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
       color: #333;
     }
+
     header {
-      background: #004aad;
-      color: #fff;
+      background-color: #004aad;
+      color: white;
       padding: 20px;
       text-align: center;
       font-size: 1.5rem;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
     }
-    .hidden { display: none !important; }
-    button {
-      background: #0066cc;
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    button:hover { background: #004a99; }
 
-    /* Auth Layout */
+    .hidden {
+      display: none !important;
+    }
+
     #authContainer {
       display: flex;
       height: 100vh;
-      justify-content: center;
       align-items: center;
-      background: #e6eef7;
+      justify-content: center;
+      background-color: #eaf0f8;
     }
+
     .auth-box {
-      background: #fff;
+      background: white;
       padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      width: 90%;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 100%;
       max-width: 400px;
     }
+
     .auth-box input {
       width: 100%;
-      padding: 10px;
       margin: 10px 0;
+      padding: 12px;
+      font-size: 1rem;
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+
+    .auth-box button {
+      width: 100%;
+      padding: 12px;
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      font-size: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .auth-box button:hover {
+      background-color: #004aad;
+    }
+
+    .auth-box p {
+      margin-top: 15px;
+      text-align: center;
+    }
+
     .auth-box a {
       color: #004aad;
       cursor: pointer;
     }
 
-    /* Main layout */
     #mainContent {
       display: flex;
       height: 100vh;
     }
+
     #sideMenu {
       width: 220px;
-      background: #00397a;
+      background-color: #00397a;
       color: white;
       padding: 20px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
     }
+
     #sideMenu button {
       background: none;
-      color: white;
       border: none;
+      color: white;
       text-align: left;
-      padding: 10px;
+      padding: 10px 0;
       font-size: 1rem;
       cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
     }
+
     #sideMenu button:hover {
-      background: #004aad;
+      background-color: #004aad;
     }
+
     #contentArea {
       flex: 1;
       padding: 20px;
-      background: #fff;
       overflow-y: auto;
-    }
-    section {
-      margin-bottom: 30px;
-    }
-    h2 {
-      color: #004aad;
+      background: white;
     }
 
-    /* Tabs */
+    section {
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: #004aad;
+      margin-bottom: 10px;
+    }
+
     .tabs {
       display: flex;
-      margin-bottom: 10px;
       border-bottom: 2px solid #ccc;
     }
+
     .tab-button {
-      flex: 1;
-      padding: 10px;
+      padding: 10px 20px;
       cursor: pointer;
-      background: #f0f2f5;
+      background-color: #f1f1f1;
       border: none;
+      border-right: 1px solid #ccc;
       font-size: 1rem;
     }
+
     .tab-button.active {
-      background: #fff;
+      background-color: white;
       font-weight: bold;
-      border-bottom: 3px solid #004aad;
+      border-bottom: 2px solid #004aad;
     }
-    .tab-content {
+
+    #tabContent {
       padding: 20px;
-      background: #fff;
+      background-color: #fff;
       border: 1px solid #ccc;
       border-top: none;
-      min-height: 200px;
     }
 
     @media (max-width: 768px) {
       #mainContent {
         flex-direction: column;
       }
+
       #sideMenu {
         flex-direction: row;
         overflow-x: auto;
         width: 100%;
       }
+
       #sideMenu button {
         flex: 1;
         white-space: nowrap;
@@ -159,32 +172,34 @@ Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com 
   </style>
 </head>
 <body>
-  <header>ProCarga • Plataforma de Cursos Logísticos</header>
+  <header>
+    ProCarga • Curso de Carregamento Logístico
+  </header>
 
-  <!-- Login e Cadastro -->
+  <!-- Tela de Autenticação -->
   <div id="authContainer">
     <div class="auth-box" id="loginSection">
       <h2>Login</h2>
-      <input type="text" id="loginUser" placeholder="Usuário">
-      <input type="password" id="loginPass" placeholder="Senha">
+      <input type="text" id="loginUser" placeholder="Usuário" />
+      <input type="password" id="loginPass" placeholder="Senha" />
       <button onclick="handleLogin()">Entrar</button>
       <p>Não tem conta? <a onclick="toggleAuth('registerSection')">Cadastre-se</a></p>
     </div>
+
     <div class="auth-box hidden" id="registerSection">
-      <h2>Criar Conta</h2>
-      <input type="text" id="regUser" placeholder="Usuário">
-      <input type="password" id="regPass" placeholder="Senha">
-      <input type="date" id="regDob">
-      <input type="text" id="regCpf" placeholder="CPF">
+      <h2>Cadastro</h2>
+      <input type="text" id="regUser" placeholder="Usuário" />
+      <input type="password" id="regPass" placeholder="Senha" />
+      <input type="date" id="regDob" />
+      <input type="text" id="regCpf" placeholder="CPF" />
       <button onclick="handleRegister()">Cadastrar</button>
-      <p>Já tem conta? <a onclick="toggleAuth('loginSection')">Fazer login</a></p>
+      <p>Já tem conta? <a onclick="toggleAuth('loginSection')">Voltar ao login</a></p>
     </div>
   </div>
 
-  <!-- Conteúdo Principal -->
+  <!-- Tela Principal -->
   <div id="mainContent" class="hidden">
     <div id="sideMenu">
-      <h3>Menu</h3>
       <button onclick="showSection('welcome')">Início</button>
       <button onclick="showSection('lessons')">Aulas</button>
       <button onclick="showSection('quiz')">Avaliação</button>
@@ -195,11 +210,10 @@ Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com 
       <section id="welcome">
         <h2>Sobre o Curso</h2>
         <p>
-          O curso "Carregamento Logístico – ProCarga" visa combater o problema frequente do carregamento ineficiente de produtos,
-          que gera atrasos, avarias e desperdícios logísticos.
+          O curso de Carregamento Logístico da ProCarga foi desenvolvido para profissionais da área que desejam melhorar a eficiência no transporte de cargas. Aqui você aprenderá a evitar carregamentos ineficientes, reduzir custos logísticos e aumentar a segurança.
         </p>
         <p>
-          Você aprenderá práticas modernas para melhorar o desempenho no carregamento de mercadorias, otimização de espaço, segurança e sustentabilidade.
+          Explore cada aula, complete a avaliação e gere seu certificado de conclusão!
         </p>
       </section>
 
@@ -212,30 +226,53 @@ Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com 
           <button class="tab-button" onclick="showTab(3)">Aula 4</button>
           <button class="tab-button" onclick="showTab(4)">Aula 5</button>
         </div>
-        <div class="tab-content" id="tabContent">
-          <h3>Fundamentos da Logística de Carregamento</h3>
-          <p>Conteúdo detalhado da Aula 1. (mínimo 2 páginas)...</p>
+        <div id="tabContent">
+          <!-- Conteúdo da primeira aba será inserido via JS -->
         </div>
       </section>
 
       <section id="quiz" class="hidden">
         <h2>Avaliação Final</h2>
-        <p>As 15 questões de múltipla escolha serão exibidas aqui.</p>
+        <p>Avaliação com 15 questões (em construção)...</p>
       </section>
 
       <section id="cert" class="hidden">
         <h2>Certificado</h2>
-        <p>Conclua a avaliação para gerar seu certificado digital.</p>
+        <p>Após concluir a avaliação, clique abaixo para gerar seu certificado digital:</p>
         <button onclick="generateCertificate()">Gerar Certificado</button>
       </section>
     </div>
   </div>
 
-  <!-- jsPDF -->
+  <!-- Script -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <!-- Scripts -->
   <script>
+    const tabContents = [
+      { title: "Aula 1: Fundamentos da Logística de Carregamento", content: "Conteúdo completo da Aula 1 sobre boas práticas, objetivos logísticos, definição de carregamento, e problemas comuns no transporte de mercadorias." },
+      { title: "Aula 2: Tipos de Cargas e Embalagens", content: "Tipos de cargas (seca, líquida, perigosa), padrões de embalagem, etiquetagem e manuseio correto." },
+      { title: "Aula 3: Equipamentos e Segurança no Carregamento", content: "Uso de EPIs, empilhadeiras, paleteiras, e normas de segurança para evitar acidentes." },
+      { title: "Aula 4: Planejamento de Carga e Roteirização", content: "Como planejar o carregamento, escolher o veículo ideal, e otimizar rotas para entregas." },
+      { title: "Aula 5: Sustentabilidade e Eficiência", content: "Redução de desperdícios, emissões e práticas verdes aplicadas à logística de transporte." }
+    ];
+
+    function showTab(index) {
+      const buttons = document.querySelectorAll('.tab-button');
+      buttons.forEach(btn => btn.classList.remove('active'));
+      buttons[index].classList.add('active');
+
+      const tab = tabContents[index];
+      document.getElementById('tabContent').innerHTML = `
+        <h3>${tab.title}</h3>
+        <p>${tab.content}</p>
+      `;
+    }
+
+    function showSection(id) {
+      document.querySelectorAll('#contentArea section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById(id).classList.remove('hidden');
+      if (id === 'lessons') showTab(0);
+    }
+
     function toggleAuth(sectionId) {
       document.getElementById('loginSection').classList.add('hidden');
       document.getElementById('registerSection').classList.add('hidden');
@@ -245,10 +282,7 @@ Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com 
     function handleLogin() {
       const user = document.getElementById('loginUser').value.trim();
       const pass = document.getElementById('loginPass').value.trim();
-      if (user === "" || pass === "") {
-        alert("Preencha todos os campos.");
-        return;
-      }
+      if (!user || !pass) return alert("Preencha todos os campos.");
       document.getElementById('authContainer').classList.add('hidden');
       document.getElementById('mainContent').classList.remove('hidden');
       showSection('welcome');
@@ -258,5 +292,27 @@ Perfeito! Abaixo está uma **página HTML completa, funcional e melhorada** com 
       const user = document.getElementById('regUser').value.trim();
       const pass = document.getElementById('regPass').value.trim();
       const dob = document.getElementById('regDob').value;
-      const cpf = document.getElementBy
-```
+      const cpf = document.getElementById('regCpf').value.trim();
+      if (!user || !pass || !dob || !cpf) return alert("Preencha todos os campos.");
+      alert("Cadastro realizado com sucesso! Faça login.");
+      toggleAuth('loginSection');
+    }
+
+    function generateCertificate() {
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF();
+      doc.setFontSize(18);
+      doc.text("Certificado de Conclusão", 20, 30);
+      doc.setFontSize(14);
+      doc.text("Certificamos que o(a) aluno(a) concluiu o curso:", 20, 50);
+      doc.text("Curso de Carregamento Logístico – ProCarga", 20, 60);
+      doc.text("Data: " + new Date().toLocaleDateString('pt-BR'), 20, 80);
+      doc.text("Assinatura: ______________________", 20, 110);
+      doc.save("certificado_proCarga.pdf");
+    }
+
+    // Carregar conteúdo inicial
+    document.addEventListener("DOMContentLoaded", () => showTab(0));
+  </script>
+</body>
+</html>
