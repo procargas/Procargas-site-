@@ -3,584 +3,289 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProCarga – Curso de Carregamento Logístico</title>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet" />
+  <title>ProCarga – Curso de Capacitação em Carregamento Logístico</title>
   <style>
+    /* Reset e base */
     * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Roboto', sans-serif;
+      margin: 0; padding: 0; box-sizing: border-box;
+      font-family: 'Montserrat', sans-serif;
     }
-
     body {
-      background-color: #000000;
+      background: #000;
       color: #d4af37;
+      line-height: 1.6;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
     }
-
-    header {
-      background-color: #121212;
-      color: #d4af37;
-      padding: 30px 40px;
-      font-size: 28px;
-      font-weight: 900;
-      text-align: center;
-      letter-spacing: 3px;
-      border-bottom: 3px solid #d4af37;
-      text-transform: uppercase;
-      flex-shrink: 0;
-    }
-
-    nav {
-      background-color: #1c1c1c;
-      display: flex;
-      justify-content: center;
-      border-bottom: 1px solid #444;
-      box-shadow: 0 2px 4px rgba(212,175,55,0.4);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      flex-shrink: 0;
-    }
-
-    nav button {
-      padding: 15px 25px;
-      border: none;
-      background: none;
-      cursor: pointer;
-      font-size: 16px;
-      color: #d4af37;
-      transition: 0.3s;
-      font-weight: 600;
-      letter-spacing: 1px;
-    }
-
-    nav button:hover,
-    nav button.active {
-      border-bottom: 3px solid #d4af37;
-      color: #fff;
-      font-weight: 700;
-    }
-
-    .container {
-      max-width: 1000px;
-      margin: 30px auto 50px;
-      padding: 20px 30px;
-      background-color: #121212;
-      border-radius: 10px;
-      box-shadow: 0 0 15px #d4af37aa;
-      flex-grow: 1;
-    }
-
-    h2 {
-      margin-bottom: 15px;
-      color: #d4af37;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-    }
-
-    .hidden {
-      display: none;
-    }
-
-    .tabs button {
-      margin: 5px 5px 5px 0;
-      padding: 10px 20px;
-      background-color: #333333;
-      border: none;
-      cursor: pointer;
-      color: #d4af37;
-      font-weight: 600;
-      border-radius: 5px;
-      transition: background-color 0.3s;
-      letter-spacing: 1px;
-    }
-
-    .tabs button.active {
-      background-color: #d4af37;
-      color: #000;
-      font-weight: 700;
-    }
-
-    .tab-content {
-      margin-top: 15px;
-      color: #eee;
-      line-height: 1.5;
-    }
-
     a {
       color: #d4af37;
       text-decoration: none;
-      font-weight: 600;
     }
     a:hover {
       text-decoration: underline;
-      color: #fff;
     }
 
-    form div.question {
-      margin-bottom: 20px;
-      color: #eee;
-      padding-bottom: 10px;
-      border-bottom: 1px solid #444;
-    }
-
-    form div.question p {
-      margin-bottom: 10px;
-      font-weight: 600;
-    }
-
-    input[type="radio"] {
-      margin-right: 8px;
-      cursor: pointer;
-    }
-
-    button {
-      background-color: #d4af37;
-      color: #000;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 16px;
-      transition: background-color 0.3s;
-      letter-spacing: 1px;
-      margin-top: 15px;
-    }
-
-    button:disabled {
-      background-color: #7a6c21;
-      cursor: not-allowed;
-      color: #ccc;
-    }
-
-    button:hover:not(:disabled) {
-      background-color: #b48f1a;
-      color: #fff;
-    }
-
-    #quizResult {
-      margin-top: 20px;
-      font-weight: 700;
-      font-size: 18px;
-      color: #d4af37;
-    }
-
-    label {
-      cursor: pointer;
-      display: inline-block;
-      margin-bottom: 5px;
-    }
-
-    /* Scrollbar customizado */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
-    ::-webkit-scrollbar-track {
-      background: #121212;
-    }
-    ::-webkit-scrollbar-thumb {
-      background: #d4af37;
-      border-radius: 4px;
-    }
-
-    /* Input nome no certificado */
-    #cert input[type="text"] {
+    /* Menu fixo */
+    nav {
+      background: #111;
+      position: fixed;
       width: 100%;
-      max-width: 300px;
-      padding: 8px;
-      margin-top: 8px;
-      border-radius: 5px;
-      border: 1px solid #d4af37;
-      font-size: 16px;
+      top: 0; left: 0;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      border-bottom: 2px solid #d4af37;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 2rem;
+      padding: 1rem 2rem;
+    }
+    nav li {
       font-weight: 600;
+      font-size: 1.1rem;
+    }
+
+    /* Container para conteúdo */
+    .container {
+      max-width: 960px;
+      margin: 5rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    h1, h2 {
+      color: #d4af37;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    p {
+      margin-bottom: 1rem;
+    }
+
+    /* Seção Início */
+    #inicio {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+    #inicio h1 {
+      font-size: 2.5rem;
+    }
+    #inicio p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin: 0.5rem auto 0;
+    }
+
+    /* Aulas */
+    #aulas ul {
+      list-style: none;
+      padding-left: 0;
+    }
+    #aulas li {
+      margin-bottom: 1rem;
+    }
+    #aulas a {
+      border: 1px solid #d4af37;
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      display: inline-block;
+      transition: background 0.3s ease;
+    }
+    #aulas a:hover {
+      background: #d4af37;
       color: #000;
+    }
+
+    /* Avaliação */
+    form {
+      background: #111;
+      padding: 1rem;
+      border: 1px solid #d4af37;
+      border-radius: 6px;
+      max-width: 600px;
+    }
+    label {
+      display: block;
+      margin: 0.8rem 0 0.3rem;
+      font-weight: 600;
+    }
+    input[type="text"], textarea {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d4af37;
+      background: #000;
+      color: #d4af37;
+      border-radius: 4px;
+      font-size: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      background: #d4af37;
+      border: none;
+      color: #000;
+      padding: 0.7rem 1.2rem;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background: #b3942e;
+    }
+
+    /* Certificado */
+    #certificado {
+      margin-top: 2rem;
+      max-width: 600px;
+    }
+    #certificado-output {
+      margin-top: 1rem;
+      padding: 1rem;
+      background: #111;
+      border: 1px solid #d4af37;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      font-family: monospace;
+    }
+
+    /* Rodapé */
+    footer {
+      background: #111;
+      text-align: center;
+      padding: 1rem;
+      border-top: 2px solid #d4af37;
+      margin-top: auto;
+      font-size: 0.9rem;
+    }
+    footer a {
+      margin: 0 0.5rem;
+      font-weight: 600;
+    }
+
+    /* Responsividade */
+    @media(max-width: 600px) {
+      nav ul {
+        flex-direction: column;
+        gap: 1rem;
+        padding: 0.5rem 1rem;
+      }
+      .container {
+        margin: 6rem 1rem 3rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <header>
-    <span style="color:#d4af37;">ProCarga</span> &mdash; Curso de Carregamento Logístico
-  </header>
+<nav>
+  <ul>
+    <li><a href="#inicio">Início</a></li>
+    <li><a href="#aulas">Aulas</a></li>
+    <li><a href="#avaliacao">Avaliação</a></li>
+    <li><a href="#certificado">Certificado</a></li>
+  </ul>
+</nav>
 
-  <nav>
-    <button data-section="welcome" class="active">Início</button>
-    <button data-section="lessons">Aulas</button>
-    <button data-section="quiz">Avaliação</button>
-    <button data-section="cert">Certificado</button>
-  </nav>
+<div class="container">
 
-  <div class="container">
+  <section id="inicio">
+    <h1>ProCarga</h1>
+    <p>Curso de Capacitação em Carregamento Logístico – Aprenda as melhores práticas para otimizar operações de carga e descarga com eficiência e segurança.</p>
+  </section>
 
-    <!-- Início -->
-    <section id="welcome">
-      <h2>Bem-vindo ao Curso ProCarga</h2>
-      <p>
-        Este curso visa capacitar profissionais com técnicas modernas e eficazes para o carregamento de mercadorias.
-        Abordaremos desde os fundamentos da logística até práticas sustentáveis para otimizar operações e evitar desperdícios.
-      </p>
-      <p>
-        Cada aula tem conteúdo aprofundado, disponível também em PDF para download. Após estudá-las,
-        você realizará a avaliação final com 15 questões para testar seus conhecimentos.
-      </p>
-    </section>
+  <section id="aulas">
+    <h2>Aulas</h2>
+    <ul>
+      <li>Aula 1 – Introdução ao Carregamento Logístico 
+        <a href="aula1.pdf" download>Download PDF</a>
+      </li>
+      <li>Aula 2 – Equipamentos e Segurança
+        <a href="aula2.pdf" download>Download PDF</a>
+      </li>
+      <li>Aula 3 – Técnicas de Carregamento
+        <a href="aula3.pdf" download>Download PDF</a>
+      </li>
+      <!-- Adicione mais aulas conforme necessário -->
+    </ul>
+  </section>
 
-    <!-- Aulas -->
-    <section id="lessons" class="hidden">
-      <h2>Aulas Detalhadas</h2>
-      <div class="tabs" role="tablist" aria-label="Aulas do curso">
-        <button class="tab-button active" role="tab" aria-selected="true" aria-controls="aula1" id="btn-aula1" tabindex="0" onclick="showTab(0)">Aula 1</button>
-        <button class="tab-button" role="tab" aria-selected="false" aria-controls="aula2" id="btn-aula2" tabindex="-1" onclick="showTab(1)">Aula 2</button>
-        <button class="tab-button" role="tab" aria-selected="false" aria-controls="aula3" id="btn-aula3" tabindex="-1" onclick="showTab(2)">Aula 3</button>
-        <button class="tab-button" role="tab" aria-selected="false" aria-controls="aula4" id="btn-aula4" tabindex="-1" onclick="showTab(3)">Aula 4</button>
-        <button class="tab-button" role="tab" aria-selected="false" aria-controls="aula5" id="btn-aula5" tabindex="-1" onclick="showTab(4)">Aula 5</button>
-      </div>
-      <div id="tabContent" class="tab-content" role="tabpanel" aria-live="polite" aria-labelledby="btn-aula1"></div>
-    </section>
+  <section id="avaliacao">
+    <h2>Avaliação</h2>
+    <form id="form-avaliacao" onsubmit="return validarForm(event)">
+      <label for="nome">Nome Completo:</label>
+      <input type="text" id="nome" name="nome" required />
 
-    <!-- Avaliação -->
-    <section id="quiz" class="hidden">
-      <h2>Avaliação Final</h2>
-      <form id="quizForm" aria-describedby="quizResult"></form>
-      <button id="submitQuizBtn" onclick="submitQuiz()" disabled>Enviar Avaliação</button>
-      <div id="quizResult" role="alert" aria-live="polite"></div>
-    </section>
+      <label for="resposta1">Qual o principal objetivo do carregamento logístico?</label>
+      <textarea id="resposta1" name="resposta1" rows="3" required></textarea>
 
-    <!-- Certificado -->
-    <section id="cert" class="hidden">
-      <h2>Certificado</h2>
-      <p>Para gerar seu certificado, insira seu nome completo e complete a avaliação com pelo menos 10 acertos.</p>
-      <label for="studentName">Nome completo:</label>
-      <input type="text" id="studentName" placeholder="Digite seu nome aqui" aria-required="true" />
-      <button id="generateCertBtn" onclick="generateCertificate()">Gerar Certificado</button>
-    </section>
+      <label for="resposta2">Quais equipamentos são mais usados?</label>
+      <textarea id="resposta2" name="resposta2" rows="3" required></textarea>
 
-  </div>
+      <button type="submit">Enviar Avaliação</button>
+    </form>
+  </section>
 
-  <!-- jsPDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <section id="certificado">
+    <h2>Certificado</h2>
+    <p>Digite seu nome para gerar o certificado em PDF:</p>
+    <input type="text" id="nome-certificado" placeholder="Seu nome completo" />
+    <button onclick="gerarCertificado()">Gerar Certificado</button>
 
-  <script>
-    const navButtons = document.querySelectorAll("nav button");
-    const submitQuizBtn = document.getElementById('submitQuizBtn');
-    const quizForm = document.getElementById('quizForm');
-    const quizResultDiv = document.getElementById('quizResult');
-    const studentNameInput = document.getElementById('studentName');
+    <pre id="certificado-output" style="display:none;"></pre>
+  </section>
 
-    let quizScore = null;
+</div>
 
-    function showSection(sectionId) {
-      document.querySelectorAll("section").forEach(sec => sec.classList.add("hidden"));
-      document.getElementById(sectionId).classList.remove("hidden");
+<footer>
+  <p>© 2025 ProCarga. Todos os direitos reservados.</p>
+  <p>
+    <a href="#">Facebook</a> | 
+    <a href="#">Instagram</a> | 
+    <a href="#">LinkedIn</a>
+  </p>
+</footer>
 
-      navButtons.forEach(btn => btn.classList.remove("active"));
-      const activeBtn = [...navButtons].find(btn => btn.dataset.section === sectionId);
-      if (activeBtn) activeBtn.classList.add("active");
+<script>
+  function validarForm(event) {
+    event.preventDefault();
+    alert('Avaliação enviada com sucesso! Obrigado pela participação.');
+    document.getElementById('form-avaliacao').reset();
+    return false;
+  }
 
-      if (sectionId === 'lessons') showTab(0);
-      if (sectionId === 'quiz') {
-        renderQuiz();
-        quizResultDiv.innerHTML = '';
-        quizScore = null;
-        submitQuizBtn.disabled = true;
-      }
-      if (sectionId === 'cert') {
-        studentNameInput.value = '';
-      }
+  function gerarCertificado() {
+    const nome = document.getElementById('nome-certificado').value.trim();
+    const output = document.getElementById('certificado-output');
+
+    if(!nome) {
+      alert('Por favor, insira seu nome para gerar o certificado.');
+      return;
     }
 
-    const tabContents = [
-      {
-        title: "Aula 1: Fundamentos da Logística de Carregamento",
-        content: `
-          <ul>
-            <li>Introdução aos conceitos básicos</li>
-            <li>Problemas comuns em carregamentos ineficientes</li>
-            <li>Impacto na cadeia logística</li>
-          </ul>
-          <p><a href="pdf/aula1_completo.pdf" target="_blank" rel="noopener noreferrer">Baixar PDF completo da Aula 1</a></p>
-        `
-      },
-      {
-        title: "Aula 2: Tipos de Cargas e Embalagens",
-        content: `
-          <ul>
-            <li>Classificação de cargas</li>
-            <li>Tipos de embalagens</li>
-            <li>Manuseio e etiquetagem</li>
-          </ul>
-          <p><a href="pdf/aula2_completo.pdf" target="_blank" rel="noopener noreferrer">Baixar PDF completo da Aula 2</a></p>
-        `
-      },
-      {
-        title: "Aula 3: Equipamentos e Segurança",
-        content: `
-          <ul>
-            <li>Equipamentos de transporte</li>
-            <li>EPIs e normas de segurança</li>
-            <li>Prevenção de acidentes</li>
-          </ul>
-          <p><a href="pdf/aula3_completo.pdf" target="_blank" rel="noopener noreferrer">Baixar PDF completo da Aula 3</a></p>
-        `
-      },
-      {
-        title: "Aula 4: Planejamento de Carga",
-        content: `
-          <ul>
-            <li>Distribuição de carga</li>
-            <li>Roteirização inteligente</li>
-            <li>Softwares de apoio</li>
-          </ul>
-          <p><a href="pdf/aula4_completo.pdf" target="_blank" rel="noopener noreferrer">Baixar PDF completo da Aula 4</a></p>
-        `
-      },
-      {
-        title: "Aula 5: Sustentabilidade e Eficiência",
-        content: `
-          <ul>
-            <li>Práticas sustentáveis</li>
-            <li>Redução de desperdício</li>
-            <li>Indicadores de desempenho</li>
-          </ul>
-          <p><a href="pdf/aula5_completo.pdf" target="_blank" rel="noopener noreferrer">Baixar PDF completo da Aula 5</a></p>
-        `
-      }
-    ];
+    // Exemplo simples de certificado textual, pode ser substituído por PDF com libs externas
+    const texto = `
+**************************************************
+            CERTIFICADO DE CONCLUSÃO
+**************************************************
 
-    function showTab(index) {
-      const tabButtons = document.querySelectorAll(".tab-button");
-      tabButtons.forEach((btn, i) => {
-        btn.classList.toggle("active", i === index);
-        btn.setAttribute("aria-selected", i === index);
-        btn.tabIndex = i === index ? 0 : -1;
-      });
+Certificamos que
 
-      const content = tabContents[index];
-      const tabContentDiv = document.getElementById("tabContent");
-      tabContentDiv.innerHTML = `<h3>${content.title}</h3>${content.content}`;
-      tabContentDiv.setAttribute('aria-labelledby', `btn-aula${index+1}`);
-    }
+${nome.toUpperCase()}
 
-    // Quiz com 15 questões reais e relevantes:
-    const quizQuestions = [
-      {
-        q: "Qual é o principal problema do carregamento ineficiente?",
-        options: ["Atrasos e avarias", "Maior segurança", "Menor custo", "Ambiente limpo"],
-        answer: 0
-      },
-      {
-        q: "Qual tipo de carga exige embalagem especial?",
-        options: ["Carga geral", "Carga líquida", "Carga seca", "Nenhuma"],
-        answer: 1
-      },
-      {
-        q: "O que significa EPI no contexto de segurança?",
-        options: ["Equipamento de Proteção Individual", "Equipamento para Produto Industrial", "Estoque para Produto Interno", "Entrada para Produto Importado"],
-        answer: 0
-      },
-      {
-        q: "Qual é a finalidade da roteirização inteligente?",
-        options: ["Reduzir custos e otimizar rotas", "Aumentar o tempo de transporte", "Duplicar o número de veículos", "Ignorar pedidos menores"],
-        answer: 0
-      },
-      {
-        q: "Por que a sustentabilidade é importante no carregamento?",
-        options: ["Reduz desperdícios e impacto ambiental", "Aumenta o uso de combustível", "Faz a carga mais pesada", "Diminui a segurança"],
-        answer: 0
-      },
-      {
-        q: "Qual equipamento é usado para movimentar pallets?",
-        options: ["Empilhadeira", "Guindaste", "Caminhão", "Esteira rolante"],
-        answer: 0
-      },
-      {
-        q: "O que significa a sigla FIFO na logística?",
-        options: ["First In, First Out", "Fast In, Fast Out", "Final Inventory for Order", "Freight In, Freight Out"],
-        answer: 0
-      },
-      {
-        q: "Como identificar cargas frágeis corretamente?",
-        options: ["Etiqueta clara e manuseio cuidadoso", "Colocando no fundo do caminhão", "Embalagem aberta", "Ignorando o transporte"],
-        answer: 0
-      },
-      {
-        q: "Qual a importância do balanceamento da carga?",
-        options: ["Evitar acidentes e danos à carga", "Aumentar o peso total", "Reduzir o volume", "Deixar o transporte mais lento"],
-        answer: 0
-      },
-      {
-        q: "O que é um indicador de desempenho na logística?",
-        options: ["Métrica para avaliar eficiência", "Quantidade de funcionários", "Número de caminhões", "Tempo de descanso"],
-        answer: 0
-      },
-      {
-        q: "Qual tipo de embalagem protege cargas líquidas?",
-        options: ["Tanques e recipientes lacrados", "Caixas de papelão", "Sacos abertos", "Fitas adesivas"],
-        answer: 0
-      },
-      {
-        q: "O que se deve fazer em caso de avarias na carga?",
-        options: ["Registrar e comunicar imediatamente", "Ignorar o problema", "Jogar fora a carga", "Acelerar a entrega"],
-        answer: 0
-      },
-      {
-        q: "Qual o papel do software na logística moderna?",
-        options: ["Otimizar rotas e controle de estoque", "Aumentar papelada", "Reduzir comunicação", "Parar operações"],
-        answer: 0
-      },
-      {
-        q: "Como evitar desperdício no carregamento?",
-        options: ["Planejamento e uso eficiente do espaço", "Carregar tudo de qualquer jeito", "Ignorar as dimensões", "Não usar embalagens"],
-        answer: 0
-      },
-      {
-        q: "Qual a melhor prática para etiquetagem?",
-        options: ["Etiqueta visível e legível", "Etiqueta escondida", "Etiqueta duplicada", "Não usar etiquetas"],
-        answer: 0
-      }
-    ];
+concluiu com êxito o curso ProCarga – Curso de Capacitação em Carregamento Logístico.
 
-    // Renderiza o quiz dinamicamente
-    function renderQuiz() {
-      quizForm.innerHTML = '';
-      quizQuestions.forEach((item, index) => {
-        const questionDiv = document.createElement('div');
-        questionDiv.classList.add('question');
-        questionDiv.setAttribute('role', 'group');
-        questionDiv.setAttribute('aria-labelledby', `q${index+1}`);
+Data: ${new Date().toLocaleDateString('pt-BR')}
 
-        const questionP = document.createElement('p');
-        questionP.id = `q${index+1}`;
-        questionP.textContent = `${index + 1}. ${item.q}`;
-        questionDiv.appendChild(questionP);
+**************************************************
+    `;
 
-        item.options.forEach((option, i) => {
-          const label = document.createElement('label');
-          label.htmlFor = `q${index+1}_option${i}`;
+    output.style.display = 'block';
+    output.textContent = texto;
+  }
+</script>
 
-          const input = document.createElement('input');
-          input.type = 'radio';
-          input.name = `q${index+1}`;
-          input.id = `q${index+1}_option${i}`;
-          input.value = i;
-          input.required = true;
-
-          label.appendChild(input);
-          label.appendChild(document.createTextNode(option));
-
-          questionDiv.appendChild(label);
-          questionDiv.appendChild(document.createElement('br'));
-        });
-
-        quizForm.appendChild(questionDiv);
-      });
-
-      // Listener para ativar botão somente quando tudo respondido
-      quizForm.addEventListener('change', () => {
-        const totalQuestions = quizQuestions.length;
-        const answered = Array.from(quizForm.elements).filter(el => el.checked).length;
-        submitQuizBtn.disabled = answered < totalQuestions;
-      });
-    }
-
-    // Enviar quiz e mostrar resultado
-    function submitQuiz() {
-      const formData = new FormData(quizForm);
-      let score = 0;
-      for(let i = 0; i < quizQuestions.length; i++) {
-        const selected = formData.get(`q${i+1}`);
-        if (selected !== null && parseInt(selected, 10) === quizQuestions[i].answer) {
-          score++;
-        }
-      }
-      quizScore = score;
-      quizResultDiv.textContent = `Você acertou ${score} de ${quizQuestions.length} perguntas.`;
-
-      // Após envio, rolar para resultado
-      quizResultDiv.scrollIntoView({ behavior: 'smooth' });
-    }
-
-    // Gera o certificado em PDF
-    async function generateCertificate() {
-      const { jsPDF } = window.jspdf;
-      const name = studentNameInput.value.trim();
-
-      if (!name) {
-        alert('Por favor, insira seu nome completo para gerar o certificado.');
-        studentNameInput.focus();
-        return;
-      }
-
-      if (quizScore === null) {
-        alert('Por favor, complete a avaliação antes de gerar o certificado.');
-        showSection('quiz');
-        return;
-      }
-
-      if (quizScore < 10) {
-        alert('Você precisa acertar pelo menos 10 questões para obter o certificado.');
-        showSection('quiz');
-        return;
-      }
-
-      const doc = new jsPDF({
-        orientation: 'landscape',
-        unit: 'pt',
-        format: 'a4'
-      });
-
-      doc.setFillColor(0, 0, 0);
-      doc.rect(0, 0, doc.internal.pageSize.width, doc.internal.pageSize.height, 'F');
-
-      doc.setTextColor('#d4af37');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(48);
-      doc.text('CERTIFICADO DE CONCLUSÃO', doc.internal.pageSize.width / 2, 120, { align: 'center' });
-
-      doc.setFontSize(24);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`Certificamos que`, doc.internal.pageSize.width / 2, 190, { align: 'center' });
-
-      doc.setFontSize(32);
-      doc.setFont('helvetica', 'bolditalic');
-      doc.text(name, doc.internal.pageSize.width / 2, 240, { align: 'center' });
-
-      doc.setFontSize(24);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`concluiu com sucesso o curso`, doc.internal.pageSize.width / 2, 280, { align: 'center' });
-
-      doc.setFontSize(28);
-      doc.setFont('helvetica', 'bold');
-      doc.text('ProCarga - Curso de Carregamento Logístico', doc.internal.pageSize.width / 2, 320, { align: 'center' });
-
-      doc.setFontSize(20);
-      doc.setFont('helvetica', 'normal');
-      doc.text(`com aproveitamento de ${quizScore} de ${quizQuestions.length} questões.`, doc.internal.pageSize.width / 2, 360, { align: 'center' });
-
-      doc.setFontSize(18);
-      doc.text(`Data: ${new Date().toLocaleDateString('pt-BR')}`, doc.internal.pageSize.width / 2, 410, { align: 'center' });
-
-      doc.setFontSize(16);
-      doc.text('Assinatura do Instrutor', doc.internal.pageSize.width / 2, 480, { align: 'center' });
-      doc.line(doc.internal.pageSize.width / 2 - 100, 485, doc.internal.pageSize.width / 2 + 100, 485);
-
-      doc.save(`Certificado_ProCarga_${name.replace(/\s+/g, '_')}.pdf`);
-    }
-
-    // Inicialização
-    navButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        showSection(btn.dataset.section);
-      });
-    });
-
-    // Mostrar seção inicial
-    showSection('welcome');
-  </script>
 </body>
 </html>
+
