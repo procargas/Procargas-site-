@@ -1,277 +1,108 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Curso Carregamento Logístico – ProCarga</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f4f6f8;
-      color: #333;
-    }
-    header {
-      background-color: #004aad;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-      font-size: 1.5rem;
-    }
-    button {
-      background-color: #0066cc;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #004a99;
-    }
-    .hidden {
-      display: none !important;
+<script>
+  // Alterna entre login e cadastro
+  function toggleAuth(sectionId) {
+    document.getElementById('loginSection').classList.add('hidden');
+    document.getElementById('registerSection').classList.add('hidden');
+    document.getElementById(sectionId).classList.remove('hidden');
+  }
+
+  // Simulação de login (sem autenticação real)
+  function handleLogin() {
+    const user = document.getElementById('loginUser').value.trim();
+    const pass = document.getElementById('loginPass').value.trim();
+
+    if (user === "" || pass === "") {
+      alert("Preencha todos os campos.");
+      return;
     }
 
-    #authContainer {
-      display: flex;
-      height: 100vh;
-      justify-content: center;
-      align-items: center;
-      background-color: #e6eef7;
+    // Supondo login válido
+    document.getElementById('authContainer').classList.add('hidden');
+    document.getElementById('mainContent').classList.remove('hidden');
+    showSection('welcome');
+  }
+
+  // Simulação de cadastro (sem persistência real)
+  function handleRegister() {
+    const user = document.getElementById('regUser').value.trim();
+    const pass = document.getElementById('regPass').value.trim();
+    const dob = document.getElementById('regDob').value;
+    const cpf = document.getElementById('regCpf').value.trim();
+
+    if (!user || !pass || !dob || !cpf) {
+      alert("Preencha todos os campos.");
+      return;
     }
 
-    .auth-box {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-      width: 90%;
-      max-width: 400px;
+    alert("Conta criada com sucesso! Faça login.");
+    toggleAuth('loginSection');
+  }
+
+  // Alterna entre seções (Início, Aulas, Quiz, Certificado)
+  function showSection(sectionId) {
+    const sections = document.querySelectorAll('#contentArea > section');
+    sections.forEach(section => section.classList.add('hidden'));
+
+    document.getElementById(sectionId).classList.remove('hidden');
+
+    // Ativa primeira aba se entrar em "Aulas"
+    if (sectionId === 'lessons') {
+      showTab(0);
     }
+  }
 
-    .auth-box input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+  // Abas das aulas
+  const tabContents = [
+    {
+      title: "Fundamentos da Logística de Carregamento",
+      content: "Conteúdo detalhado da Aula 1. (mínimo 2 páginas)..."
+    },
+    {
+      title: "Tipos de Cargas e Embalagens",
+      content: "Conteúdo detalhado da Aula 2. (mínimo 2 páginas)..."
+    },
+    {
+      title: "Equipamentos e Segurança no Carregamento",
+      content: "Conteúdo detalhado da Aula 3. (mínimo 2 páginas)..."
+    },
+    {
+      title: "Planejamento de Carga e Roteirização",
+      content: "Conteúdo detalhado da Aula 4. (mínimo 2 páginas)..."
+    },
+    {
+      title: "Sustentabilidade e Eficiência Logística",
+      content: "Conteúdo detalhado da Aula 5. (mínimo 2 páginas)..."
     }
+  ];
 
-    .auth-box a {
-      color: #004aad;
-      cursor: pointer;
-    }
+  function showTab(index) {
+    const tabButtons = document.querySelectorAll(".tab-button");
+    const tabContent = document.getElementById("tabContent");
 
-    #mainContent {
-      display: flex;
-      height: 100vh;
-    }
+    tabButtons.forEach(btn => btn.classList.remove("active"));
+    tabButtons[index].classList.add("active");
 
-    #sideMenu {
-      width: 220px;
-      background-color: #00397a;
-      color: white;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    tabContent.innerHTML = `
+      <h3>${tabContents[index].title}</h3>
+      <p>${tabContents[index].content}</p>
+    `;
+  }
 
-    #sideMenu h3 {
-      margin-top: 0;
-    }
+  // Geração do certificado com jsPDF
+  function generateCertificate() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
 
-    #sideMenu button {
-      background: none;
-      border: none;
-      color: white;
-      text-align: left;
-      padding: 10px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-bottom: 1px solid rgba(255,255,255,0.2);
-    }
+    doc.setFontSize(20);
+    doc.text("Certificado de Conclusão", 20, 30);
 
-    #sideMenu button:hover {
-      background-color: #004aad;
-    }
+    doc.setFontSize(14);
+    doc.text("Certificamos que o(a) aluno(a) concluiu com êxito o curso:", 20, 50);
+    doc.text("Curso de Carregamento Logístico – ProCarga", 20, 60);
 
-    #contentArea {
-      flex: 1;
-      padding: 20px;
-      overflow-y: auto;
-      background: #fff;
-    }
+    doc.text("Data: " + new Date().toLocaleDateString('pt-BR'), 20, 80);
+    doc.text("Assinatura: __________________________", 20, 110);
 
-    section {
-      margin-bottom: 30px;
-    }
-
-    h2 {
-      color: #004aad;
-    }
-
-    /* Abas das aulas */
-    .tab-container {
-      margin-top: 20px;
-    }
-
-    .tabs {
-      display: flex;
-      border-bottom: 2px solid #ccc;
-    }
-
-    .tabs button {
-      flex: 1;
-      background-color: #f0f2f5;
-      color: #333;
-      border: none;
-      padding: 12px;
-      font-size: 1rem;
-      border-right: 1px solid #ddd;
-      cursor: pointer;
-    }
-
-    .tabs button:last-child {
-      border-right: none;
-    }
-
-    .tabs button.active {
-      background-color: #fff;
-      border-bottom: 3px solid #004aad;
-      font-weight: bold;
-    }
-
-    .tab-content {
-      padding: 20px;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-top: none;
-      min-height: 200px;
-    }
-
-    form#quizForm {
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 8px;
-    }
-
-    @media (max-width: 768px) {
-      #mainContent {
-        flex-direction: column;
-      }
-
-      #sideMenu {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
-      }
-
-      #sideMenu button {
-        flex: 1;
-        white-space: nowrap;
-      }
-
-      .tabs {
-        flex-direction: column;
-      }
-
-      .tabs button {
-        border-right: none;
-        border-bottom: 1px solid #ccc;
-      }
-    }
-  </style>
-</head>
-<body>
-  <header>
-    ProCarga • Plataforma de Cursos Logísticos
-  </header>
-
-  <!-- Autenticação -->
-  <div id="authContainer">
-    <div class="auth-box" id="loginSection">
-      <h2>Login</h2>
-      <input type="text" id="loginUser" placeholder="Usuário">
-      <input type="password" id="loginPass" placeholder="Senha">
-      <button onclick="handleLogin()">Entrar</button>
-      <p style="margin-top: 10px;">Não tem conta? <a onclick="toggleAuth('registerSection')">Cadastre-se</a></p>
-    </div>
-
-    <div class="auth-box hidden" id="registerSection">
-      <h2>Criar Conta</h2>
-      <input type="text" id="regUser" placeholder="Usuário">
-      <input type="password" id="regPass" placeholder="Senha">
-      <input type="date" id="regDob">
-      <input type="text" id="regCpf" placeholder="CPF">
-      <button onclick="handleRegister()">Cadastrar</button>
-      <p style="margin-top: 10px;">Já tem conta? <a onclick="toggleAuth('loginSection')">Fazer login</a></p>
-    </div>
-  </div>
-
-  <!-- Conteúdo Principal -->
-  <div id="mainContent" class="hidden">
-    <div id="sideMenu">
-      <h3>Menu</h3>
-      <button onclick="showSection('welcome')">Início</button>
-      <button onclick="showSection('lessons')">Aulas</button>
-      <button onclick="showSection('quiz')">Avaliação</button>
-      <button onclick="showSection('cert')">Certificado</button>
-    </div>
-
-    <div id="contentArea">
-      <!-- Início -->
-      <section id="welcome">
-        <h2>Bem-vindo ao Curso Carregamento Logístico</h2>
-        <p>Capacite-se em técnicas de carregamento com foco em eficiência, segurança e sustentabilidade.</p>
-        <p>Explore as aulas, realize a avaliação final e gere seu certificado.</p>
-      </section>
-
-      <!-- Aulas com Abas -->
-      <section id="lessons" class="hidden">
-        <h2>Aulas do Curso</h2>
-        <div class="tab-container">
-          <div class="tabs">
-            <button class="tab-button active" onclick="showTab(0)">Aula 1</button>
-            <button class="tab-button" onclick="showTab(1)">Aula 2</button>
-            <button class="tab-button" onclick="showTab(2)">Aula 3</button>
-            <button class="tab-button" onclick="showTab(3)">Aula 4</button>
-            <button class="tab-button" onclick="showTab(4)">Aula 5</button>
-          </div>
-          <div class="tab-content" id="tabContent">
-            <h3>Fundamentos da Logística de Carregamento</h3>
-            <p>Conteúdo detalhado da Aula 1. (mínimo 2 páginas)...</p>
-          </div>
-        </div>
-      </section>
-
-      <!-- Avaliação -->
-      <section id="quiz" class="hidden">
-        <h2>Avaliação Final</h2>
-        <form id="quizForm">
-          <p>Aqui estarão as 15 questões de múltipla escolha...</p>
-        </form>
-      </section>
-
-      <!-- Certificado -->
-      <section id="cert" class="hidden">
-        <h2>Certificado</h2>
-        <p>Conclua a avaliação para gerar seu certificado digital.</p>
-        <button onclick="generateCertificate()">Gerar Certificado</button>
-      </section>
-    </div>
-  </div>
-
-  <!-- jsPDF para gerar certificado -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script>
-    // Trocar entre login e registro
-    function toggleAuth(sectionId) {
-      document.getElementById('loginSection').classList.add('hidden');
-      document.getElementById('registerSection').classList.add('hidden');
-      document.get
+    doc.save("certificado_procarga.pdf");
+  }
+</script>
