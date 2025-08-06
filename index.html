@@ -2,144 +2,276 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Curso Carregamento Logístico – ProCarga</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; padding: 0; background: #f0f2f5; }
-    header { background: #004aad; color: #fff; padding: 20px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
-    button { background: #0066cc; color: #fff; border: none; padding: 12px 24px; cursor: pointer; font-size: 1rem; border-radius: 4px; }
-    button:hover { background: #005bb5; }
-    input[type="text"], input[type="password"], input[type="date"] {
-      padding: 10px; width: 100%; font-size: 1rem; margin-bottom: 12px; border-radius: 4px; border: 1px solid #ccc;
+    * {
+      box-sizing: border-box;
     }
-    .hidden { display: none !important; }
-    #mainContent { display: flex; min-height: calc(100vh - 80px); }
-    #sideMenu { width: 220px; background: #00397a; color: white; padding: 20px; }
-    #sideMenu h3 { margin-top: 0; }
-    #sideMenu button { display: block; width: 100%; background: transparent; color: #fff; border: none; padding: 10px 0; text-align: left; font-size: 1rem; cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.2); }
-    #sideMenu button:hover { background: #004aad; }
-    #contentArea { flex: 1; padding: 20px; background: #fff; overflow-y: auto; }
-    section { margin-bottom: 20px; }
-    h2 { color: #004aad; }
-    #quizForm { background: #f9f9f9; padding: 20px; border-radius: 8px; }
-    #quizForm div { margin-bottom: 20px; }
-    input[type="radio"] { margin-right: 8px; }
-    #cert { text-align: center; }
-    #authContainer { display: flex; height: 100vh; }
-    .auth-box { flex: 1; display: flex; align-items: center; justify-content: center; }
-    .auth-box .form-area { width: 80%; max-width: 400px; background: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 3px 8px rgba(0,0,0,0.2); }
-    .auth-box img { max-width: 80%; display: block; margin: 20px auto; }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background-color: #004aad;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      font-size: 1.5rem;
+    }
+    button {
+      background-color: #0066cc;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #004a99;
+    }
+    .hidden {
+      display: none !important;
+    }
+
+    #authContainer {
+      display: flex;
+      height: 100vh;
+      justify-content: center;
+      align-items: center;
+      background-color: #e6eef7;
+    }
+
+    .auth-box {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      width: 90%;
+      max-width: 400px;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .auth-box a {
+      color: #004aad;
+      cursor: pointer;
+    }
+
+    #mainContent {
+      display: flex;
+      height: 100vh;
+    }
+
+    #sideMenu {
+      width: 220px;
+      background-color: #00397a;
+      color: white;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    #sideMenu h3 {
+      margin-top: 0;
+    }
+
+    #sideMenu button {
+      background: none;
+      border: none;
+      color: white;
+      text-align: left;
+      padding: 10px;
+      font-size: 1rem;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255,255,255,0.2);
+    }
+
+    #sideMenu button:hover {
+      background-color: #004aad;
+    }
+
+    #contentArea {
+      flex: 1;
+      padding: 20px;
+      overflow-y: auto;
+      background: #fff;
+    }
+
+    section {
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      color: #004aad;
+    }
+
+    /* Abas das aulas */
+    .tab-container {
+      margin-top: 20px;
+    }
+
+    .tabs {
+      display: flex;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .tabs button {
+      flex: 1;
+      background-color: #f0f2f5;
+      color: #333;
+      border: none;
+      padding: 12px;
+      font-size: 1rem;
+      border-right: 1px solid #ddd;
+      cursor: pointer;
+    }
+
+    .tabs button:last-child {
+      border-right: none;
+    }
+
+    .tabs button.active {
+      background-color: #fff;
+      border-bottom: 3px solid #004aad;
+      font-weight: bold;
+    }
+
+    .tab-content {
+      padding: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-top: none;
+      min-height: 200px;
+    }
+
+    form#quizForm {
+      background: #f9f9f9;
+      padding: 20px;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      #mainContent {
+        flex-direction: column;
+      }
+
+      #sideMenu {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+      }
+
+      #sideMenu button {
+        flex: 1;
+        white-space: nowrap;
+      }
+
+      .tabs {
+        flex-direction: column;
+      }
+
+      .tabs button {
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>ProCarga • Plataforma de Cursos Logísticos</h1>
+    ProCarga • Plataforma de Cursos Logísticos
   </header>
+
+  <!-- Autenticação -->
   <div id="authContainer">
     <div class="auth-box" id="loginSection">
-      <div class="form-area">
-        <h2 style="color:#004aad;">Bem-vindo de volta</h2>
-        <input type="text" id="loginUser" placeholder="Usuário">
-        <input type="password" id="loginPass" placeholder="Senha">
-        <button onclick="handleLogin()">Entrar</button>
-        <p style="margin-top: 15px;">Não tem conta? <a href="#" onclick="toggleAuth('registerSection')">Crie uma aqui</a></p>
-      </div>
+      <h2>Login</h2>
+      <input type="text" id="loginUser" placeholder="Usuário">
+      <input type="password" id="loginPass" placeholder="Senha">
+      <button onclick="handleLogin()">Entrar</button>
+      <p style="margin-top: 10px;">Não tem conta? <a onclick="toggleAuth('registerSection')">Cadastre-se</a></p>
     </div>
+
     <div class="auth-box hidden" id="registerSection">
-      <div class="form-area">
-        <h2 style="color:#004aad;">Criar conta</h2>
-        <input type="text" id="regUser" placeholder="Usuário">
-        <input type="password" id="regPass" placeholder="Senha">
-        <input type="date" id="regDob" placeholder="Data de Nascimento">
-        <input type="text" id="regCpf" placeholder="CPF">
-        <button onclick="handleRegister()">Criar Conta</button>
-        <p style="margin-top: 15px;">Já tem conta? <a href="#" onclick="toggleAuth('loginSection')">Voltar ao login</a></p>
-        <img src="https://img.freepik.com/vetores-gratis/caminhao-de-entrega-pequeno_52683-12040.jpg" alt="Caminhão pequeno">
-      </div>
+      <h2>Criar Conta</h2>
+      <input type="text" id="regUser" placeholder="Usuário">
+      <input type="password" id="regPass" placeholder="Senha">
+      <input type="date" id="regDob">
+      <input type="text" id="regCpf" placeholder="CPF">
+      <button onclick="handleRegister()">Cadastrar</button>
+      <p style="margin-top: 10px;">Já tem conta? <a onclick="toggleAuth('loginSection')">Fazer login</a></p>
     </div>
   </div>
+
+  <!-- Conteúdo Principal -->
   <div id="mainContent" class="hidden">
     <div id="sideMenu">
       <h3>Menu</h3>
       <button onclick="showSection('welcome')">Início</button>
-      <button onclick="showSection('lesson1')">Aula 1</button>
-      <button onclick="showSection('lesson2')">Aula 2</button>
-      <button onclick="showSection('lesson3')">Aula 3</button>
-      <button onclick="showSection('lesson4')">Aula 4</button>
-      <button onclick="showSection('lesson5')">Aula 5</button>
-      <button onclick="showSection('quiz')">Avaliação Final</button>
+      <button onclick="showSection('lessons')">Aulas</button>
+      <button onclick="showSection('quiz')">Avaliação</button>
       <button onclick="showSection('cert')">Certificado</button>
     </div>
+
     <div id="contentArea">
+      <!-- Início -->
       <section id="welcome">
-        <h2>Bem-vindo ao Curso Carregamento Logístico – ProCarga</h2>
-        <p>Este curso foi desenvolvido para capacitar profissionais da área de logística no processo de carregamento eficiente, seguro e otimizado de produtos. Cada aula possui conteúdo aprofundado com no mínimo duas páginas. Ao final, aplique seus conhecimentos na Avaliação Final com 15 questões e gere seu certificado.</p>
+        <h2>Bem-vindo ao Curso Carregamento Logístico</h2>
+        <p>Capacite-se em técnicas de carregamento com foco em eficiência, segurança e sustentabilidade.</p>
+        <p>Explore as aulas, realize a avaliação final e gere seu certificado.</p>
       </section>
-      <section id="lesson1" class="hidden">
-        <h2>Aula 1: Fundamentos da Logística de Carregamento</h2>
-        <p>Conteúdo completo da Aula 1 (mínimo 2 páginas)...</p>
+
+      <!-- Aulas com Abas -->
+      <section id="lessons" class="hidden">
+        <h2>Aulas do Curso</h2>
+        <div class="tab-container">
+          <div class="tabs">
+            <button class="tab-button active" onclick="showTab(0)">Aula 1</button>
+            <button class="tab-button" onclick="showTab(1)">Aula 2</button>
+            <button class="tab-button" onclick="showTab(2)">Aula 3</button>
+            <button class="tab-button" onclick="showTab(3)">Aula 4</button>
+            <button class="tab-button" onclick="showTab(4)">Aula 5</button>
+          </div>
+          <div class="tab-content" id="tabContent">
+            <h3>Fundamentos da Logística de Carregamento</h3>
+            <p>Conteúdo detalhado da Aula 1. (mínimo 2 páginas)...</p>
+          </div>
+        </div>
       </section>
-      <section id="lesson2" class="hidden">
-        <h2>Aula 2: Tipos de Cargas e Embalagens</h2>
-        <p>Conteúdo completo da Aula 2 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson3" class="hidden">
-        <h2>Aula 3: Equipamentos e Segurança no Carregamento</h2>
-        <p>Conteúdo completo da Aula 3 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson4" class="hidden">
-        <h2>Aula 4: Planejamento de Carga e Roteirização</h2>
-        <p>Conteúdo completo da Aula 4 (mínimo 2 páginas)...</p>
-      </section>
-      <section id="lesson5" class="hidden">
-        <h2>Aula 5: Sustentabilidade e Eficiência Logística</h2>
-        <p>Conteúdo completo da Aula 5 (mínimo 2 páginas)...</p>
-      </section>
+
+      <!-- Avaliação -->
       <section id="quiz" class="hidden">
         <h2>Avaliação Final</h2>
         <form id="quizForm">
-          <p>(15 questões serão inseridas aqui com alternativas)</p>
+          <p>Aqui estarão as 15 questões de múltipla escolha...</p>
         </form>
       </section>
+
+      <!-- Certificado -->
       <section id="cert" class="hidden">
         <h2>Certificado</h2>
-        <p>Seu certificado estará disponível após a conclusão da Avaliação Final.</p>
+        <p>Conclua a avaliação para gerar seu certificado digital.</p>
         <button onclick="generateCertificate()">Gerar Certificado</button>
       </section>
     </div>
   </div>
+
+  <!-- jsPDF para gerar certificado -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script>
+    // Trocar entre login e registro
     function toggleAuth(sectionId) {
       document.getElementById('loginSection').classList.add('hidden');
       document.getElementById('registerSection').classList.add('hidden');
-      document.getElementById(sectionId).classList.remove('hidden');
-    }
-
-    function handleLogin() {
-      document.getElementById('authContainer').classList.add('hidden');
-      document.getElementById('mainContent').classList.remove('hidden');
-    }
-
-    function handleRegister() {
-      alert('Conta criada com sucesso! Faça login.');
-      toggleAuth('loginSection');
-    }
-
-    function showSection(sectionId) {
-      document.querySelectorAll('#contentArea > section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(sectionId).classList.remove('hidden');
-    }
-
-    function generateCertificate() {
-      const {{ jsPDF }} = window.jspdf;
-      const doc = new jsPDF();
-      doc.setFontSize(22);
-      doc.text("Certificado de Conclusão", 20, 30);
-      doc.setFontSize(14);
-      doc.text("Certificamos que o aluno concluiu o curso de Carregamento Logístico – ProCarga.", 20, 50);
-      doc.text("Data: " + new Date().toLocaleDateString(), 20, 70);
-      doc.save("certificado_procarga.pdf");
-    }
-  </script>
-</body>
-</html>
+      document.get
