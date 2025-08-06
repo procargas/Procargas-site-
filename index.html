@@ -4,139 +4,271 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ProCarga – Curso de Carregamento Logístico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    /* (Mesmos estilos anteriores, omitidos por brevidade) */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    body {
+      background-color: #f4f4f4;
+      color: #333;
+    }
+
+    header {
+      background-color: #005C99;
+      color: white;
+      padding: 20px 40px;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    nav {
+      background-color: #ffffff;
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #ccc;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav button {
+      padding: 15px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      transition: 0.3s;
+    }
+
+    nav button:hover,
+    nav button.active {
+      border-bottom: 3px solid #005C99;
+      color: #005C99;
+      font-weight: bold;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 30px auto;
+      padding: 20px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+      color: #005C99;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .tabs button {
+      margin: 5px;
+      padding: 10px 15px;
+      background-color: #eee;
+      border: none;
+      cursor: pointer;
+    }
+
+    .tabs button.active {
+      background-color: #005C99;
+      color: white;
+    }
+
+    .tab-content {
+      margin-top: 15px;
+    }
+
+    a {
+      color: #005C99;
+    }
+
+    form div {
+      margin-bottom: 15px;
+    }
+
+    input[type="radio"] {
+      margin-right: 5px;
+    }
+
+    button {
+      background-color: #005C99;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004477;
+    }
   </style>
 </head>
 <body>
+
   <header>ProCarga • Curso de Carregamento Logístico</header>
 
-  <!-- Autenticação -->
-  <div id="authContainer">
-    <!-- ... mesma estrutura anterior ... -->
+  <nav>
+    <button onclick="showSection('welcome')" class="active">Início</button>
+    <button onclick="showSection('lessons')">Aulas</button>
+    <button onclick="showSection('quiz')">Avaliação</button>
+    <button onclick="showSection('cert')">Certificado</button>
+  </nav>
+
+  <div class="container">
+
+    <!-- Início -->
+    <section id="welcome">
+      <h2>Bem-vindo ao Curso ProCarga</h2>
+      <p>
+        Este curso visa capacitar profissionais com técnicas modernas e eficazes para o carregamento de mercadorias.
+        Abordaremos desde os fundamentos da logística até práticas sustentáveis para otimizar operações e evitar desperdícios.
+      </p>
+      <p>
+        Cada aula tem conteúdo aprofundado, disponível também em PDF para download. Após estudá-las,
+        você realizará a avaliação final com 15 questões para testar seus conhecimentos.
+      </p>
+    </section>
+
+    <!-- Aulas -->
+    <section id="lessons" class="hidden">
+      <h2>Aulas Detalhadas</h2>
+      <div class="tabs">
+        <button class="tab-button active" onclick="showTab(0)">Aula 1</button>
+        <button class="tab-button" onclick="showTab(1)">Aula 2</button>
+        <button class="tab-button" onclick="showTab(2)">Aula 3</button>
+        <button class="tab-button" onclick="showTab(3)">Aula 4</button>
+        <button class="tab-button" onclick="showTab(4)">Aula 5</button>
+      </div>
+      <div id="tabContent" class="tab-content"></div>
+    </section>
+
+    <!-- Avaliação -->
+    <section id="quiz" class="hidden">
+      <h2>Avaliação Final</h2>
+      <form id="quizForm"></form>
+      <button onclick="submitQuiz()">Enviar Avaliação</button>
+      <div id="quizResult"></div>
+    </section>
+
+    <!-- Certificado -->
+    <section id="cert" class="hidden">
+      <h2>Certificado</h2>
+      <p>Você deve completar a avaliação antes de gerar o certificado.</p>
+      <button onclick="generateCertificate()">Gerar Certificado</button>
+    </section>
+
   </div>
 
-  <!-- Conteúdo Principal -->
-  <div id="mainContent" class="hidden">
-    <div id="sideMenu">
-      <button onclick="showSection('welcome')">Início</button>
-      <button onclick="showSection('lessons')">Aulas</button>
-      <button onclick="showSection('quiz')">Avaliação</button>
-      <button onclick="showSection('cert')">Certificado</button>
-    </div>
-    <div id="contentArea">
-      <!-- Página de Boas-vindas com introdução aprimorada -->
-      <section id="welcome">
-        <h2>Bem-vindo ao Curso ProCarga</h2>
-        <p>
-          Este curso visa capacitar profissionais com técnicas modernas e eficazes para o carregamento de mercadorias.
-          Abordaremos desde os fundamentos da logística até práticas sustentáveis para otimizar operações e evitar desperdícios.
-        </p>
-        <p>
-          Cada aula tem conteúdo aprofundado, disponível também em PDF para download. Após estudá-las,
-          você realizará a avaliação final com 15 questões para testar seus conhecimentos.
-        </p>
-      </section>
-
-      <!-- Aulas com Conteúdo e Links para PDF -->
-      <section id="lessons" class="hidden">
-        <h2>Aulas Detalhadas</h2>
-        <div class="tabs">
-          <button class="tab-button active" onclick="showTab(0)">Aula 1</button>
-          <button class="tab-button" onclick="showTab(1)">Aula 2</button>
-          <button class="tab-button" onclick="showTab(2)">Aula 3</button>
-          <button class="tab-button" onclick="showTab(3)">Aula 4</button>
-          <button class="tab-button" onclick="showTab(4)">Aula 5</button>
-        </div>
-        <div id="tabContent"></div>
-      </section>
-
-      <!-- Avaliação Final com 15 Questões -->
-      <section id="quiz" class="hidden">
-        <h2>Avaliação Final</h2>
-        <form id="quizForm">
-          <!-- Questões geradas via JavaScript -->
-        </form>
-        <button onclick="submitQuiz()">Enviar Avaliação</button>
-        <div id="quizResult"></div>
-      </section>
-
-      <!-- Certificado -->
-      <section id="cert" class="hidden">
-        <h2>Certificado</h2>
-        <p>Você deve completar a avaliação antes de gerar o certificado.</p>
-        <button onclick="generateCertificate()">Gerar Certificado</button>
-      </section>
-    </div>
-  </div>
-
-  <!-- JS e jsPDF -->
+  <!-- jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <script>
-    // Conteúdo das aulas com mais detalhes e link para PDF
+    const navButtons = document.querySelectorAll("nav button");
+
+    function showSection(sectionId) {
+      document.querySelectorAll("section").forEach(sec => sec.classList.add("hidden"));
+      document.getElementById(sectionId).classList.remove("hidden");
+
+      navButtons.forEach(btn => btn.classList.remove("active"));
+      [...navButtons].find(btn => btn.textContent.toLowerCase().includes(sectionId)).classList.add("active");
+
+      if (sectionId === 'lessons') showTab(0);
+      if (sectionId === 'quiz') renderQuiz();
+    }
+
     const tabContents = [
       {
         title: "Aula 1: Fundamentos da Logística de Carregamento",
         content: `
-          <p>• Introdução aos conceitos básicos.<br>
-          • Problemas comuns em carregamentos ineficientes.<br>
-          • Impacto na cadeia logística e custos operacionais.</p>
-          <p><a href="pdf/aula1.pdf" target="_blank">Baixar PDF completo da Aula 1</a></p>
+          <ul>
+            <li>Introdução aos conceitos básicos</li>
+            <li>Problemas comuns em carregamentos ineficientes</li>
+            <li>Impacto na cadeia logística</li>
+          </ul>
+          <p><a href="pdf/aula1.pdf" target="_blank">Baixar PDF da Aula 1</a></p>
         `
       },
       {
         title: "Aula 2: Tipos de Cargas e Embalagens",
         content: `
-          <p>• Classificação de cargas: geral, líquida e perigosa.<br>
-          • Embalagens recomendadas e etiquetagem adequada.<br>
-          • Procedimentos de manuseio e armazenamento.</p>
-          <p><a href="pdf/aula2.pdf" target="_blank">Baixar PDF completo da Aula 2</a></p>
+          <ul>
+            <li>Classificação de cargas</li>
+            <li>Tipos de embalagens</li>
+            <li>Manuseio e etiquetagem</li>
+          </ul>
+          <p><a href="pdf/aula2.pdf" target="_blank">Baixar PDF da Aula 2</a></p>
         `
       },
       {
         title: "Aula 3: Equipamentos e Segurança",
         content: `
-          <p>• Equipamentos utilizados: empilhadeiras, paleteiras.<br>
-          • Uso correto de EPIs e normas de segurança.<br>
-          • Boas práticas para evitar acidentes.</p>
-          <p><a href="pdf/aula3.pdf" target="_blank">Baixar PDF completo da Aula 3</a></p>
+          <ul>
+            <li>Equipamentos de transporte</li>
+            <li>EPIs e normas de segurança</li>
+            <li>Prevenção de acidentes</li>
+          </ul>
+          <p><a href="pdf/aula3.pdf" target="_blank">Baixar PDF da Aula 3</a></p>
         `
       },
       {
-        title: "Aula 4: Planejamento de Carga e Roteirização",
+        title: "Aula 4: Planejamento de Carga",
         content: `
-          <p>• Como planejar o arranjo de carga no veículo.<br>
-          • Seleção de rotas e otimização de espaço.<br>
-          • Uso de tecnologia para rastreamento.</p>
-          <p><a href="pdf/aula4.pdf" target="_blank">Baixar PDF completo da Aula 4</a></p>
+          <ul>
+            <li>Distribuição de carga</li>
+            <li>Roteirização inteligente</li>
+            <li>Softwares de apoio</li>
+          </ul>
+          <p><a href="pdf/aula4.pdf" target="_blank">Baixar PDF da Aula 4</a></p>
         `
       },
       {
         title: "Aula 5: Sustentabilidade e Eficiência",
         content: `
-          <p>• Redução de desperdício e emissão de CO₂.<br>
-          • Práticas verdes na logística.<br>
-          • Indicadores de desempenho sustentável.</p>
-          <p><a href="pdf/aula5.pdf" target="_blank">Baixar PDF completo da Aula 5</a></p>
+          <ul>
+            <li>Práticas sustentáveis</li>
+            <li>Redução de desperdício</li>
+            <li>Indicadores de desempenho</li>
+          </ul>
+          <p><a href="pdf/aula5.pdf" target="_blank">Baixar PDF da Aula 5</a></p>
         `
       }
     ];
 
-    // Quiz – 15 perguntas
+    function showTab(index) {
+      const tabButtons = document.querySelectorAll(".tab-button");
+      tabButtons.forEach(btn => btn.classList.remove("active"));
+      tabButtons[index].classList.add("active");
+
+      const content = tabContents[index];
+      document.getElementById("tabContent").innerHTML = `<h3>${content.title}</h3>${content.content}`;
+    }
+
     const quizQuestions = [
       {
-        q: 'Qual é o principal problema do carregamento ineficiente?',
-        options: ['Atrasos e avarias', 'Maior segurança', 'Menor custo', 'Ambiente limpo'],
+        q: "Qual é o principal problema do carregamento ineficiente?",
+        options: ["Atrasos e avarias", "Maior segurança", "Menor custo", "Ambiente limpo"],
         answer: 0
       },
       {
-        q: 'Qual tipo de carga exige embalagem especial?',
-        options: ['Carga geral', 'Carga líquida', 'Carga seca', 'Nenhuma'],
+        q: "Qual tipo de carga exige embalagem especial?",
+        options: ["Carga geral", "Carga líquida", "Carga seca", "Nenhuma"],
         answer: 1
-      },
-      // ... 13 outras questões ...
+      }
     ];
-    // Garante 15 questões
+
     while (quizQuestions.length < 15) {
       quizQuestions.push({
         q: `Questão ${quizQuestions.length + 1}`,
@@ -145,29 +277,13 @@
       });
     }
 
-    function showTab(i) {
-      const buttons = document.querySelectorAll('.tab-button');
-      buttons.forEach(b=>b.classList.remove('active'));
-      buttons[i].classList.add('active');
-      document.getElementById('tabContent').innerHTML = `
-        <h3>${tabContents[i].title}</h3>${tabContents[i].content}
-      `;
-    }
-
-    function showSection(id) {
-      document.querySelectorAll('#contentArea section').forEach(sec => sec.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-      if (id==='lessons') showTab(0);
-      if (id==='quiz') renderQuiz();
-    }
-
     function renderQuiz() {
       const form = document.getElementById('quizForm');
       form.innerHTML = '';
-      quizQuestions.forEach((q,i)=>{
+      quizQuestions.forEach((q, i) => {
         const div = document.createElement('div');
-        div.innerHTML = `<p>${i+1}. ${q.q}</p>` +
-          q.options.map((opt,j)=>`
+        div.innerHTML = `<p><strong>${i + 1}.</strong> ${q.q}</p>` +
+          q.options.map((opt, j) => `
             <label><input type="radio" name="q${i}" value="${j}"> ${opt}</label><br>`).join('');
         form.appendChild(div);
       });
@@ -176,7 +292,7 @@
     function submitQuiz() {
       const form = document.getElementById('quizForm');
       let score = 0;
-      quizQuestions.forEach((q,i)=>{
+      quizQuestions.forEach((q, i) => {
         const sel = form[`q${i}`].value;
         if (parseInt(sel) === q.answer) score++;
       });
@@ -186,25 +302,26 @@
 
     function generateCertificate() {
       if (window.quizScore < 10) {
-        alert('Você precisa acertar pelo menos 10 para gerar o certificado.');
+        alert("Você precisa acertar pelo menos 10 questões para gerar o certificado.");
         return;
       }
       const { jsPDF } = window.jspdf;
       const doc = new jsPDF();
       doc.setFontSize(18);
-      doc.text("Certificado de Conclusão",20,30);
+      doc.text("Certificado de Conclusão", 20, 30);
       doc.setFontSize(14);
-      doc.text("Certificamos que o(a) aluno(a) concluiu o curso:",20,50);
-      doc.text("Curso de Carregamento Logístico – ProCarga",20,60);
-      doc.text("Data: " + new Date().toLocaleDateString('pt-BR'),20,80);
-      doc.text("Assinatura: ____________________",20,110);
+      doc.text("Certificamos que o(a) aluno(a) concluiu o curso:", 20, 50);
+      doc.text("Curso de Carregamento Logístico – ProCarga", 20, 60);
+      doc.text("Data: " + new Date().toLocaleDateString('pt-BR'), 20, 80);
+      doc.text("Assinatura: ____________________", 20, 110);
       doc.save("certificado_procarga.pdf");
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
+    document.addEventListener("DOMContentLoaded", () => {
+      showSection("welcome");
       showTab(0);
-      showSection('welcome');
     });
   </script>
+
 </body>
 </html>
