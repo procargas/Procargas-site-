@@ -1,280 +1,195 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ProCarga – Curso de Capacitação em Carregamento Logístico</title>
-  <style>
-    /* Reset e base */
-    * {
-      margin: 0; padding: 0; box-sizing: border-box;
-      font-family: 'Montserrat', sans-serif;
-    }
-    body {
-      background: #000;
-      color: #d4af37;
-      line-height: 1.6;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
-    a {
-      color: #d4af37;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-
-    /* Menu fixo */
-    nav {
-      background: #111;
-      position: fixed;
-      width: 100%;
-      top: 0; left: 0;
-      z-index: 1000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 1rem 2rem;
-      border-bottom: 2px solid #d4af37;
-    }
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 2rem;
-    }
-    nav li {
-      font-weight: 600;
-      font-size: 1.1rem;
-    }
-    .logo {
-      font-weight: 700;
-      font-size: 1.5rem;
-    }
-    .language-select {
-      background: #111;
-      color: #d4af37;
-      border: none;
-      font-size: 1rem;
-      padding: 0.5rem;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    /* Barra de pesquisa */
-    .search-bar {
-      margin-right: 2rem;
-    }
-    .search-input {
-      padding: 0.5rem;
-      border: 1px solid #d4af37;
-      background: #000;
-      color: #d4af37;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-
-    /* Container para conteúdo */
-    .container {
-      max-width: 960px;
-      margin: 5rem auto 3rem;
-      padding: 0 1rem;
-    }
-
-    h1, h2 {
-      color: #d4af37;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    p {
-      margin-bottom: 1rem;
-    }
-
-    /* Seção Início */
-    #inicio {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    #inicio h1 {
-      font-size: 2.5rem;
-    }
-    #inicio p {
-      font-size: 1.25rem;
-      max-width: 600px;
-      margin: 0.5rem auto 0;
-    }
-
-    /* Aulas */
-    #aulas ul {
-      list-style: none;
-      padding-left: 0;
-    }
-    #aulas li {
-      margin-bottom: 1rem;
-    }
-    #aulas a {
-      border: 1px solid #d4af37;
-      padding: 0.4rem 0.8rem;
-      border-radius: 4px;
-      display: inline-block;
-      transition: background 0.3s ease;
-    }
-    #aulas a:hover {
-      background: #d4af37;
-      color: #000;
-    }
-
-    /* Avaliação */
-    form {
-      background: #111;
-      padding: 1rem;
-      border: 1px solid #d4af37;
-      border-radius: 6px;
-      max-width: 600px;
-    }
-    label {
-      display: block;
-      margin: 0.8rem 0 0.3rem;
-      font-weight: 600;
-    }
-    input[type="text"], textarea {
-      width: 100%;
-      padding: 0.5rem;
-      border: 1px solid #d4af37;
-      background: #000;
-      color: #d4af37;
-      border-radius: 4px;
-      font-size: 1rem;
-    }
-    button {
-      margin-top: 1rem;
-      background: #d4af37;
-      border: none;
-      color: #000;
-      padding: 0.7rem 1.2rem;
-      font-weight: 700;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background 0.3s ease;
-    }
-    button:hover {
-      background: #b3942e;
-    }
-
-    /* Certificado */
-    #certificado {
-      margin-top: 2rem;
-      max-width: 600px;
-    }
-    #certificado-output {
-      margin-top: 1rem;
-      padding: 1rem;
-      background: #111;
-      border: 1px solid #d4af37;
-      border-radius: 6px;
-      white-space: pre-wrap;
-      font-family: monospace;
-    }
-
-    /* Rodapé */
-    footer {
-      background: #111;
-      text-align: center;
-      padding: 1rem;
-      border-top: 2px solid #d4af37;
-      margin-top: auto;
-      font-size: 0.9rem;
-    }
-    footer a {
-      margin: 0 0.5rem;
-      font-weight: 600;
-    }
-
-    /* Responsividade */
-    @media(max-width: 600px) {
-      nav ul {
-        flex-direction: column;
-        gap: 1rem;
-        padding: 0.5rem 1rem;
-      }
-      .container {
-        margin: 6rem 1rem 3rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Curso Logístico - Acesso Udemy</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        a {
+            background-color: #0073e6;
+            color: #fff;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+        a:hover {
+            background-color: #005bb5;
+        }
+        section {
+            padding: 20px;
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #0066cc;
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 4px;
+        }
+        button:hover {
+            background: #005bb5;
+        }
+        .hidden { display: none !important; }
+    </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo">ProCarga</div>
-  <ul>
-    <li><a href="#inicio">Início</a></li>
-    <li><a href="#aulas">Aulas</a></li>
-    <li><a href="#avaliacao">Avaliação</a></li>
-    <li><a href="#certificado">Certificado</a></li>
-  </ul>
-  <div class="search-bar">
-    <input class="search-input" type="text" placeholder="Pesquisar curso..." />
-  </div>
-  <div>
-    <select class="language-select" onchange="changeLanguage(event)">
-      <option value="pt">Português</option>
-      <option value="en">English</option>
-      <option value="es">Español</option>
-    </select>
-  </div>
-</nav>
+    <div class="container">
+        <h1>Curso Logístico - Acesso Udemy</h1>
+        <p>Bem-vindo ao curso de Carregamento Logístico. Aproveite para aprender sobre as melhores práticas logísticas!</p>
+        <a href="https://www.udemy.com/?utm_source=adwords&utm_medium=udemyads&utm_campaign=Search_Keyword_Gamma_NonP_la.EN_cc.ROW-English&campaigntype=Search&portfolio=ROW-English&language=EN&product=Course&test=&audience=Keyword&topic=&priority=Gamma&utm_content=deal4584&utm_term=_._ag_163319698720_._ad_696300018944_._kw_moocs_._de_m_._dm__._pl__._ti_kwd-1846588968_._li_9100863_._pd__._&matchtype=b&gad_source=1&gad_campaignid=21168323211&gbraid=0AAAAADROdO036_I4MTxW1DcWlLvyRj1l9&gclid=CjwKCAjwhuHEBhBHEiwAZrvdcslvEXl7-976B8Rg5qmNgTWfdAxNknfwhFoRIc2zhO-AXzz162kqChoCN7wQAvD_BwE" target="_blank">
+            Acesse o Curso na Udemy
+        </a>
 
-<div class="container">
+        <section id="welcome">
+            <h2>Bem-vindo ao Curso de Carregamento Logístico</h2>
+            <p>Este curso irá te guiar pelos conceitos essenciais do carregamento logístico e boas práticas.</p>
+            <button id="startButton">Iniciar Curso</button>
+        </section>
 
-  <section id="inicio">
-    <h1>ProCarga</h1>
-    <p>Curso de Capacitação em Carregamento Logístico – Aprenda as melhores práticas para otimizar operações de carga e descarga com eficiência e segurança.</p>
-    <p><a href="#registro">Clique aqui para se registrar no curso</a></p>
-  </section>
+        <section id="lesson1" class="hidden">
+            <h2>Aula 1: O que é carregamento ineficiente?</h2>
+            <p>
+                Carregamento ineficiente acontece quando não aproveitamos de forma inteligente o espaço disponível no veículo ou contêiner, resultando em desperdício. Pode gerar tempos de carregamento maiores, custo de transporte elevado e aumento do risco de danos à carga.
+            </p>
+            <p>Vídeo recomendado: <a href="https://youtu.be/2lLqjzOgUBE?si=ZWMb9o8EcYIrFu5Q" target="_blank">Entenda o Carregamento Logístico</a></p>
+            <button onclick="nextLesson(2)">Próxima Aula</button>
+        </section>
 
-  <section id="aulas">
-    <h2>Aulas</h2>
-    <ul>
-      <li>Aula 1 – Introdução ao Carregamento Logístico 
-        <a href="aula1.pdf" download>Download PDF</a>
-      </li>
-      <li>Aula 2 – Equipamentos e Segurança
-        <a href="aula2.pdf" download>Download PDF</a>
-      </li>
-      <li>Aula 3 – Técnicas de Carregamento
-        <a href="aula3.pdf" download>Download PDF</a>
-      </li>
-    </ul>
-  </section>
+        <section id="lesson2" class="hidden">
+            <h2>Aula 2: Causas comuns de ineficiência</h2>
+            <p>
+                São frequentes fatores como falta de planejamento, onde não mapeamos bem o perfil da carga nem a sequência de empilhamento. A desorganização no armazém dificulta o acesso rápido e atrasa a operação.
+            </p>
+            <button onclick="nextLesson(3)">Próxima Aula</button>
+        </section>
 
-  <section id="avaliacao">
-    <h2>Avaliação</h2>
-    <form id="form-avaliacao" onsubmit="return validarForm(event)">
-      <label for="nome">Nome Completo:</label>
-      <input type="text" id="nome" name="nome" required />
+        <section id="lesson3" class="hidden">
+            <h2>Aula 3: Boas práticas</h2>
+            <p>
+                Inicie sempre com um plano: defina o tipo de carga, sequência de descarga e métodos de fixação. Use corretamente EPIs para prevenir acidentes e garantir segurança.
+            </p>
+            <button onclick="nextLesson(4)">Próxima Aula</button>
+        </section>
 
-      <label for="resposta1">Qual o principal objetivo do carregamento logístico?</label>
-      <textarea id="resposta1" name="resposta1" rows="3" required></textarea>
+        <section id="lesson4" class="hidden">
+            <h2>Aula 4: Tecnologias aplicadas</h2>
+            <p>
+                O uso de tecnologias como WMS, TMS, RFID e sensores de peso em tempo real otimizam o processo de carregamento. Essas ferramentas permitem planejamento mais eficiente, controle preciso e segurança operacional.
+            </p>
+            <p>Vídeo recomendado: <a href="https://youtu.be/BWvtrDnOcv8?si=s3Zxv9KCtzKB9EU2" target="_blank">Tecnologias na Logística</a></p>
+            <button onclick="nextLesson(5)">Próxima Aula</button>
+        </section>
 
-      <label for="resposta2">Quais equipamentos são mais usados?</label>
-      <textarea id="resposta2" name="resposta2" rows="3" required></textarea>
+        <section id="lesson5" class="hidden">
+            <h2>Aula 5: Sustentabilidade na Logística</h2>
+            <p>
+                A sustentabilidade no carregamento envolve redução de CO₂, uso de materiais recicláveis, reaproveitamento de pallets e planejamento inteligente para evitar viagens desnecessárias.
+            </p>
+            <p>Vídeo recomendado: <a href="https://youtu.be/qdTFt50LMKE?si=87KpTU4fHDCxb4OH" target="_blank">Logística Sustentável</a></p>
+            <button onclick="showQuiz()">Ir para Quiz</button>
+        </section>
 
-      <button type="submit">Enviar Avaliação</button>
-    </form>
-  </section>
+        <section id="quiz" class="hidden">
+            <h2 style="text-align:center;">Quiz Final (7 perguntas)</h2>
+            <form id="quizForm">
+                <div><strong>1. Carregamento ineficiente pode causar:</strong><br>
+                    <label><input type="radio" name="q1" value="a"> A) Redução de custo</label><br>
+                    <label><input type="radio" name="q1" value="b"> B) Atrasos</label><br>
+                    <label><input type="radio" name="q1" value="c"> C) Otimização de tempo</label>
+                </div>
+                <div><strong>2. Causa comum de ineficiência é:</strong><br>
+                    <label><input type="radio" name="q2" value="a"> A) Treinamento contínuo</label><br>
+                    <label><input type="radio" name="q2" value="b"> B) Falta de planejamento</label><br>
+                    <label><input type="radio" name="q2" value="c"> C) Checklist operacional</label>
+                </div>
+                <div><strong>3. Boa prática inclui:</strong><br>
+                    <label><input type="radio" name="q3" value="a"> A) Ignorar EPIs</label><br>
+                    <label><input type="radio" name="q3" value="b"> B) Otimizar espaço</label><br>
+                    <label><input type="radio" name="q3" value="c"> C) Deixar a carga solta</label>
+                </div>
+                <div><strong>4. Organização do armazém influencia:</strong><br>
+                    <label><input type="radio" name="q4" value="a"> A) Consumo de combustível</label><br>
+                    <label><input type="radio" name="q4" value="b"> B) Tempo de carregamento</label><br>
+                    <label><input type="radio" name="q4" value="c"> C) Preço da carga</label>
+                </div>
+                <div><strong>5. Tecnologia que ajuda no controle de carga:</strong><br>
+                    <label><input type="radio" name="q5" value="a"> A) Manual de processos</label><br>
+                    <label><input type="radio" name="q5" value="b"> B) WMS</label><br>
+                    <label><input type="radio" name="q5" value="c"> C) Tabela de pesos</label>
+                </div>
+                <div><strong>6. Sustentabilidade na logística é importante para:</strong><br>
+                    <label><input type="radio" name="q6" value="a"> A) Reduzir CO₂</label><br>
+                    <label><input type="radio" name="q6" value="b"> B) Comprar mais veículos</label><br>
+                    <label><input type="radio" name="q6" value="c"> C) Reforçar marketing</label>
+                </div>
+                <div><strong>7. A logística sustentável foca em:</strong><br>
+                    <label><input type="radio" name="q7" value="a"> A) Aumento de viagens</label><br>
+                    <label><input type="radio" name="q7" value="b"> B) Economia de energia e transporte eficiente</label><br>
+                    <label><input type="radio" name="q7" value="c"> C) Aumento de impostos</label>
+                </div>
+                <button type="submit" onclick="submitQuiz()">Finalizar Quiz</button>
+            </form>
+        </section>
+    </div>
 
-  <section id="certificado">
-    <h2>Certificado</h2>
-    <p>Digite seu nome para gerar o certificado em PDF:</p>
-    <input type="text" id="nome-certificado" placeholder="Seu nome completo" />
-    <button onclick="gerarCertificado()">Gerar Certificado</button>
+    <script>
+        let currentLesson = 1;
 
-    <pre id="certificado-output" style="display:none;"></pre>
-  </section>
+        function nextLesson(lesson) {
+            document.getElementById(`lesson${currentLesson}`).classList.add("hidden");
+            document.getElementById(`lesson${lesson}`).classList.remove("hidden");
+            currentLesson = lesson;
+        }
 
-</div>
+        document.getElementById("startButton").onclick = function() {
+            document.getElementById("welcome").classList.add("hidden");
+            document.getElementById("lesson1").classList.remove("hidden");
+        }
 
-<footer>
-  <p>© 2025 ProCarga. Todos os direitos reservados.</p>
+        function showQuiz() {
+            document.getElementById("lesson5").classList.add("hidden");
+            document.getElementById("quiz").classList.remove("hidden");
+        }
+
+        function submitQuiz() {
+            event.preventDefault();
+            alert("Quiz finalizado! Parabéns por concluir o curso.");
+        }
+    </script>
+
+</body>
+</html>
