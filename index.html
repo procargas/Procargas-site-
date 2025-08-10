@@ -1,195 +1,378 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<!doctype html>
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Curso Logístico - Acesso Udemy</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, sans-serif;
-            margin: 0;
-            padding: 0;
-            background: #f0f2f5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        .container {
-            background-color: #ffffff;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            max-width: 800px;
-            width: 100%;
-            text-align: center;
-        }
-        h1 {
-            color: #333;
-        }
-        p {
-            color: #555;
-        }
-        a {
-            background-color: #0073e6;
-            color: #fff;
-            padding: 12px 20px;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            transition: background-color 0.3s;
-        }
-        a:hover {
-            background-color: #005bb5;
-        }
-        section {
-            padding: 20px;
-            max-width: 800px;
-            margin: 20px auto;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-        }
-        button {
-            background: #0066cc;
-            color: #fff;
-            border: none;
-            padding: 12px 24px;
-            cursor: pointer;
-            font-size: 1rem;
-            border-radius: 4px;
-        }
-        button:hover {
-            background: #005bb5;
-        }
-        .hidden { display: none !important; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Academia Corporativa — Cursos Online</title>
+  <meta name="description" content="Plataforma de cursos online estilo institucional (layout inspirado em portais financeiros): cursos, trilhas, certificados e área do aluno."/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Pequenas customizações além do Tailwind */
+    .brand-gradient{background:linear-gradient(90deg,#d8122a,#b10f22)}
+    .glass{background:rgba(255,255,255,0.6);backdrop-filter:blur(6px)}
+  </style>
 </head>
-<body>
+<body class="bg-gray-50 text-gray-800 antialiased">
+  <!-- HEADER -->
+  <header class="brand-gradient text-white">
+    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+      <div class="flex items-center gap-4">
+        <div class="w-12 h-12 rounded-md bg-white flex items-center justify-center font-bold text-red-700">BC</div>
+        <div>
+          <h1 class="text-lg font-extrabold">Academia Corporativa</h1>
+          <p class="text-sm opacity-90">Capacitação profissional e certificação</p>
+        </div>
+      </div>
 
-    <div class="container">
-        <h1>Curso Logístico - Acesso Udemy</h1>
-        <p>Bem-vindo ao curso de Carregamento Logístico. Aproveite para aprender sobre as melhores práticas logísticas!</p>
-        <a href="https://www.udemy.com/?utm_source=adwords&utm_medium=udemyads&utm_campaign=Search_Keyword_Gamma_NonP_la.EN_cc.ROW-English&campaigntype=Search&portfolio=ROW-English&language=EN&product=Course&test=&audience=Keyword&topic=&priority=Gamma&utm_content=deal4584&utm_term=_._ag_163319698720_._ad_696300018944_._kw_moocs_._de_m_._dm__._pl__._ti_kwd-1846588968_._li_9100863_._pd__._&matchtype=b&gad_source=1&gad_campaignid=21168323211&gbraid=0AAAAADROdO036_I4MTxW1DcWlLvyRj1l9&gclid=CjwKCAjwhuHEBhBHEiwAZrvdcslvEXl7-976B8Rg5qmNgTWfdAxNknfwhFoRIc2zhO-AXzz162kqChoCN7wQAvD_BwE" target="_blank">
-            Acesse o Curso na Udemy
-        </a>
+      <nav class="hidden md:flex items-center gap-6">
+        <a href="#cursos" class="hover:underline">Cursos</a>
+        <a href="#trilhas" class="hover:underline">Trilhas</a>
+        <a href="#certificados" class="hover:underline">Certificados</a>
+        <a href="#sobre" class="hover:underline">Sobre</a>
+      </nav>
 
-        <section id="welcome">
-            <h2>Bem-vindo ao Curso de Carregamento Logístico</h2>
-            <p>Este curso irá te guiar pelos conceitos essenciais do carregamento logístico e boas práticas.</p>
-            <button id="startButton">Iniciar Curso</button>
-        </section>
-
-        <section id="lesson1" class="hidden">
-            <h2>Aula 1: O que é carregamento ineficiente?</h2>
-            <p>
-                Carregamento ineficiente acontece quando não aproveitamos de forma inteligente o espaço disponível no veículo ou contêiner, resultando em desperdício. Pode gerar tempos de carregamento maiores, custo de transporte elevado e aumento do risco de danos à carga.
-            </p>
-            <p>Vídeo recomendado: <a href="https://youtu.be/2lLqjzOgUBE?si=ZWMb9o8EcYIrFu5Q" target="_blank">Entenda o Carregamento Logístico</a></p>
-            <button onclick="nextLesson(2)">Próxima Aula</button>
-        </section>
-
-        <section id="lesson2" class="hidden">
-            <h2>Aula 2: Causas comuns de ineficiência</h2>
-            <p>
-                São frequentes fatores como falta de planejamento, onde não mapeamos bem o perfil da carga nem a sequência de empilhamento. A desorganização no armazém dificulta o acesso rápido e atrasa a operação.
-            </p>
-            <button onclick="nextLesson(3)">Próxima Aula</button>
-        </section>
-
-        <section id="lesson3" class="hidden">
-            <h2>Aula 3: Boas práticas</h2>
-            <p>
-                Inicie sempre com um plano: defina o tipo de carga, sequência de descarga e métodos de fixação. Use corretamente EPIs para prevenir acidentes e garantir segurança.
-            </p>
-            <button onclick="nextLesson(4)">Próxima Aula</button>
-        </section>
-
-        <section id="lesson4" class="hidden">
-            <h2>Aula 4: Tecnologias aplicadas</h2>
-            <p>
-                O uso de tecnologias como WMS, TMS, RFID e sensores de peso em tempo real otimizam o processo de carregamento. Essas ferramentas permitem planejamento mais eficiente, controle preciso e segurança operacional.
-            </p>
-            <p>Vídeo recomendado: <a href="https://youtu.be/BWvtrDnOcv8?si=s3Zxv9KCtzKB9EU2" target="_blank">Tecnologias na Logística</a></p>
-            <button onclick="nextLesson(5)">Próxima Aula</button>
-        </section>
-
-        <section id="lesson5" class="hidden">
-            <h2>Aula 5: Sustentabilidade na Logística</h2>
-            <p>
-                A sustentabilidade no carregamento envolve redução de CO₂, uso de materiais recicláveis, reaproveitamento de pallets e planejamento inteligente para evitar viagens desnecessárias.
-            </p>
-            <p>Vídeo recomendado: <a href="https://youtu.be/qdTFt50LMKE?si=87KpTU4fHDCxb4OH" target="_blank">Logística Sustentável</a></p>
-            <button onclick="showQuiz()">Ir para Quiz</button>
-        </section>
-
-        <section id="quiz" class="hidden">
-            <h2 style="text-align:center;">Quiz Final (7 perguntas)</h2>
-            <form id="quizForm">
-                <div><strong>1. Carregamento ineficiente pode causar:</strong><br>
-                    <label><input type="radio" name="q1" value="a"> A) Redução de custo</label><br>
-                    <label><input type="radio" name="q1" value="b"> B) Atrasos</label><br>
-                    <label><input type="radio" name="q1" value="c"> C) Otimização de tempo</label>
-                </div>
-                <div><strong>2. Causa comum de ineficiência é:</strong><br>
-                    <label><input type="radio" name="q2" value="a"> A) Treinamento contínuo</label><br>
-                    <label><input type="radio" name="q2" value="b"> B) Falta de planejamento</label><br>
-                    <label><input type="radio" name="q2" value="c"> C) Checklist operacional</label>
-                </div>
-                <div><strong>3. Boa prática inclui:</strong><br>
-                    <label><input type="radio" name="q3" value="a"> A) Ignorar EPIs</label><br>
-                    <label><input type="radio" name="q3" value="b"> B) Otimizar espaço</label><br>
-                    <label><input type="radio" name="q3" value="c"> C) Deixar a carga solta</label>
-                </div>
-                <div><strong>4. Organização do armazém influencia:</strong><br>
-                    <label><input type="radio" name="q4" value="a"> A) Consumo de combustível</label><br>
-                    <label><input type="radio" name="q4" value="b"> B) Tempo de carregamento</label><br>
-                    <label><input type="radio" name="q4" value="c"> C) Preço da carga</label>
-                </div>
-                <div><strong>5. Tecnologia que ajuda no controle de carga:</strong><br>
-                    <label><input type="radio" name="q5" value="a"> A) Manual de processos</label><br>
-                    <label><input type="radio" name="q5" value="b"> B) WMS</label><br>
-                    <label><input type="radio" name="q5" value="c"> C) Tabela de pesos</label>
-                </div>
-                <div><strong>6. Sustentabilidade na logística é importante para:</strong><br>
-                    <label><input type="radio" name="q6" value="a"> A) Reduzir CO₂</label><br>
-                    <label><input type="radio" name="q6" value="b"> B) Comprar mais veículos</label><br>
-                    <label><input type="radio" name="q6" value="c"> C) Reforçar marketing</label>
-                </div>
-                <div><strong>7. A logística sustentável foca em:</strong><br>
-                    <label><input type="radio" name="q7" value="a"> A) Aumento de viagens</label><br>
-                    <label><input type="radio" name="q7" value="b"> B) Economia de energia e transporte eficiente</label><br>
-                    <label><input type="radio" name="q7" value="c"> C) Aumento de impostos</label>
-                </div>
-                <button type="submit" onclick="submitQuiz()">Finalizar Quiz</button>
-            </form>
-        </section>
+      <div class="flex items-center gap-3">
+        <button id="btn-login" class="bg-white text-red-700 px-4 py-2 rounded font-semibold hover:opacity-95">Entrar</button>
+        <a href="#inscreva" class="hidden sm:inline-block bg-white text-red-700 px-4 py-2 rounded font-semibold">Inscreva-se</a>
+        <button id="menu-btn" class="md:hidden">☰</button>
+      </div>
     </div>
 
-    <script>
-        let currentLesson = 1;
+    <!-- mobile menu -->
+    <div id="mobile-menu" class="hidden bg-red-600/80 md:hidden">
+      <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
+        <a href="#cursos" class="text-white">Cursos</a>
+        <a href="#trilhas" class="text-white">Trilhas</a>
+        <a href="#certificados" class="text-white">Certificados</a>
+        <a href="#sobre" class="text-white">Sobre</a>
+      </div>
+    </div>
+  </header>
 
-        function nextLesson(lesson) {
-            document.getElementById(`lesson${currentLesson}`).classList.add("hidden");
-            document.getElementById(`lesson${lesson}`).classList.remove("hidden");
-            currentLesson = lesson;
-        }
+  <!-- HERO -->
+  <main class="max-w-7xl mx-auto px-6 py-10">
+    <section class="grid lg:grid-cols-2 gap-8 items-center">
+      <div class="space-y-6">
+        <span class="inline-block px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 font-semibold">Novo • Trilha Logística</span>
+        <h2 class="text-3xl md:text-4xl font-extrabold">Aprenda a evitar carregamento ineficiente e reduza custos na logística</h2>
+        <p class="text-gray-600">Curso prático com estudos de caso, aulas passo-a-passo, simulações e certificado digital. Material voltado para responsáveis por operação, planejamento e transportes.</p>
+        <div class="flex gap-3">
+          <a href="#cursos" class="bg-red-700 text-white px-5 py-3 rounded shadow">Ver Cursos</a>
+          <a href="#sobre" class="border border-red-700 text-red-700 px-5 py-3 rounded">Como funciona</a>
+        </div>
 
-        document.getElementById("startButton").onclick = function() {
-            document.getElementById("welcome").classList.add("hidden");
-            document.getElementById("lesson1").classList.remove("hidden");
-        }
+        <div class="grid grid-cols-3 gap-3 max-w-sm mt-2">
+          <div class="p-3 bg-white rounded shadow text-center">
+            <div class="text-sm font-bold">60h</div>
+            <div class="text-xs text-gray-500">Carga horária</div>
+          </div>
+          <div class="p-3 bg-white rounded shadow text-center">
+            <div class="text-sm font-bold">Mentorias</div>
+            <div class="text-xs text-gray-500">ao vivo</div>
+          </div>
+          <div class="p-3 bg-white rounded shadow text-center">
+            <div class="text-sm font-bold">Certificado</div>
+            <div class="text-xs text-gray-500">Digital</div>
+          </div>
+        </div>
+      </div>
 
-        function showQuiz() {
-            document.getElementById("lesson5").classList.add("hidden");
-            document.getElementById("quiz").classList.remove("hidden");
-        }
+      <div class="bg-white rounded-lg shadow-lg p-6">
+        <h3 class="font-bold text-lg mb-3">Inscreva-se na turma</h3>
+        <form id="enroll-form" class="space-y-3">
+          <input name="nome" placeholder="Nome completo" required class="w-full p-3 rounded border" />
+          <input name="email" type="email" placeholder="E-mail" required class="w-full p-3 rounded border" />
+          <select name="curso" class="w-full p-3 rounded border">
+            <option value="carregamento">Carregamento Ineficiente — Trilha</option>
+            <option value="logistica">Logística e Armazenagem</option>
+            <option value="ti">Gestão de Transportes (TI)</option>
+          </select>
+          <div class="flex gap-3">
+            <button type="submit" class="flex-1 bg-red-700 text-white px-4 py-2 rounded">Inscrever</button>
+            <button type="button" id="btn-sample" class="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded">Ver programa</button>
+          </div>
+          <p class="text-xs text-gray-500">Pagamento via cartão, boleto ou convênio corporativo.</p>
+        </form>
+      </div>
+    </section>
 
-        function submitQuiz() {
-            event.preventDefault();
-            alert("Quiz finalizado! Parabéns por concluir o curso.");
-        }
-    </script>
+    <!-- FILTERS + COURSES -->
+    <section id="cursos" class="mt-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-bold">Cursos em Destaque</h3>
+        <div class="flex gap-3 items-center">
+          <input id="search" placeholder="Buscar curso" class="px-3 py-2 rounded border" />
+          <select id="filter" class="px-3 py-2 rounded border">
+            <option value="all">Todos</option>
+            <option value="logistica">Logística</option>
+            <option value="negocios">Negócios</option>
+            <option value="ti">TI</option>
+          </select>
+        </div>
+      </div>
 
+      <div id="courses-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Course Card template (JS will populate) -->
+      </div>
+    </section>
+
+    <!-- TRILHAS -->
+    <section id="trilhas" class="mt-16 bg-white rounded-lg shadow p-6">
+      <h3 class="text-2xl font-bold mb-4">Trilhas de Aprendizado</h3>
+      <div class="grid md:grid-cols-3 gap-4">
+        <article class="p-4 border rounded">
+          <h4 class="font-semibold">Trilha Logística Completa</h4>
+          <p class="text-sm text-gray-600">Sequência: Fundamentos → Planejamento de Carga → Segurança → KPIs</p>
+          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
+        </article>
+        <article class="p-4 border rounded">
+          <h4 class="font-semibold">Trilha Operacional</h4>
+          <p class="text-sm text-gray-600">Foco em operação, produtividade e redução de desperdícios.</p>
+          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
+        </article>
+        <article class="p-4 border rounded">
+          <h4 class="font-semibold">Trilha Gestão & Cadastro</h4>
+          <p class="text-sm text-gray-600">Gestão, liderança e indicadores para supervisores.</p>
+          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- CERTIFICADOS E TESTEMUNHOS -->
+    <section id="certificados" class="mt-16 grid lg:grid-cols-2 gap-6">
+      <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-2xl font-bold mb-3">Como emitir seu certificado</h3>
+        <ol class="list-decimal list-inside text-gray-600">
+          <li>Concluir todos os módulos e avaliações.</li>
+          <li>Aguardar validação do projeto final (quando houver).</li>
+          <li>Gerar certificado na área do aluno — disponível em PDF.</li>
+        </ol>
+        <p class="mt-4 text-sm text-gray-500">Observação: certificados são emitidos digitalmente e podem ser verificados via código de autenticidade.</p>
+      </div>
+
+      <div class="bg-white rounded-lg shadow p-6">
+        <h3 class="text-2xl font-bold mb-3">Depoimentos</h3>
+        <blockquote class="italic text-gray-600">“Reduzimos o tempo de carregamento em 30% após aplicar as técnicas do curso.”</blockquote>
+        <p class="mt-2 text-sm text-gray-500">— Gerente de Operações, Transportadora XYZ</p>
+      </div>
+    </section>
+
+    <!-- ABOUT / INSTRUCTORS -->
+    <section id="sobre" class="mt-16">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-2xl font-bold">Sobre a Academia</h3>
+          <p class="text-gray-600">Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional. Conteúdo produzido por especialistas de mercado com didática aplicada.</p>
+          <ul class="mt-4 space-y-2 text-gray-600">
+            <li>Instrutores certificados</li>
+            <li>Conteúdo atualizado</li>
+            <li>Material de apoio e estudos de caso</li>
+          </ul>
+        </div>
+
+        <div class="bg-white rounded-lg shadow p-6">
+          <h3 class="text-2xl font-bold">Instrutores</h3>
+          <div class="grid grid-cols-2 gap-4 mt-4">
+            <div class="p-3 border rounded">
+              <div class="font-bold">Samuel Ramos</div>
+              <div class="text-sm text-gray-600">Especialista em Logística</div>
+            </div>
+            <div class="p-3 border rounded">
+              <div class="font-bold">Marcos Guilherme</div>
+              <div class="text-sm text-gray-600">Eng. de Transportes</div>
+            </div>
+            <div class="p-3 border rounded">
+              <div class="font-bold">Lavinya</div>
+              <div class="text-sm text-gray-600">Coordenadora de Operações</div>
+            </div>
+            <div class="p-3 border rounded">
+              <div class="font-bold">Samuel Afonso</div>
+              <div class="text-sm text-gray-600">Analista de Dados</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-gray-200 mt-16">
+    <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-6">
+      <div>
+        <h4 class="font-bold text-white">Academia Corporativa</h4>
+        <p class="text-sm">Capacitação profissional disponível para colaboradores e público em geral.</p>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Navegação</h5>
+        <ul class="text-sm mt-2 space-y-1">
+          <li><a href="#cursos" class="hover:underline">Cursos</a></li>
+          <li><a href="#trilhas" class="hover:underline">Trilhas</a></li>
+          <li><a href="#certificados" class="hover:underline">Certificados</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Suporte</h5>
+        <ul class="text-sm mt-2 space-y-1">
+          <li><a href="#" class="hover:underline">Central de Ajuda</a></li>
+          <li><a href="#" class="hover:underline">Fale conosco</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5 class="font-semibold text-white">Contato</h5>
+        <p class="text-sm mt-2">contato@academia.com<br/>0800-123-456</p>
+      </div>
+    </div>
+    <div class="border-t border-gray-700 py-4 text-center text-sm">&copy; 2025 Academia Corporativa — Todos os direitos reservados</div>
+  </footer>
+
+  <!-- SCRIPTS: dados de exemplo e interatividade leve -->
+  <script>
+    // Mobile menu toggle
+    document.getElementById('menu-btn')?.addEventListener('click', () => {
+      const m = document.getElementById('mobile-menu');
+      if(!m) return;
+      m.classList.toggle('hidden');
+    });
+
+    // Example courses data
+    const courses = [
+      { id:1, title:'Carregamento Ineficiente — Diagnóstico', category:'logistica', hours:8, price:'Grátis', summary:'Identifique pontos de perda no processo de carregamento.', tags:['fundamentos','prático'] },
+      { id:2, title:'Planejamento de Carga e Estivagem', category:'logistica', hours:12, price:'R$ 199', summary:'Técnicas de distribuição de peso, paletização e documentação.', tags:['planejamento','segurança'] },
+      { id:3, title:'Segurança no Carregamento', category:'logistica', hours:6, price:'R$ 99', summary:'Boas práticas para evitar acidentes durante o carregamento.', tags:['segurança'] },
+      { id:4, title:'Uso de Dados e KPIs na Logística', category:'ti', hours:10, price:'R$ 249', summary:'Como indicadores orientam decisões operacionais.', tags:['dados','kpi'] },
+      { id:5, title:'Otimização de Processos Operacionais', category:'negocios', hours:14, price:'R$ 299', summary:'Lean, 5S e metodologias para redução de desperdício.', tags:['lean','processo'] },
+      { id:6, title:'Ferramentas Digitais para Gestão de Carga', category:'ti', hours:8, price:'R$ 179', summary:'Softwares, TMS e agendamento de janelas.', tags:['software','tms'] }
+    ];
+
+    const grid = document.getElementById('courses-grid');
+
+    function renderCourses(list){
+      grid.innerHTML = '';
+      list.forEach(c => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-lg p-4 shadow flex flex-col justify-between';
+        card.innerHTML = `
+          <div>
+            <div class="text-xs text-gray-500">${c.category.toUpperCase()}</div>
+            <h4 class="font-semibold text-lg mt-1">${c.title}</h4>
+            <p class="text-sm text-gray-600 mt-2">${c.summary}</p>
+          </div>
+          <div class="mt-4 flex items-center justify-between">
+            <div class="text-sm text-gray-500">${c.hours}h • ${c.price}</div>
+            <div class="flex gap-2">
+              <button class="px-3 py-1 border rounded text-sm" data-id="${c.id}" onclick="viewCourse(${c.id})">Detalhes</button>
+              <button class="px-3 py-1 bg-red-700 text-white rounded text-sm" onclick="enroll(${c.id})">Inscrever</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    function viewCourse(id){
+      const c = courses.find(x=>x.id===id);
+      if(!c) return;
+      // Simple modal
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+      modal.innerHTML = `
+        <div class="bg-white w-11/12 md:w-2/3 lg:w-1/2 rounded-lg p-6 relative">
+          <button id="close-modal" class="absolute top-3 right-3 text-gray-500">✕</button>
+          <h3 class="text-2xl font-bold">${c.title}</h3>
+          <p class="text-sm text-gray-600 mt-2">${c.summary}</p>
+          <ul class="mt-4 text-sm text-gray-600">
+            <li>Categoria: ${c.category}</li>
+            <li>Carga horária: ${c.hours} horas</li>
+            <li>Valor: ${c.price}</li>
+            <li>Tags: ${c.tags.join(', ')}</li>
+          </ul>
+          <div class="mt-6 flex gap-3">
+            <button class="bg-red-700 text-white px-4 py-2 rounded" onclick="enroll(${c.id})">Inscrever</button>
+            <a href="#" class="px-4 py-2 border rounded" onclick="downloadSample(event)">Material (PDF)</a>
+          </div>
+        </div>
+      `;
+      modal.querySelector('#close-modal').addEventListener('click', ()=>modal.remove());
+      modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
+      document.body.appendChild(modal);
+    }
+
+    function enroll(id){
+      const c = courses.find(x=>x.id===id);
+      if(!c) return alert('Curso não encontrado');
+      // open small form modal
+      const modal = document.createElement('div');
+      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+      modal.innerHTML = `
+        <div class="bg-white w-11/12 md:w-1/2 rounded-lg p-6 relative">
+          <button id="close-enroll" class="absolute top-3 right-3 text-gray-500">✕</button>
+          <h3 class="text-xl font-bold mb-2">Inscrever em: ${c.title}</h3>
+          <form id="enroll-mini" class="space-y-3">
+            <input name="nome" placeholder="Nome completo" required class="w-full p-2 rounded border" />
+            <input name="email" type="email" placeholder="E-mail" required class="w-full p-2 rounded border" />
+            <div class="flex gap-3">
+              <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded">Confirmar</button>
+              <button type="button" id="cancel-enroll" class="px-4 py-2 border rounded">Cancelar</button>
+            </div>
+          </form>
+        </div>
+      `;
+      modal.querySelector('#close-enroll').addEventListener('click', ()=>modal.remove());
+      modal.querySelector('#cancel-enroll').addEventListener('click', ()=>modal.remove());
+      modal.querySelector('#enroll-mini').addEventListener('submit', (e)=>{
+        e.preventDefault();
+        alert('Inscrição confirmada — você receberá e‑mail com instruções. (Simulação)');
+        modal.remove();
+      });
+      document.body.appendChild(modal);
+    }
+
+    function downloadSample(e){
+      e.preventDefault();
+      alert('Download simulado — neste exemplo não há PDF real.');
+    }
+
+    // Search & filter
+    document.getElementById('filter').addEventListener('change', (e)=>{
+      applyFilters();
+    });
+    document.getElementById('search').addEventListener('input', (e)=>{
+      applyFilters();
+    });
+
+    function applyFilters(){
+      const f = document.getElementById('filter').value;
+      const s = document.getElementById('search').value.toLowerCase().trim();
+      let list = courses.filter(c=> (f==='all' || c.category===f));
+      if(s) list = list.filter(c=> c.title.toLowerCase().includes(s) || c.summary.toLowerCase().includes(s));
+      renderCourses(list);
+    }
+
+    // initial render
+    renderCourses(courses);
+
+    // small behaviour for sample button
+    document.getElementById('btn-sample').addEventListener('click', ()=>{
+      const sampleModal = document.createElement('div');
+      sampleModal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
+      sampleModal.innerHTML = `
+        <div class="bg-white w-11/12 md:w-2/3 rounded-lg p-6">
+          <h3 class="text-xl font-bold">Programa: Carregamento Ineficiente — Diagnóstico</h3>
+          <ul class="mt-3 text-sm text-gray-600 list-disc list-inside">
+            <li>Módulo 1 — Conceitos e impactos</li>
+            <li>Módulo 2 — Processos de carga e documentos</li>
+            <li>Módulo 3 — Segurança e equipamentos</li>
+            <li>Módulo 4 — Ferramentas e automação</li>
+            <li>Módulo 5 — Projeto prático (estudo de caso)</li>
+          </ul>
+          <div class="mt-4 text-right"><button class="px-4 py-2 border rounded" id="close-sample">Fechar</button></div>
+        </div>
+      `;
+      sampleModal.querySelector('#close-sample').addEventListener('click', ()=>sampleModal.remove());
+      document.body.appendChild(sampleModal);
+    });
+
+  </script>
 </body>
 </html>
