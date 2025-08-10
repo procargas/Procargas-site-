@@ -34,18 +34,45 @@
       top: 0; left: 0;
       z-index: 1000;
       display: flex;
-      justify-content: center;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
       border-bottom: 2px solid #d4af37;
     }
     nav ul {
       list-style: none;
       display: flex;
       gap: 2rem;
-      padding: 1rem 2rem;
     }
     nav li {
       font-weight: 600;
       font-size: 1.1rem;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.5rem;
+    }
+    .language-select {
+      background: #111;
+      color: #d4af37;
+      border: none;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    /* Barra de pesquisa */
+    .search-bar {
+      margin-right: 2rem;
+    }
+    .search-input {
+      padding: 0.5rem;
+      border: 1px solid #d4af37;
+      background: #000;
+      color: #d4af37;
+      border-radius: 4px;
+      font-size: 1rem;
     }
 
     /* Container para conteúdo */
@@ -180,12 +207,23 @@
 <body>
 
 <nav>
+  <div class="logo">ProCarga</div>
   <ul>
     <li><a href="#inicio">Início</a></li>
     <li><a href="#aulas">Aulas</a></li>
     <li><a href="#avaliacao">Avaliação</a></li>
     <li><a href="#certificado">Certificado</a></li>
   </ul>
+  <div class="search-bar">
+    <input class="search-input" type="text" placeholder="Pesquisar curso..." />
+  </div>
+  <div>
+    <select class="language-select" onchange="changeLanguage(event)">
+      <option value="pt">Português</option>
+      <option value="en">English</option>
+      <option value="es">Español</option>
+    </select>
+  </div>
 </nav>
 
 <div class="container">
@@ -193,6 +231,7 @@
   <section id="inicio">
     <h1>ProCarga</h1>
     <p>Curso de Capacitação em Carregamento Logístico – Aprenda as melhores práticas para otimizar operações de carga e descarga com eficiência e segurança.</p>
+    <p><a href="#registro">Clique aqui para se registrar no curso</a></p>
   </section>
 
   <section id="aulas">
@@ -207,7 +246,6 @@
       <li>Aula 3 – Técnicas de Carregamento
         <a href="aula3.pdf" download>Download PDF</a>
       </li>
-      <!-- Adicione mais aulas conforme necessário -->
     </ul>
   </section>
 
@@ -240,52 +278,3 @@
 
 <footer>
   <p>© 2025 ProCarga. Todos os direitos reservados.</p>
-  <p>
-    <a href="#">Facebook</a> | 
-    <a href="#">Instagram</a> | 
-    <a href="#">LinkedIn</a>
-  </p>
-</footer>
-
-<script>
-  function validarForm(event) {
-    event.preventDefault();
-    alert('Avaliação enviada com sucesso! Obrigado pela participação.');
-    document.getElementById('form-avaliacao').reset();
-    return false;
-  }
-
-  function gerarCertificado() {
-    const nome = document.getElementById('nome-certificado').value.trim();
-    const output = document.getElementById('certificado-output');
-
-    if(!nome) {
-      alert('Por favor, insira seu nome para gerar o certificado.');
-      return;
-    }
-
-    // Exemplo simples de certificado textual, pode ser substituído por PDF com libs externas
-    const texto = `
-**************************************************
-            CERTIFICADO DE CONCLUSÃO
-**************************************************
-
-Certificamos que
-
-${nome.toUpperCase()}
-
-concluiu com êxito o curso ProCarga – Curso de Capacitação em Carregamento Logístico.
-
-Data: ${new Date().toLocaleDateString('pt-BR')}
-
-**************************************************
-    `;
-
-    output.style.display = 'block';
-    output.textContent = texto;
-  }
-</script>
-
-</body>
-</html>
-
