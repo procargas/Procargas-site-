@@ -1,115 +1,473 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Procargas Academy</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Procargas Academy — Portfólio & Aulas</title>
 <style>
-  body { background: #111; color: white; font-family: sans-serif; margin: 0; display: flex; }
-  a { color: white; text-decoration: none; }
-  :root { --gold: #FFD700; }
-  .btn-outline { border: 1px solid var(--gold); background: transparent; padding: 0.5rem 1rem; color: var(--gold); cursor: pointer; }
-  .btn-gold { background: var(--gold); color: black; padding: 0.5rem 1rem; border: none; cursor: pointer; }
-  .card { background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 0.5rem; }
-  .small { font-size: 0.875rem; }
-
-  /* Sidebar */
-  .sidebar {
-    width: 220px;
-    background: #181818;
-    padding-top: 1rem;
-    display: flex;
-    flex-direction: column;
-    border-right: 1px solid #333;
-    position: fixed;
-    top: 0;
-    bottom: 0;
+  :root { --bg:#0f1113; --panel:#151617; --muted:#bfc3c7; --gold:#FFD700; --card: rgba(255,255,255,0.03); }
+  *{box-sizing:border-box}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#fff;display:flex;min-height:100vh}
+  a{color:inherit}
+  .sidebar{width:240px;background:#101214;border-right:1px solid rgba(255,255,255,0.03);position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;padding:1rem 0}
+  .brand{padding:0 1rem;margin-bottom:.5rem}
+  .brand h1{font-size:1.05rem;margin:.25rem 0;color:var(--gold)}
+  .nav{display:flex;flex-direction:column;gap:0.25rem;padding:0 0.5rem}
+  .tab-btn{background:transparent;border:none;color:#dfe3e6;text-align:left;padding:.65rem .9rem;cursor:pointer;font-weight:600;font-size:.95rem;border-left:4px solid transparent}
+  .tab-btn:hover{background:rgba(255,255,255,0.02)}
+  .tab-btn.active{background:#202224;border-left-color:var(--gold);color:var(--gold)}
+  .sidebar-footer{margin-top:auto;padding:1rem .9rem;font-size:.85rem;color:var(--muted)}
+  .main{margin-left:240px;flex:1;padding:1.25rem;min-height:100vh}
+  .header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
+  .hero{display:flex;gap:1rem;align-items:center}
+  h2{color:var(--gold);margin:0 0 .75rem 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem}
+  .card{background:var(--card);padding:1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
+  .small{color:var(--muted);font-size:.9rem}
+  .pill{display:inline-block;background:rgba(0,0,0,0.25);padding:.25rem .5rem;border-radius:999px;font-weight:700;color:var(--gold)}
+  .course-title{font-weight:700;margin:0 0 .5rem 0}
+  .btn{display:inline-block;padding:.45rem .7rem;border-radius:6px;border:none;cursor:pointer;font-weight:600}
+  .btn-gold{background:var(--gold);color:#111}
+  .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--gold)}
+  /* Aula accordion */
+  .lesson{border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+  .lesson-head{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;cursor:pointer}
+  .lesson-head h4{margin:0;font-size:1rem}
+  .lesson-body{padding:1rem;border-top:1px solid rgba(255,255,255,0.02);display:none;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
+  .lesson-body p{margin:.5rem 0;color:var(--muted);line-height:1.45}
+  .meta{font-size:.85rem;color:var(--muted)}
+  /* responsive */
+  @media(max-width:880px){
+    .sidebar{position:relative;width:100%;display:flex;flex-direction:row;gap:.5rem;overflow:auto;height:auto;padding:.5rem}
+    .main{margin-left:0;padding:.75rem}
+    .nav{flex-direction:row}
+    .tab-btn{white-space:nowrap;padding:.5rem .65rem;font-size:.9rem}
   }
-  .tab-btn {
-    padding: 0.75rem 1rem;
-    background: transparent;
-    border: none;
-    color: white;
-    text-align: left;
-    cursor: pointer;
-    font-weight: 600;
-  }
-  .tab-btn.active {
-    background: #333;
-    border-left: 4px solid var(--gold);
-    color: var(--gold);
-  }
-
-  /* Conteúdo principal */
-  .main-content {
-    margin-left: 220px;
-    padding: 1rem;
-    flex: 1;
-  }
-
-  /* Painéis */
-  .tab-panel { display: none; }
-  .tab-panel.active { display: block; }
 </style>
 </head>
 <body>
 
-<!-- Sidebar -->
-<div class="sidebar">
-  <button class="tab-btn active" data-tab="courses">📚 Cursos</button>
-  <button class="tab-btn" data-tab="trails">🛤️ Trilhas</button>
-  <button class="tab-btn" data-tab="certificates">📜 Certificados</button>
-  <button class="tab-btn" data-tab="about">ℹ️ Sobre</button>
-</div>
+  <!-- Sidebar -->
+  <aside class="sidebar" role="navigation" aria-label="Navegação principal">
+    <div class="brand">
+      <h1>Procargas Academy</h1>
+      <div class="small">Capacitação em logística & operações</div>
+    </div>
 
-<!-- Conteúdo -->
-<div class="main-content">
+    <nav class="nav" aria-label="tabs">
+      <button class="tab-btn active" data-tab="home">🏠 Home</button>
+      <button class="tab-btn" data-tab="aulas">📘 Aulas</button>
+      <button class="tab-btn" data-tab="cursos">📚 Cursos</button>
+      <button class="tab-btn" data-tab="trails">🛤 Trilhas</button>
+      <button class="tab-btn" data-tab="certificates">📜 Certificados</button>
+      <button class="tab-btn" data-tab="about">ℹ️ Sobre</button>
+    </nav>
 
-  <!-- Cursos -->
-  <div class="tab-panel active" id="tab-courses">
-    <h2 style="color:var(--gold)">Cursos em Destaque</h2>
-    <div class="card">Curso prático com estudos de caso, aulas passo-a-passo e certificado digital.</div>
-  </div>
+    <div class="sidebar-footer small">
+      contato@procargas.com<br/>0800-123-456
+    </div>
+  </aside>
 
-  <!-- Trilhas -->
-  <div class="tab-panel" id="tab-trails">
-    <h2 style="color:var(--gold)">Trilhas de Aprendizado</h2>
-    <div class="card">Trilha Logística — Aprenda a evitar carregamento ineficiente e reduzir custos.</div>
-  </div>
+  <!-- Main -->
+  <main class="main">
 
-  <!-- Certificados -->
-  <div class="tab-panel" id="tab-certificates">
-    <h2 style="color:var(--gold)">Como emitir seu certificado</h2>
-    <ol>
-      <li>Concluir todos os módulos e avaliações.</li>
-      <li>Aguardar validação do projeto final (quando houver).</li>
-      <li>Gerar certificado na área do aluno — PDF.</li>
-    </ol>
-  </div>
+    <!-- HOME / PORTFOLIO -->
+    <section id="home" class="tab-panel active" aria-live="polite">
+      <div class="header">
+        <div class="hero">
+          <div>
+            <h2>Portfólio — Cursos em Logística</h2>
+            <div class="small">Coleção de cursos práticos e microcursos cobrindo toda a operação de carga e descarga, pátio e docas.</div>
+          </div>
+        </div>
+      </div>
 
-  <!-- Sobre -->
-  <div class="tab-panel" id="tab-about">
-    <h2 style="color:var(--gold)">Sobre a Academia</h2>
-    <p>Plataforma voltada para qualificação técnica e desenvolvimento profissional.</p>
-    <ul>
-      <li>Instrutores certificados</li>
-      <li>Conteúdo atualizado</li>
-      <li>Material de apoio e estudos de caso</li>
-    </ul>
-  </div>
+      <div class="grid" style="margin-top:1rem">
+        <!-- Course cards: each links to the Aulas section -->
+        <article class="card">
+          <div class="course-title">Operações de Carga e Descarga — Essentials</div>
+          <div class="small">Controle do processo, segurança e fluxos básicos. Ideal para supervisores.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
 
-</div>
+        <article class="card">
+          <div class="course-title">Gestão de Pátio e Docas</div>
+          <div class="small">Layout de pátio, sistemas de agendamento e controle de filas.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="course-title">Segurança e Prevenção de Danos</div>
+          <div class="small">Boas práticas, inspeções, proteções e redução de avarias.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="course-title">Tecnologia & Automação de Docas</div>
+          <div class="small">WMS, sensores IoT, telemetria e integração com transportadoras.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="course-title">Lean Logistics & KPIs</div>
+          <div class="small">Eliminação de desperdício, VSM, KPIs operacionais e dashboards.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <div class="course-title">Manuseio de Perecíveis</div>
+          <div class="small">Cuidados térmicos, rotas e tempos máximos de exposição.</div>
+          <div style="margin-top:.75rem">
+            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- AULAS (15 detalhadas) -->
+    <section id="aulas" class="tab-panel" aria-live="polite">
+      <h2>Aulas — Otimização de Carregamento e Descarregamento (15 módulos)</h2>
+      <p class="small">Cada aula traz: objetivo, tópicos centrais, atividades práticas e link para vídeos no YouTube (buscas prontas).</p>
+
+      <div style="margin-top:1rem;display:grid;gap:.75rem">
+        <!-- Aula 1 -->
+        <div class="lesson" id="lesson-1">
+          <div class="lesson-head" tabindex="0">
+            <h4>1 — Introdução à Logística na Distribuição</h4>
+            <div class="meta">Objetivo: contextualizar | <span class="pill">Básico</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> panorama da cadeia de suprimentos, papel do carregamento e descarregamento na performance logística, custos diretos e indiretos afetados por gargalos (piso do pátio, mão-de-obra, tempos de espera).</p>
+            <p><strong>Atividade prática:</strong> mapear o processo de carga/descarga atual de uma unidade (fluxograma simples).</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Introduction+to+Logistics+and+Supply+Chain+Management">Buscar no YouTube: "Introduction to Logistics and Supply Chain Management"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 2 -->
+        <div class="lesson" id="lesson-2">
+          <div class="lesson-head" tabindex="0">
+            <h4>2 — Principais Desafios no Pátio e nas Docas</h4>
+            <div class="meta">Objetivo: identificar falhas comuns | <span class="pill">Básico</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> estacionamento inadequado, filas, risco ergonômico, layout ineficiente e como estes fatores se traduzem em custos e risco operacional.</p>
+            <p><strong>Atividade prática:</strong> checklist de inspeção do pátio — segurança, sinalização e fluxo de entrada/saída.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Dockyard+Safety+and+Efficiency+in+Logistics">Buscar: "Dockyard Safety and Efficiency in Logistics"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 3 -->
+        <div class="lesson" id="lesson-3">
+          <div class="lesson-head" tabindex="0">
+            <h4>3 — Segurança e Infraestrutura do Pátio</h4>
+            <div class="meta">Objetivo: projetar um pátio eficiente | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> layout otimizado, iluminação, retirada de pontos cegos, sinalização, faixas e ergonomia para operadores e motoristas.</p>
+            <p><strong>Atividade prática:</strong> desenhar um layout otimizado da doca para reduzir cruzamentos e retrabalhos.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Designing+Safe+Loading+Dock+Layouts">Buscar: "Designing Safe Loading Dock Layouts"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 4 -->
+        <div class="lesson" id="lesson-4">
+          <div class="lesson-head" tabindex="0">
+            <h4>4 — Gestão de Filas e Tempo de Espera</h4>
+            <div class="meta">Objetivo: reduzir tempos ociosos | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> sistemas de agendamento (appointments), zona de espera, sinalização dinâmica e trackers de chegada.</p>
+            <p><strong>Atividade prática:</strong> projeto de um sistema de agendamento simples (planilha + regras).</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Appointment+Scheduling+for+Loading+Docks">Buscar: "Appointment Scheduling for Loading Docks"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 5 -->
+        <div class="lesson" id="lesson-5">
+          <div class="lesson-head" tabindex="0">
+            <h4>5 — Treinamento de Equipe e Boas Práticas</h4>
+            <div class="meta">Objetivo: padronizar operações | <span class="pill">Básico</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> elaboração de SOPs, instruções visuais, comunicação entre motorista e operador, briefing diário e reciclagem.</p>
+            <p><strong>Atividade prática:</strong> criar um SOP para procedimento de acoplamento e travamento de carga.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Standard+Operating+Procedures+in+Logistics">Buscar: "Standard Operating Procedures in Logistics"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 6 -->
+        <div class="lesson" id="lesson-6">
+          <div class="lesson-head" tabindex="0">
+            <h4>6 — Uso de Tecnologia e Automação</h4>
+            <div class="meta">Objetivo: conhecer soluções tecnológicas | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> WMS, WCS, sensores IoT, telemetria, dock levelers automáticos e integração com TMS.</p>
+            <p><strong>Atividade prática:</strong> esboçar requisitos para integração WMS ↔ TMS para controle de docas.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Warehouse+Management+Systems+in+Modern+Supply+Chains">Buscar: "Warehouse Management Systems in Modern Supply Chains"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 7 -->
+        <div class="lesson" id="lesson-7">
+          <div class="lesson-head" tabindex="0">
+            <h4>7 — Monitoramento e KPIs Operacionais</h4>
+            <div class="meta">Objetivo: medir para melhorar | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> métricas essenciais: tempo na doca, tempo de ciclo, tempo de espera, produtividade por operador, % avarias, OTIF.</p>
+            <p><strong>Atividade prática:</strong> montar um dashboard simples (planilha) com 5 KPIs chave.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Logistics+KPI+Tracking+and+Dashboards">Buscar: "Logistics KPI Tracking and Dashboards"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 8 -->
+        <div class="lesson" id="lesson-8">
+          <div class="lesson-head" tabindex="0">
+            <h4>8 — Fluxo Contínuo e Lean Logistics</h4>
+            <div class="meta">Objetivo: eliminar desperdícios | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> VSM para docas, 5S, setup rápido, Kanban aplicado à expedição e melhoria contínua.</p>
+            <p><strong>Atividade prática:</strong> realizar um VSM da operação de expedição e identificar 3 desperdícios.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Lean+Approach+to+Loading+Dock+Operations">Buscar: "Lean Approach to Loading Dock Operations"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 9 -->
+        <div class="lesson" id="lesson-9">
+          <div class="lesson-head" tabindex="0">
+            <h4>9 — Prevenção de Danos a Veículos e Cargas</h4>
+            <div class="meta">Objetivo: reduzir avarias | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> estudios sobre amarração, proteção de lateral, rampas, cordoalhas, uso correto de equipamentos de movimentação.</p>
+            <p><strong>Atividade prática:</strong> checklist pré e pós-operação para reduzir avarias.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=How+to+Prevent+Cargo+Damage+During+Loading">Buscar: "How to Prevent Cargo Damage During Loading"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 10 -->
+        <div class="lesson" id="lesson-10">
+          <div class="lesson-head" tabindex="0">
+            <h4>10 — Redução de Perdas de Produtos e Perecíveis</h4>
+            <div class="meta">Objetivo: proteger perecíveis | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> cadeia de frio, embalagem de proteção, tempo máximo de exposição e rotinas de inventário rotativo.</p>
+            <p><strong>Atividade prática:</strong> montar um fluxo de manipulação de um produto perecível desde a doca até a saída.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Handling+Perishables+in+Logistics+Loading">Buscar: "Handling Perishables in Logistics Loading"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 11 -->
+        <div class="lesson" id="lesson-11">
+          <div class="lesson-head" tabindex="0">
+            <h4>11 — Compliance e Multas</h4>
+            <div class="meta">Objetivo: evitar penalidades | <span class="pill">Básico</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> normas, regras de trânsito interno, responsabilidade civil, documentação exigida e prevenção de autuações.</p>
+            <p><strong>Atividade prática:</strong> checklist de conformidade documental e de segurança.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=ILO+Safety+Regulations+at+Loading+Areas">Buscar: "ILO Safety Regulations at Loading Areas"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 12 -->
+        <div class="lesson" id="lesson-12">
+          <div class="lesson-head" tabindex="0">
+            <h4>12 — Simulações e Cenários de Casos</h4>
+            <div class="meta">Objetivo: testar soluções | <span class="pill">Avançado</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> modelagem de gargalos, simulação de filas (discrete event), análise de cenários e estudo de caso com indicadores antes/depois.</p>
+            <p><strong>Atividade prática:</strong> simular 1 turno com recursos atuais e com melhoria proposta (planilha/simulador simples).</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Case+Study+Logistics+Bottleneck+Simulation">Buscar: "Case Study: Logistics Bottleneck Simulation"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 13 -->
+        <div class="lesson" id="lesson-13">
+          <div class="lesson-head" tabindex="0">
+            <h4>13 — Planejamento Estratégico de Carga e Descarga</h4>
+            <div class="meta">Objetivo: desenhar planos robustos | <span class="pill">Avançado</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> balanceamento de docas, roteirização, políticas de priorização, simulação de demanda e planejamento de capacidade.</p>
+            <p><strong>Atividade prática:</strong> criar um plano de capacidade para picos semanais.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Strategic+Dock+and+Yard+Planning+in+Logistics">Buscar: "Strategic Dock and Yard Planning in Logistics"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 14 -->
+        <div class="lesson" id="lesson-14">
+          <div class="lesson-head" tabindex="0">
+            <h4>14 — Uso de Relatórios e Feedback Contínuo</h4>
+            <div class="meta">Objetivo: transformar dados em ações | <span class="pill">Intermediário</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> como coletar dados, montar relatórios executivos e operacionais, ciclos de feedback com times e caminhoneiros.</p>
+            <p><strong>Atividade prática:</strong> construir um relatório semanal de performance com 5 ações recomendadas.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Operational+Reporting+Tools+for+Loading+Efficiency">Buscar: "Operational Reporting Tools for Loading Efficiency"</a></p>
+          </div>
+        </div>
+
+        <!-- Aula 15 -->
+        <div class="lesson" id="lesson-15">
+          <div class="lesson-head" tabindex="0">
+            <h4>15 — Plano de Ação e Melhoria Contínua (PDCA)</h4>
+            <div class="meta">Objetivo: implementar mudanças | <span class="pill">Avançado</span></div>
+          </div>
+          <div class="lesson-body">
+            <p><strong>Conteúdo:</strong> ciclo PDCA aplicado a pátio/docas, roadmap de implantação, gestão de mudanças e KPIs de sucesso.</p>
+            <p><strong>Atividade prática:</strong> montar um plano 90 dias com 3 iniciativas prioritárias e métricas de sucesso.</p>
+            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Continuous+Improvement+in+Logistics+Operations">Buscar: "Continuous Improvement in Logistics Operations"</a></p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CURSOS (sinopse / lista) -->
+    <section id="cursos" class="tab-panel" aria-live="polite">
+      <h2>Catálogo de Cursos</h2>
+      <div class="small">Cursos oferecidos e microcursos focados em competências práticas.</div>
+
+      <div class="grid" style="margin-top:1rem">
+        <article class="card">
+          <h3 class="course-title">Curso: Carregamento Eficiente (60h)</h3>
+          <p class="small">Aulas passo-a-passo, simulações e certificado digital. Abrange técnicas de amarração, sequência de leitura de cargas e planejamento de docas.</p>
+          <div style="margin-top:.6rem">
+            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="course-title">Curso: Gestão de Pátio e Operações</h3>
+          <p class="small">Foco em layout, controle de fluxo, agendamento de chegada e segurança.</p>
+          <div style="margin-top:.6rem">
+            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
+          </div>
+        </article>
+
+        <article class="card">
+          <h3 class="course-title">Microcurso: Manuseio de Perecíveis</h3>
+          <p class="small">Protocolos, tempo de exposição e proteções especiais para produtos sensíveis.</p>
+          <div style="margin-top:.6rem">
+            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- TRILHAS -->
+    <section id="trails" class="tab-panel" aria-live="polite">
+      <h2>Trilhas de Aprendizado</h2>
+      <div class="small">Combina cursos e aulas para trajetórias: Operador, Supervisor e Gerente de Pátio.</div>
+      <div style="margin-top:1rem" class="grid">
+        <div class="card">
+          <h3 class="course-title">Trilha: Operador de Docas</h3>
+          <p class="small">Aulas 1,2,5,9 — foco operacional e segurança.</p>
+        </div>
+        <div class="card">
+          <h3 class="course-title">Trilha: Supervisor de Pátio</h3>
+          <p class="small">Aulas 3,4,7,13 — planejamento e medição.</p>
+        </div>
+        <div class="card">
+          <h3 class="course-title">Trilha: Gestão Estratégica</h3>
+          <p class="small">Aulas 6,8,12,15 — tecnologia, lean e melhoria contínua.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CERTIFICADOS -->
+    <section id="certificates" class="tab-panel" aria-live="polite">
+      <h2>Certificados</h2>
+      <div class="card">
+        <h3 style="margin-top:0">Como emitir seu certificado</h3>
+        <ol class="small">
+          <li>Concluir todos os módulos e avaliações.</li>
+          <li>Aguardar validação do projeto final.</li>
+          <li>Gerar certificado na área do aluno — disponível em PDF.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="tab-panel" aria-live="polite">
+      <h2>Sobre a Academia</h2>
+      <div class="card">
+        <p class="small">Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional. Especialistas em gestão de pátio e docas (ex.: Fretefy).</p>
+        <ul class="small">
+          <li>Instrutores certificados</li>
+          <li>Conteúdo atualizado</li>
+          <li>Material de apoio e estudos de caso</li>
+        </ul>
+      </div>
+    </section>
+
+  </main>
 
 <script>
-document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-    document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-    btn.classList.add("active");
-    document.getElementById("tab-" + btn.dataset.tab).classList.add("active");
+  // Tab navigation
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = document.querySelectorAll('.tab-panel');
+
+  function showTab(name){
+    tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===name));
+    panels.forEach(p=> p.classList.toggle('active', p.id===name));
+    // scroll to top of main for better UX
+    document.querySelector('.main').scrollTop = 0;
+  }
+
+  tabs.forEach(t=>{
+    t.addEventListener('click', ()=> showTab(t.dataset.tab));
   });
-});
+
+  // Links that point from cards to aulas
+  document.querySelectorAll('[data-goto]').forEach(el=>{
+    el.addEventListener('click', e=>{
+      e.preventDefault();
+      const target = el.dataset.goto;
+      showTab(target);
+      // focus first lesson for convenience
+      const firstLesson = document.querySelector('#aulas .lesson-head');
+      if(firstLesson) firstLesson.focus();
+    });
+  });
+
+  // Accordion for lessons
+  document.querySelectorAll('.lesson-head').forEach(head=>{
+    head.addEventListener('click', ()=>{
+      const body = head.nextElementSibling;
+      const opened = body.style.display === 'block';
+      // close all
+      document.querySelectorAll('.lesson-body').forEach(b=> b.style.display = 'none');
+      if(!opened) body.style.display = 'block';
+      // smooth scroll into view
+      head.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+    // allow keyboard toggle (Enter/Space)
+    head.addEventListener('keydown', (ev)=>{
+      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); head.click(); }
+    });
+  });
+
+  // make first panel visible by default
+  document.addEventListener('DOMContentLoaded', ()=>{
+    showTab('home');
+  });
 </script>
 
 </body>
-</html>
+              </html>
