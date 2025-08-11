@@ -1,109 +1,174 @@
 <!doctype html>
-<html lang="pt-BR">
+<html lang="pt">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Academia Corporativa — Cursos Online</title>
-  <meta name="description" content="Plataforma de cursos online estilo institucional (layout inspirado em portais financeiros): cursos, trilhas, certificados e área do aluno."/>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Procargas Academy — Multilingual Demo</title>
+
+  <!-- Tailwind for quick styling (optional, included) -->
   <script src="https://cdn.tailwindcss.com"></script>
+
   <style>
-    /* Pequenas customizações além do Tailwind */
-    .brand-gradient{background:linear-gradient(90deg,#d8122a,#b10f22)}
-    .glass{background:rgba(255,255,255,0.6);backdrop-filter:blur(6px)}
+    :root{
+      --bg:#070707;       /* black */
+      --gold:#c9a84a;     /* gold */
+      --gold-2:#af8f3a;
+      --accent:#86d1ff;   /* light blue */
+      --muted:#cfcfcf;
+      --card:#0f0f0f;
+      --glass: rgba(255,255,255,0.02);
+    }
+    body{
+      background:var(--bg);
+      color:var(--muted);
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    a { color: inherit; }
+    /* Header */
+    header { border-bottom: 1px solid rgba(255,255,255,0.03); }
+    .logo-box{ width:56px; height:56px; border-radius:10px; display:flex; align-items:center; justify-content:center;
+               background: linear-gradient(180deg,var(--gold),var(--gold-2)); box-shadow: 0 6px 20px rgba(0,0,0,0.6); }
+    .logo-box img{ width:48px; height:48px; object-fit:contain; display:block; border-radius:8px; }
+    .brand-title{ color:var(--gold); font-weight:800; letter-spacing:.2px; }
+    .brand-sub{ color: rgba(255,255,255,0.65); font-size:.9rem; }
+    /* Buttons */
+    .btn-gold { background: linear-gradient(90deg,var(--gold),var(--gold-2)); color:#070707; font-weight:700; padding:.55rem .9rem; border-radius:10px; }
+    .btn-outline { border:1px solid rgba(255,255,255,0.04); padding:.5rem .8rem; border-radius:10px; color:var(--muted); background:transparent; }
+    .pill { background: rgba(255,255,255,0.02); padding:.25rem .6rem; border-radius:999px; font-weight:700; color: var(--gold); display:inline-block; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01)); border:1px solid rgba(255,255,255,0.03); padding:1rem; border-radius:12px; }
+    .tag { background: rgba(134,209,255,0.07); padding:.2rem .5rem; border-radius:8px; color:var(--accent); font-weight:700; display:inline-block; }
+    .dropdown-menu{ position:absolute; background:var(--card); border:1px solid rgba(255,255,255,0.03); padding:.5rem; border-radius:10px; margin-top:.5rem; min-width:220px; box-shadow: 0 12px 40px rgba(0,0,0,0.6); display:none; z-index:60; }
+    .dropdown-item{ padding:.45rem .6rem; border-radius:8px; color:var(--muted); display:block; text-decoration:none; }
+    .dropdown-item:hover{ background: rgba(255,255,255,0.02); color:var(--gold); }
+    /* modals */
+    .modal-backdrop{ position:fixed; inset:0; background:rgba(0,0,0,0.65); display:flex; align-items:center; justify-content:center; z-index:80; }
+    .modal{ background:var(--card); border-radius:12px; padding:1.15rem; width:95%; max-width:900px; border:1px solid rgba(169,137,58,0.06); color:var(--muted); }
+    .close-btn{ background:transparent; border:0; color:var(--muted); font-size:1.25rem; cursor:pointer; }
+    /* small helpers */
+    input, select, textarea { background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--muted); padding:.6rem .7rem; border-radius:8px; width:100%; }
+    .small{ font-size:.9rem; color:rgba(255,255,255,0.65); }
+    /* responsive */
+    @media (max-width: 768px){
+      .nav-desktop{ display:none; }
+      #mobile-menu{ display:block; }
+    }
+    @media (min-width: 769px){
+      #mobile-menu{ display:none; }
+    }
   </style>
 </head>
-<body class="bg-gray-50 text-gray-800 antialiased">
+<body>
+
   <!-- HEADER -->
-  <header class="brand-gradient text-white">
-    <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between gap-6">
+  <header class="px-6 py-4">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-6">
       <div class="flex items-center gap-4">
-        <div class="w-12 h-12 rounded-md bg-white flex items-center justify-center font-bold text-red-700">BC</div>
+        <div class="logo-box" id="logo-box">
+          <!-- Try to load external image; if missing, show inline SVG -->
+          <img id="logo-img" src="procargas-logo.jpg" alt="Procargas Logo" onerror="document.getElementById('logo-img').style.display='none'; renderSVGLogo()" />
+        </div>
         <div>
-          <h1 class="text-lg font-extrabold">Academia Corporativa</h1>
-          <p class="text-sm opacity-90">Capacitação profissional e certificação</p>
+          <div class="brand-title" data-i18n="brand.title">Procargas Academy</div>
+          <div class="brand-sub" data-i18n="brand.subtitle">Professional training & certificates</div>
         </div>
       </div>
 
-      <nav class="hidden md:flex items-center gap-6">
-        <a href="#cursos" class="hover:underline">Cursos</a>
-        <a href="#trilhas" class="hover:underline">Trilhas</a>
-        <a href="#certificados" class="hover:underline">Certificados</a>
-        <a href="#sobre" class="hover:underline">Sobre</a>
+      <!-- NAV desktop -->
+      <nav class="nav-desktop flex items-center gap-4">
+        <div class="relative">
+          <button id="modalities-btn" class="btn-outline" aria-expanded="false" aria-controls="modalities-menu" data-i18n="menu.modalities">Modalidades</button>
+          <div id="modalities-menu" class="dropdown-menu" aria-hidden="true"></div>
+        </div>
+        <a href="#courses" class="small" data-i18n="menu.courses">Cursos</a>
+        <a href="#trails" class="small" data-i18n="menu.trails">Trilhas</a>
+        <a href="#certificates" class="small" data-i18n="menu.certificates">Certificados</a>
+        <a href="#events" class="small" data-i18n="menu.events">Eventos</a>
+        <a href="#stakeholders" class="small" data-i18n="menu.stakeholders">Stakeholders</a>
+        <a href="#contact" class="small" data-i18n="menu.contact">Contato</a>
       </nav>
 
       <div class="flex items-center gap-3">
-        <button id="btn-login" class="bg-white text-red-700 px-4 py-2 rounded font-semibold hover:opacity-95">Entrar</button>
-        <a href="#inscreva" class="hidden sm:inline-block bg-white text-red-700 px-4 py-2 rounded font-semibold">Inscreva-se</a>
-        <button id="menu-btn" class="md:hidden">☰</button>
+        <select id="lang" class="bg-transparent small" title="Select language" aria-label="Select language">
+          <option value="pt">PT</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+        </select>
+
+        <div id="auth-area" class="flex items-center gap-2">
+          <button id="btn-login" class="btn-outline">Login</button>
+          <button id="btn-register" class="btn-gold">Register</button>
+        </div>
+
+        <button id="mobile-menu-toggle" class="btn-outline md:hidden">☰</button>
       </div>
     </div>
 
-    <!-- mobile menu -->
-    <div id="mobile-menu" class="hidden bg-red-600/80 md:hidden">
-      <div class="max-w-7xl mx-auto px-6 py-4 flex flex-col gap-3">
-        <a href="#cursos" class="text-white">Cursos</a>
-        <a href="#trilhas" class="text-white">Trilhas</a>
-        <a href="#certificados" class="text-white">Certificados</a>
-        <a href="#sobre" class="text-white">Sobre</a>
+    <!-- MOBILE menu -->
+    <div id="mobile-menu" class="max-w-7xl mx-auto px-4 mt-3 hidden">
+      <div class="card p-3 flex flex-col gap-2">
+        <button id="mobile-modalities" class="btn-outline text-left">Modalidades</button>
+        <a href="#courses" class="small">Cursos</a>
+        <a href="#trails" class="small">Trilhas</a>
+        <a href="#events" class="small">Eventos</a>
+        <a href="#contact" class="small">Contato</a>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- MAIN -->
   <main class="max-w-7xl mx-auto px-6 py-10">
-    <section class="grid lg:grid-cols-2 gap-8 items-center">
-      <div class="space-y-6">
-        <span class="inline-block px-3 py-1 rounded-full text-sm bg-red-100 text-red-700 font-semibold">Novo • Trilha Logística</span>
-        <h2 class="text-3xl md:text-4xl font-extrabold">Aprenda a evitar carregamento ineficiente e reduza custos na logística</h2>
-        <p class="text-gray-600">Curso prático com estudos de caso, aulas passo-a-passo, simulações e certificado digital. Material voltado para responsáveis por operação, planejamento e transportes.</p>
-        <div class="flex gap-3">
-          <a href="#cursos" class="bg-red-700 text-white px-5 py-3 rounded shadow">Ver Cursos</a>
-          <a href="#sobre" class="border border-red-700 text-red-700 px-5 py-3 rounded">Como funciona</a>
+    <section class="grid lg:grid-cols-2 gap-8 items-start">
+      <div>
+        <span class="pill" data-i18n="hero.tag">Novo • Trilha Logística</span>
+        <h1 class="text-3xl md:text-4xl" style="color:var(--gold);font-weight:800;margin-top:.6rem" data-i18n="hero.title">Aprenda a evitar carregamento ineficiente e reduzir custos na logística</h1>
+        <p class="mt-4 small" data-i18n="hero.desc">Curso prático com estudos de caso, aulas passo-a-passo, simulações e certificado digital.</p>
+
+        <div class="mt-6 flex gap-3">
+          <button id="see-courses" class="btn-gold" data-i18n="hero.cta_courses">Ver Cursos</button>
+          <button id="how-it-works" class="btn-outline" data-i18n="hero.cta_how">Como funciona</button>
         </div>
 
-        <div class="grid grid-cols-3 gap-3 max-w-sm mt-2">
-          <div class="p-3 bg-white rounded shadow text-center">
-            <div class="text-sm font-bold">60h</div>
-            <div class="text-xs text-gray-500">Carga horária</div>
+        <div class="mt-6 grid grid-cols-3 gap-3 max-w-sm">
+          <div class="card text-center">
+            <div class="text-xl" style="color:var(--gold);font-weight:800">60h</div>
+            <div class="small" data-i18n="hero.hours">Carga horária</div>
           </div>
-          <div class="p-3 bg-white rounded shadow text-center">
-            <div class="text-sm font-bold">Mentorias</div>
-            <div class="text-xs text-gray-500">ao vivo</div>
+          <div class="card text-center">
+            <div class="text-xl" style="color:var(--gold);font-weight:800">Mentorias</div>
+            <div class="small" data-i18n="hero.mentorships">Ao vivo</div>
           </div>
-          <div class="p-3 bg-white rounded shadow text-center">
-            <div class="text-sm font-bold">Certificado</div>
-            <div class="text-xs text-gray-500">Digital</div>
+          <div class="card text-center">
+            <div class="text-xl" style="color:var(--gold);font-weight:800">Certificado</div>
+            <div class="small" data-i18n="hero.certificate">Digital</div>
           </div>
         </div>
       </div>
 
-      <div class="bg-white rounded-lg shadow-lg p-6">
-        <h3 class="font-bold text-lg mb-3">Inscreva-se na turma</h3>
+      <div class="card">
+        <h3 style="font-weight:800;color:var(--gold);margin-bottom:.5rem" data-i18n="enroll.title">Inscreva-se na turma</h3>
         <form id="enroll-form" class="space-y-3">
-          <input name="nome" placeholder="Nome completo" required class="w-full p-3 rounded border" />
-          <input name="email" type="email" placeholder="E-mail" required class="w-full p-3 rounded border" />
-          <select name="curso" class="w-full p-3 rounded border">
-            <option value="carregamento">Carregamento Ineficiente — Trilha</option>
-            <option value="logistica">Logística e Armazenagem</option>
-            <option value="ti">Gestão de Transportes (TI)</option>
-          </select>
+          <input id="enroll-name" name="name" placeholder="Nome completo" required />
+          <input id="enroll-email" name="email" type="email" placeholder="E-mail" required />
+          <select id="enroll-course" name="course"></select>
           <div class="flex gap-3">
-            <button type="submit" class="flex-1 bg-red-700 text-white px-4 py-2 rounded">Inscrever</button>
-            <button type="button" id="btn-sample" class="flex-1 border border-gray-300 text-gray-700 px-4 py-2 rounded">Ver programa</button>
+            <button type="submit" class="btn-gold" data-i18n="enroll.btn">Inscrever</button>
+            <button type="button" id="btn-syllabus" class="btn-outline" data-i18n="enroll.syllabus">Ver programa</button>
           </div>
-          <p class="text-xs text-gray-500">Pagamento via cartão, boleto ou convênio corporativo.</p>
+          <p class="small" data-i18n="enroll.pay">Pagamento via cartão, boleto ou convênio corporativo.</p>
         </form>
       </div>
     </section>
 
-    <!-- FILTERS + COURSES -->
-    <section id="cursos" class="mt-12">
+    <!-- COURSES -->
+    <section id="courses" class="mt-12">
       <div class="flex items-center justify-between mb-6">
-        <h3 class="text-2xl font-bold">Cursos em Destaque</h3>
+        <h2 style="font-weight:800;color:var(--gold)" data-i18n="courses.title">Cursos em Destaque</h2>
         <div class="flex gap-3 items-center">
-          <input id="search" placeholder="Buscar curso" class="px-3 py-2 rounded border" />
-          <select id="filter" class="px-3 py-2 rounded border">
-            <option value="all">Todos</option>
+          <input id="search" placeholder="Buscar curso" class="px-3 py-2 rounded bg-transparent border border-white/6" />
+          <select id="filter" class="px-3 py-2 rounded bg-transparent border border-white/6">
+            <option value="all" data-i18n="filter.all">Todos</option>
             <option value="logistica">Logística</option>
             <option value="negocios">Negócios</option>
             <option value="ti">TI</option>
@@ -112,266 +177,888 @@
       </div>
 
       <div id="courses-grid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Course Card template (JS will populate) -->
+        <!-- JS will render course cards -->
       </div>
     </section>
 
-    <!-- TRILHAS -->
-    <section id="trilhas" class="mt-16 bg-white rounded-lg shadow p-6">
-      <h3 class="text-2xl font-bold mb-4">Trilhas de Aprendizado</h3>
-      <div class="grid md:grid-cols-3 gap-4">
-        <article class="p-4 border rounded">
-          <h4 class="font-semibold">Trilha Logística Completa</h4>
-          <p class="text-sm text-gray-600">Sequência: Fundamentos → Planejamento de Carga → Segurança → KPIs</p>
-          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
-        </article>
-        <article class="p-4 border rounded">
-          <h4 class="font-semibold">Trilha Operacional</h4>
-          <p class="text-sm text-gray-600">Foco em operação, produtividade e redução de desperdícios.</p>
-          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
-        </article>
-        <article class="p-4 border rounded">
-          <h4 class="font-semibold">Trilha Gestão & Cadastro</h4>
-          <p class="text-sm text-gray-600">Gestão, liderança e indicadores para supervisores.</p>
-          <a href="#cursos" class="text-red-700 text-sm font-semibold">Ver trilha →</a>
-        </article>
-      </div>
+    <!-- TRAILS -->
+    <section id="trails" class="mt-16 card p-6">
+      <h3 style="font-weight:800;color:var(--gold)" data-i18n="trails.title">Trilhas de Aprendizado</h3>
+      <div class="grid md:grid-cols-3 gap-4 mt-4" id="trails-grid"></div>
     </section>
 
-    <!-- CERTIFICADOS E TESTEMUNHOS -->
-    <section id="certificados" class="mt-16 grid lg:grid-cols-2 gap-6">
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-2xl font-bold mb-3">Como emitir seu certificado</h3>
-        <ol class="list-decimal list-inside text-gray-600">
-          <li>Concluir todos os módulos e avaliações.</li>
-          <li>Aguardar validação do projeto final (quando houver).</li>
-          <li>Gerar certificado na área do aluno — disponível em PDF.</li>
+    <!-- CERTIFICATES / TESTIMONIALS -->
+    <section id="certificates" class="mt-16 grid lg:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 style="font-weight:700;color:var(--gold)" data-i18n="certs.title">Como emitir seu certificado</h3>
+        <ol class="list-decimal list-inside small">
+          <li data-i18n="certs.step1">Concluir todos os módulos e avaliações.</li>
+          <li data-i18n="certs.step2">Aguardar validação do projeto final (quando houver).</li>
+          <li data-i18n="certs.step3">Gerar certificado na área do aluno — disponível em PDF.</li>
         </ol>
-        <p class="mt-4 text-sm text-gray-500">Observação: certificados são emitidos digitalmente e podem ser verificados via código de autenticidade.</p>
       </div>
 
-      <div class="bg-white rounded-lg shadow p-6">
-        <h3 class="text-2xl font-bold mb-3">Depoimentos</h3>
-        <blockquote class="italic text-gray-600">“Reduzimos o tempo de carregamento em 30% após aplicar as técnicas do curso.”</blockquote>
-        <p class="mt-2 text-sm text-gray-500">— Gerente de Operações, Transportadora XYZ</p>
+      <div class="card">
+        <h3 style="font-weight:700;color:var(--gold)" data-i18n="testimonials.title">Depoimentos</h3>
+        <blockquote class="italic small">“Reduzimos o tempo de carregamento em 30% após aplicar as técnicas do curso.”</blockquote>
+        <p class="mt-2 small">— Gerente de Operações, Transportadora XYZ</p>
       </div>
     </section>
 
     <!-- ABOUT / INSTRUCTORS -->
-    <section id="sobre" class="mt-16">
-      <div class="grid md:grid-cols-2 gap-6">
-        <div class="bg-white rounded-lg shadow p-6">
-          <h3 class="text-2xl font-bold">Sobre a Academia</h3>
-          <p class="text-gray-600">Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional. Conteúdo produzido por especialistas de mercado com didática aplicada.</p>
-          <ul class="mt-4 space-y-2 text-gray-600">
-            <li>Instrutores certificados</li>
-            <li>Conteúdo atualizado</li>
-            <li>Material de apoio e estudos de caso</li>
-          </ul>
-        </div>
+    <section id="about" class="mt-16 grid md:grid-cols-2 gap-6">
+      <div class="card">
+        <h3 style="font-weight:700;color:var(--gold)" data-i18n="about.title">Sobre a Academia</h3>
+        <p class="small" data-i18n="about.desc">Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional.</p>
+        <ul class="mt-4 small">
+          <li data-i18n="about.benefit1">Instrutores certificados</li>
+          <li data-i18n="about.benefit2">Conteúdo atualizado</li>
+          <li data-i18n="about.benefit3">Material de apoio e estudos de caso</li>
+        </ul>
+      </div>
 
-        <div class="bg-white rounded-lg shadow p-6">
-          <h3 class="text-2xl font-bold">Instrutores</h3>
-          <div class="grid grid-cols-2 gap-4 mt-4">
-            <div class="p-3 border rounded">
-              <div class="font-bold">Samuel Ramos</div>
-              <div class="text-sm text-gray-600">Especialista em Logística</div>
-            </div>
-            <div class="p-3 border rounded">
-              <div class="font-bold">Marcos Guilherme</div>
-              <div class="text-sm text-gray-600">Eng. de Transportes</div>
-            </div>
-            <div class="p-3 border rounded">
-              <div class="font-bold">Lavinya</div>
-              <div class="text-sm text-gray-600">Coordenadora de Operações</div>
-            </div>
-            <div class="p-3 border rounded">
-              <div class="font-bold">Samuel Afonso</div>
-              <div class="text-sm text-gray-600">Analista de Dados</div>
-            </div>
-          </div>
-        </div>
+      <div class="card">
+        <h3 style="font-weight:700;color:var(--gold)" data-i18n="instructors.title">Instrutores</h3>
+        <div class="grid grid-cols-2 gap-4 mt-4" id="instructors-list"></div>
       </div>
     </section>
 
   </main>
 
   <!-- FOOTER -->
-  <footer class="bg-gray-800 text-gray-200 mt-16">
-    <div class="max-w-7xl mx-auto px-6 py-12 grid md:grid-cols-4 gap-6">
+  <footer class="mt-12">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-6 py-8">
       <div>
-        <h4 class="font-bold text-white">Academia Corporativa</h4>
-        <p class="text-sm">Capacitação profissional disponível para colaboradores e público em geral.</p>
+        <h4 style="font-weight:800;color:var(--gold)">Procargas Academy</h4>
+        <p class="small">Capacitação profissional disponível para colaboradores e público em geral.</p>
       </div>
       <div>
-        <h5 class="font-semibold text-white">Navegação</h5>
-        <ul class="text-sm mt-2 space-y-1">
-          <li><a href="#cursos" class="hover:underline">Cursos</a></li>
-          <li><a href="#trilhas" class="hover:underline">Trilhas</a></li>
-          <li><a href="#certificados" class="hover:underline">Certificados</a></li>
+        <h5 style="font-weight:700;color:var(--gold)">Navegação</h5>
+        <ul class="small space-y-1">
+          <li><a href="#courses">Cursos</a></li>
+          <li><a href="#trails">Trilhas</a></li>
+          <li><a href="#certificates">Certificados</a></li>
         </ul>
       </div>
       <div>
-        <h5 class="font-semibold text-white">Suporte</h5>
-        <ul class="text-sm mt-2 space-y-1">
-          <li><a href="#" class="hover:underline">Central de Ajuda</a></li>
-          <li><a href="#" class="hover:underline">Fale conosco</a></li>
+        <h5 style="font-weight:700;color:var(--gold)">Suporte</h5>
+        <ul class="small space-y-1">
+          <li><a href="#">Central de Ajuda</a></li>
+          <li><a href="#">Fale conosco</a></li>
         </ul>
       </div>
       <div>
-        <h5 class="font-semibold text-white">Contato</h5>
-        <p class="text-sm mt-2">contato@academia.com<br/>0800-123-456</p>
+        <h5 style="font-weight:700;color:var(--gold)">Contato</h5>
+        <p class="small mt-2">contato@procargas.com<br/>0800-123-456</p>
       </div>
     </div>
-    <div class="border-t border-gray-700 py-4 text-center text-sm">&copy; 2025 Academia Corporativa — Todos os direitos reservados</div>
+    <div class="max-w-7xl mx-auto px-6 text-center mt-2 small">&copy; 2025 Procargas Academy — Todos os direitos reservados</div>
   </footer>
 
-  <!-- SCRIPTS: dados de exemplo e interatividade leve -->
+  <!-- Modals root -->
+  <div id="modals-root"></div>
+
+  <!-- ---------- SCRIPTS ---------- -->
   <script>
-    // Mobile menu toggle
-    document.getElementById('menu-btn')?.addEventListener('click', () => {
-      const m = document.getElementById('mobile-menu');
-      if(!m) return;
-      m.classList.toggle('hidden');
+  /* -----------------------
+     Translation data (i18n)
+     ----------------------- */
+  const translations = {
+    pt: {
+      "brand.title":"Procargas Academy",
+      "brand.subtitle":"Capacitação profissional e certificação",
+      "menu.modalities":"Modalidades",
+      "menu.courses":"Cursos",
+      "menu.trails":"Trilhas",
+      "menu.certificates":"Certificados",
+      "menu.events":"Eventos",
+      "menu.stakeholders":"Stakeholders",
+      "menu.contact":"Contato",
+      "hero.tag":"Novo • Trilha Logística",
+      "hero.title":"Aprenda a evitar carregamento ineficiente e reduzir custos na logística",
+      "hero.desc":"Curso prático com estudos de caso, aulas passo-a-passo, simulações e certificado digital.",
+      "hero.cta_courses":"Ver Cursos",
+      "hero.cta_how":"Como funciona",
+      "hero.hours":"Carga horária",
+      "hero.mentorships":"Ao vivo",
+      "hero.certificate":"Digital",
+      "enroll.title":"Inscreva-se na turma",
+      "enroll.btn":"Inscrever",
+      "enroll.syllabus":"Ver programa",
+      "enroll.pay":"Pagamento via cartão, boleto ou convênio corporativo.",
+      "courses.title":"Cursos em Destaque",
+      "filter.all":"Todos",
+      "trails.title":"Trilhas de Aprendizado",
+      "certs.title":"Como emitir seu certificado",
+      "certs.step1":"Concluir todos os módulos e avaliações.",
+      "certs.step2":"Aguardar validação do projeto final (quando houver).",
+      "certs.step3":"Gerar certificado na área do aluno — disponível em PDF.",
+      "testimonials.title":"Depoimentos",
+      "about.title":"Sobre a Academia",
+      "about.desc":"Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional.",
+      "about.benefit1":"Instrutores certificados",
+      "about.benefit2":"Conteúdo atualizado",
+      "about.benefit3":"Material de apoio e estudos de caso",
+      "instructors.title":"Instrutores",
+      "modalities":[
+        "Cinema Acessível","Audiodescrição","Legenda Oculta","Dublagem","Interpretação em Mídia",
+        "Respeaking","Revisão","Interpretação em Língua de Sinais","Legendagem para Surdos e Ensurdecidos",
+        "Legendagem","Narração","Acessibilidade na Mídia"
+      ]
+    },
+    en: {
+      "brand.title":"Procargas Academy",
+      "brand.subtitle":"Professional training & certificates",
+      "menu.modalities":"Modalities",
+      "menu.courses":"Courses",
+      "menu.trails":"Learning Paths",
+      "menu.certificates":"Certificates",
+      "menu.events":"Events",
+      "menu.stakeholders":"Stakeholders",
+      "menu.contact":"Contact",
+      "hero.tag":"New • Logistics Path",
+      "hero.title":"Learn to avoid inefficient loading and reduce logistics costs",
+      "hero.desc":"Practical course with case studies, step-by-step lessons, simulations and digital certificate.",
+      "hero.cta_courses":"See Courses",
+      "hero.cta_how":"How it works",
+      "hero.hours":"Hours",
+      "hero.mentorships":"Live Mentorships",
+      "hero.certificate":"Digital",
+      "enroll.title":"Enroll in the cohort",
+      "enroll.btn":"Enroll",
+      "enroll.syllabus":"View syllabus",
+      "enroll.pay":"Payment by card, boleto or corporate agreement.",
+      "courses.title":"Featured Courses",
+      "filter.all":"All",
+      "trails.title":"Learning Paths",
+      "certs.title":"How to issue your certificate",
+      "certs.step1":"Complete all modules and assessments.",
+      "certs.step2":"Wait for final project validation (if any).",
+      "certs.step3":"Generate certificate in the student area — available in PDF.",
+      "testimonials.title":"Testimonials",
+      "about.title":"About the Academy",
+      "about.desc":"Institutional platform focused on technical qualification and professional development.",
+      "about.benefit1":"Certified instructors",
+      "about.benefit2":"Updated content",
+      "about.benefit3":"Support materials and case studies",
+      "instructors.title":"Instructors",
+      "modalities":[
+        "Accessible Filmmaking","Audio Description","Audio Subtitling","Dubbing","Media Interpreting",
+        "Respeaking","Reviewing","Sign Language Interpreting","Subtitling for the Deaf and Hard of Hearing",
+        "Subtitling","Voice-over","Media Accessibility"
+      ]
+    },
+    es: {
+      "brand.title":"Procargas Academy",
+      "brand.subtitle":"Formación profesional y certificados",
+      "menu.modalities":"Modalidades",
+      "menu.courses":"Cursos",
+      "menu.trails":"Rutas de Aprendizaje",
+      "menu.certificates":"Certificados",
+      "menu.events":"Eventos",
+      "menu.stakeholders":"Stakeholders",
+      "menu.contact":"Contacto",
+      "hero.tag":"Nuevo • Ruta Logística",
+      "hero.title":"Aprende a evitar cargas ineficientes y reducir costos en la logística",
+      "hero.desc":"Curso práctico con estudios de caso, lecciones paso a paso, simulaciones y certificado digital.",
+      "hero.cta_courses":"Ver Cursos",
+      "hero.cta_how":"Cómo funciona",
+      "hero.hours":"Horas",
+      "hero.mentorships":"Mentorías en vivo",
+      "hero.certificate":"Digital",
+      "enroll.title":"Inscríbete en la cohorte",
+      "enroll.btn":"Inscribirse",
+      "enroll.syllabus":"Ver programa",
+      "enroll.pay":"Pago con tarjeta, boleto o convenio corporativo.",
+      "courses.title":"Cursos Destacados",
+      "filter.all":"Todos",
+      "trails.title":"Rutas de Aprendizaje",
+      "certs.title":"Cómo emitir su certificado",
+      "certs.step1":"Completar todos los módulos y evaluaciones.",
+      "certs.step2":"Esperar la validación del proyecto final (si aplica).",
+      "certs.step3":"Generar certificado en el área del alumno — disponible en PDF.",
+      "testimonials.title":"Testimonios",
+      "about.title":"Acerca de la Academia",
+      "about.desc":"Plataforma institucional orientada a la calificación técnica y desarrollo profesional.",
+      "about.benefit1":"Instructores certificados",
+      "about.benefit2":"Contenido actualizado",
+      "about.benefit3":"Materiales de apoyo y estudios de caso",
+      "instructors.title":"Instructores",
+      "modalities":[
+        "Cine Accesible","Audiodescripción","Subtitulado de Audio","Doblaje","Interpretación de Medios",
+        "Respeaking","Revisión","Interpretación en Lengua de Señas","Subtítulos para Sordos e Hipoacúsicos",
+        "Subtitulado","Voice-over","Accesibilidad en Medios"
+      ]
+    }
+  };
+
+  /* -----------------------
+     Courses data (with lessons)
+     Each course contains lessons array; each lesson has content per language
+     ----------------------- */
+  const courses = [
+    {
+      id:1,
+      slug:'carregamento-diagnostico',
+      category:'logistica',
+      hours:8,
+      price:{pt:'Grátis',en:'Free',es:'Gratis'},
+      title:{pt:'Carregamento Ineficiente — Diagnóstico',en:'Inefficient Loading — Diagnosis',es:'Carga Ineficiente — Diagnóstico'},
+      summary:{
+        pt:'Identifique pontos de perda no processo de carregamento.',
+        en:'Identify loss points in the loading process.',
+        es:'Identifica puntos de pérdida en el proceso de carga.'
+      },
+      tags:['fundamentos','prático'],
+      lessons: [
+        { id:101, title:{pt:'Módulo 1 — Conceitos',en:'Module 1 — Concepts',es:'Módulo 1 — Conceptos'}, content:{pt:'Introdução aos conceitos de carregamento e impactos.',en:'Intro to loading concepts and impacts.',es:'Introducción a conceptos de carga e impactos.'} },
+        { id:102, title:{pt:'Módulo 2 — Processos de Carga',en:'Module 2 — Loading Processes',es:'Módulo 2 — Procesos de Carga'}, content:{pt:'Documentação, checklists e fluxo.',en:'Documentation, checklists and flow.',es:'Documentación, checklists y flujo.'} },
+        { id:103, title:{pt:'Módulo 3 — Medidas Práticas',en:'Module 3 — Practical Measures',es:'Módulo 3 — Medidas Prácticas'}, content:{pt:'Técnicas para reduzir perdas e tempo.',en:'Techniques to reduce losses and time.',es:'Técnicas para reducir pérdidas y tiempo.'} },
+      ]
+    },
+    {
+      id:2,
+      slug:'planejamento-carga',
+      category:'logistica',
+      hours:12,
+      price:{pt:'R$ 199',en:'$199',es:'$199'},
+      title:{pt:'Planejamento de Carga e Estivagem',en:'Load Planning and Stowage',es:'Planificación de Carga y Estiba'},
+      summary:{
+        pt:'Técnicas de distribuição de peso, paletização e documentação.',
+        en:'Weight distribution, palletizing and documentation techniques.',
+        es:'Técnicas de distribución de peso, paletizado y documentación.'
+      },
+      tags:['planejamento','segurança'],
+      lessons:[
+        { id:201, title:{pt:'Módulo 1 — Fundamentos',en:'Module 1 — Fundamentals',es:'Módulo 1 — Fundamentos'}, content:{pt:'Princípios de estabilidade e peso.',en:'Stability and weight principles.',es:'Principios de estabilidad y peso.'} },
+        { id:202, title:{pt:'Módulo 2 — Paletização',en:'Module 2 — Palletizing',es:'Módulo 2 — Paletizado'}, content:{pt:'Boas práticas de pallet e amarração.',en:'Best pallet and lashing practices.',es:'Buenas prácticas de pallet y amarre.'} },
+        { id:203, title:{pt:'Módulo 3 — Documentos',en:'Module 3 — Documents',es:'Módulo 3 — Documentos'}, content:{pt:'Notas fiscais, manifesto e registros.',en:'Invoices, manifests and records.',es:'Notas, manifiestos y registros.'} },
+      ]
+    },
+    {
+      id:3,
+      slug:'seguranca-carregamento',
+      category:'logistica',
+      hours:6,
+      price:{pt:'R$ 99',en:'$99',es:'$99'},
+      title:{pt:'Segurança no Carregamento',en:'Safety in Loading',es:'Seguridad en la Carga'},
+      summary:{
+        pt:'Boas práticas para evitar acidentes durante o carregamento.',
+        en:'Good practices to prevent accidents during loading.',
+        es:'Buenas prácticas para evitar accidentes durante la carga.'
+      },
+      tags:['segurança'],
+      lessons:[
+        { id:301, title:{pt:'Módulo 1 — Riscos',en:'Module 1 — Risks',es:'Módulo 1 — Riesgos'}, content:{pt:'Identificação de riscos comuns.',en:'Identifying common risks.',es:'Identificación de riesgos comunes.'} },
+        { id:302, title:{pt:'Módulo 2 — EPIs',en:'Module 2 — PPE',es:'Módulo 2 — EPPs'}, content:{pt:'Equipamentos e uso correto.',en:'Equipment and correct use.',es:'Equipos y uso correcto.'} },
+        { id:303, title:{pt:'Módulo 3 — Protocolos',en:'Module 3 — Protocols',es:'Módulo 3 — Protocolos'}, content:{pt:'Procedimentos em emergências.',en:'Emergency procedures.',es:'Procedimientos en emergencias.'} },
+      ]
+    },
+    // Add more courses here as needed...
+  ];
+
+  /* -----------------------
+     Trails and instructors (data)
+     ----------------------- */
+  const trails = [
+    { id:'t1', title:{pt:'Trilha Logística Completa',en:'Complete Logistics Path',es:'Ruta Logística Completa'}, desc:{pt:'Fundamentos → Planejamento de Carga → Segurança → KPIs',en:'Fundamentals → Load Planning → Safety → KPIs',es:'Fundamentos → Planificación de Carga → Seguridad → KPIs'} },
+    { id:'t2', title:{pt:'Trilha Operacional',en:'Operational Path',es:'Ruta Operativa'}, desc:{pt:'Foco em operação, produtividade e redução de desperdícios.',en:'Focus on operation, productivity and waste reduction.',es:'Enfoque en operación, productividad y reducción de desperdicios.'} },
+    { id:'t3', title:{pt:'Trilha Gestão & Cadastro',en:'Management & Records Path',es:'Ruta Gestión y Registro'}, desc:{pt:'Gestão, liderança e indicadores para supervisores.',en:'Management, leadership and KPIs for supervisors.',es:'Gestión, liderazgo e indicadores para supervisores.'} }
+  ];
+
+  const instructors = [
+    { name:'Samuel Ramos', role:{pt:'Especialista em Logística',en:'Logistics Specialist',es:'Especialista en Logística'} },
+    { name:'Marcos Guilherme', role:{pt:'Eng. de Transportes',en:'Transport Engineer',es:'Ing. de Transportes'} },
+    { name:'Lavinya', role:{pt:'Coordenadora de Operações',en:'Operations Coordinator',es:'Coordinadora de Operaciones'} },
+    { name:'Samuel Afonso', role:{pt:'Analista de Dados',en:'Data Analyst',es:'Analista de Datos'} },
+  ];
+
+  /* -----------------------
+     Utility & initial state
+     ----------------------- */
+  let currentLang = localStorage.getItem('procargas_lang') || 'pt';
+  document.getElementById('lang').value = currentLang;
+
+  function t(key){
+    // simple getter for translations; supports dot path like 'hero.title'
+    const obj = translations[currentLang];
+    if(!obj) return key;
+    // direct key
+    if(obj[key] !== undefined) return obj[key];
+    // nested lookup: split by dot
+    const parts = key.split('.');
+    let cur = obj;
+    for(const p of parts){
+      if(cur[p] === undefined) return key;
+      cur = cur[p];
+    }
+    return cur;
+  }
+
+  /* -----------------------
+     Render translations (apply to elements with data-i18n)
+     ----------------------- */
+  function applyTranslations(){
+    document.querySelectorAll('[data-i18n]').forEach(el=>{
+      const key = el.getAttribute('data-i18n');
+      const value = t(key);
+      if(Array.isArray(value)){
+        // ignore arrays, used for modalities list
+        return;
+      }
+      el.textContent = value;
     });
 
-    // Example courses data
-    const courses = [
-      { id:1, title:'Carregamento Ineficiente — Diagnóstico', category:'logistica', hours:8, price:'Grátis', summary:'Identifique pontos de perda no processo de carregamento.', tags:['fundamentos','prático'] },
-      { id:2, title:'Planejamento de Carga e Estivagem', category:'logistica', hours:12, price:'R$ 199', summary:'Técnicas de distribuição de peso, paletização e documentação.', tags:['planejamento','segurança'] },
-      { id:3, title:'Segurança no Carregamento', category:'logistica', hours:6, price:'R$ 99', summary:'Boas práticas para evitar acidentes durante o carregamento.', tags:['segurança'] },
-      { id:4, title:'Uso de Dados e KPIs na Logística', category:'ti', hours:10, price:'R$ 249', summary:'Como indicadores orientam decisões operacionais.', tags:['dados','kpi'] },
-      { id:5, title:'Otimização de Processos Operacionais', category:'negocios', hours:14, price:'R$ 299', summary:'Lean, 5S e metodologias para redução de desperdício.', tags:['lean','processo'] },
-      { id:6, title:'Ferramentas Digitais para Gestão de Carga', category:'ti', hours:8, price:'R$ 179', summary:'Softwares, TMS e agendamento de janelas.', tags:['software','tms'] }
-    ];
+    // dynamic lists: modalities
+    renderModalities();
 
+    // update courses, trails, instructors display text
+    renderCourses();
+    renderTrails();
+    renderInstructors();
+
+    // update enroll-course options
+    populateEnrollCourses();
+
+    // Update some placeholders and labels
+    const placeholders = {
+      'enroll-name': {pt:'Nome completo', en:'Full name', es:'Nombre completo'},
+      'enroll-email': {pt:'E-mail', en:'Email', es:'Correo electrónico'},
+      'search': {pt:'Buscar curso', en:'Search course', es:'Buscar curso'}
+    };
+    Object.keys(placeholders).forEach(id=>{
+      const el = document.getElementById(id);
+      if(el) el.placeholder = placeholders[id][currentLang];
+    });
+  }
+
+  /* -----------------------
+     Render modalities dropdown
+     ----------------------- */
+  function renderModalities(){
+    const list = translations[currentLang].modalities || [];
+    const menu = document.getElementById('modalities-menu');
+    menu.innerHTML = '';
+    list.forEach((m,i)=>{
+      const a = document.createElement('a');
+      a.href='#';
+      a.className='dropdown-item';
+      a.textContent = m;
+      a.addEventListener('click',(e)=>{ e.preventDefault(); openMessageModal(m); });
+      menu.appendChild(a);
+    });
+  }
+
+  /* -----------------------
+     Render courses grid
+     ----------------------- */
+  function renderCourses(filterList){
     const grid = document.getElementById('courses-grid');
+    grid.innerHTML = '';
+    const search = (document.getElementById('search')?.value || '').toLowerCase().trim();
+    const filter = document.getElementById('filter')?.value || 'all';
+    const list = courses.filter(c=>{
+      if(filter !== 'all' && c.category !== filter) return false;
+      if(search){
+        const title = (c.title[currentLang] || '').toLowerCase();
+        const sum = (c.summary[currentLang] || '').toLowerCase();
+        return title.includes(search) || sum.includes(search);
+      }
+      return true;
+    });
 
-    function renderCourses(list){
-      grid.innerHTML = '';
-      list.forEach(c => {
-        const card = document.createElement('article');
-        card.className = 'bg-white rounded-lg p-4 shadow flex flex-col justify-between';
-        card.innerHTML = `
-          <div>
-            <div class="text-xs text-gray-500">${c.category.toUpperCase()}</div>
-            <h4 class="font-semibold text-lg mt-1">${c.title}</h4>
-            <p class="text-sm text-gray-600 mt-2">${c.summary}</p>
-          </div>
-          <div class="mt-4 flex items-center justify-between">
-            <div class="text-sm text-gray-500">${c.hours}h • ${c.price}</div>
-            <div class="flex gap-2">
-              <button class="px-3 py-1 border rounded text-sm" data-id="${c.id}" onclick="viewCourse(${c.id})">Detalhes</button>
-              <button class="px-3 py-1 bg-red-700 text-white rounded text-sm" onclick="enroll(${c.id})">Inscrever</button>
-            </div>
-          </div>
-        `;
-        grid.appendChild(card);
-      });
-    }
-
-    function viewCourse(id){
-      const c = courses.find(x=>x.id===id);
-      if(!c) return;
-      // Simple modal
-      const modal = document.createElement('div');
-      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
-      modal.innerHTML = `
-        <div class="bg-white w-11/12 md:w-2/3 lg:w-1/2 rounded-lg p-6 relative">
-          <button id="close-modal" class="absolute top-3 right-3 text-gray-500">✕</button>
-          <h3 class="text-2xl font-bold">${c.title}</h3>
-          <p class="text-sm text-gray-600 mt-2">${c.summary}</p>
-          <ul class="mt-4 text-sm text-gray-600">
-            <li>Categoria: ${c.category}</li>
-            <li>Carga horária: ${c.hours} horas</li>
-            <li>Valor: ${c.price}</li>
-            <li>Tags: ${c.tags.join(', ')}</li>
-          </ul>
-          <div class="mt-6 flex gap-3">
-            <button class="bg-red-700 text-white px-4 py-2 rounded" onclick="enroll(${c.id})">Inscrever</button>
-            <a href="#" class="px-4 py-2 border rounded" onclick="downloadSample(event)">Material (PDF)</a>
+    list.forEach(c=>{
+      const card = document.createElement('article');
+      card.className = 'card p-4 flex flex-col justify-between';
+      card.innerHTML = `
+        <div>
+          <div class="small text-gray-400">${c.category.toUpperCase()}</div>
+          <h4 class="font-semibold text-lg mt-1" style="color:var(--gold)">${escapeHtml(c.title[currentLang])}</h4>
+          <p class="small mt-2">${escapeHtml(c.summary[currentLang])}</p>
+        </div>
+        <div class="mt-4 flex items-center justify-between">
+          <div class="small text-gray-400">${c.hours}h • ${c.price[currentLang]}</div>
+          <div class="flex gap-2">
+            <button class="px-3 py-1 border rounded text-sm btn-outline" data-id="${c.id}" data-action="details">Detalhes</button>
+            <button class="px-3 py-1 rounded text-sm btn-gold" data-id="${c.id}" data-action="enroll">Inscrever</button>
           </div>
         </div>
       `;
-      modal.querySelector('#close-modal').addEventListener('click', ()=>modal.remove());
-      modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.remove(); });
-      document.body.appendChild(modal);
-    }
+      grid.appendChild(card);
+    });
 
-    function enroll(id){
-      const c = courses.find(x=>x.id===id);
-      if(!c) return alert('Curso não encontrado');
-      // open small form modal
-      const modal = document.createElement('div');
-      modal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
-      modal.innerHTML = `
-        <div class="bg-white w-11/12 md:w-1/2 rounded-lg p-6 relative">
-          <button id="close-enroll" class="absolute top-3 right-3 text-gray-500">✕</button>
-          <h3 class="text-xl font-bold mb-2">Inscrever em: ${c.title}</h3>
-          <form id="enroll-mini" class="space-y-3">
-            <input name="nome" placeholder="Nome completo" required class="w-full p-2 rounded border" />
-            <input name="email" type="email" placeholder="E-mail" required class="w-full p-2 rounded border" />
-            <div class="flex gap-3">
-              <button type="submit" class="bg-red-700 text-white px-4 py-2 rounded">Confirmar</button>
-              <button type="button" id="cancel-enroll" class="px-4 py-2 border rounded">Cancelar</button>
-            </div>
-          </form>
-        </div>
-      `;
-      modal.querySelector('#close-enroll').addEventListener('click', ()=>modal.remove());
-      modal.querySelector('#cancel-enroll').addEventListener('click', ()=>modal.remove());
-      modal.querySelector('#enroll-mini').addEventListener('submit', (e)=>{
-        e.preventDefault();
-        alert('Inscrição confirmada — você receberá e‑mail com instruções. (Simulação)');
-        modal.remove();
+    // attach events
+    grid.querySelectorAll('[data-action="details"]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const id = Number(btn.getAttribute('data-id'));
+        openCourseModal(id);
       });
-      document.body.appendChild(modal);
-    }
+    });
+    grid.querySelectorAll('[data-action="enroll"]').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        const id = Number(btn.getAttribute('data-id'));
+        openEnrollModal(id);
+      });
+    });
+  }
 
-    function downloadSample(e){
+  /* -----------------------
+     Render trails and instructors
+     ----------------------- */
+  function renderTrails(){
+    const container = document.getElementById('trails-grid');
+    container.innerHTML = '';
+    trails.forEach(tl=>{
+      const d = document.createElement('article');
+      d.className = 'p-4 border rounded';
+      d.innerHTML = `<h4 class="font-semibold">${escapeHtml(tl.title[currentLang])}</h4><p class="small">${escapeHtml(tl.desc[currentLang])}</p><a href="#courses" class="text-sm" style="color:var(--gold)">Ver trilha →</a>`;
+      container.appendChild(d);
+    });
+  }
+
+  function renderInstructors(){
+    const container = document.getElementById('instructors-list');
+    container.innerHTML = '';
+    instructors.forEach(ins=>{
+      const d = document.createElement('div');
+      d.className = 'p-3 border rounded';
+      d.innerHTML = `<div class="font-bold">${escapeHtml(ins.name)}</div><div class="small">${escapeHtml(ins.role[currentLang])}</div>`;
+      container.appendChild(d);
+    });
+  }
+
+  /* -----------------------
+     Populate enroll-course select
+     ----------------------- */
+  function populateEnrollCourses(){
+    const sel = document.getElementById('enroll-course');
+    sel.innerHTML = '';
+    courses.forEach(c=>{
+      const opt = document.createElement('option');
+      opt.value = c.id;
+      opt.textContent = c.title[currentLang];
+      sel.appendChild(opt);
+    });
+  }
+
+  /* -----------------------
+     Modal helpers
+     ----------------------- */
+  const modalsRoot = document.getElementById('modals-root');
+
+  function openModal(htmlContent){
+    // close existing root children
+    const backdrop = document.createElement('div');
+    backdrop.className = 'modal-backdrop';
+    const modal = document.createElement('div');
+    modal.className = 'modal';
+    modal.innerHTML = htmlContent;
+    backdrop.appendChild(modal);
+    backdrop.addEventListener('click', (e)=>{
+      if(e.target === backdrop) backdrop.remove();
+    });
+    modalsRoot.appendChild(backdrop);
+    return { backdrop, modal };
+  }
+
+  function closeAllModals(){
+    modalsRoot.innerHTML = '';
+  }
+
+  /* -----------------------
+     Course modal (details + lessons list)
+     ----------------------- */
+  function openCourseModal(courseId){
+    const c = courses.find(x=>x.id===courseId);
+    if(!c) return alert('Course not found');
+    let lessonsHtml = '<ul class="lesson-list">';
+    c.lessons.forEach(ls=>{
+      lessonsHtml += `<li class="flex justify-between items-center"><div><strong>${escapeHtml(ls.title[currentLang])}</strong><div class="small">${escapeHtml(ls.content[currentLang].slice(0,120))}</div></div><div><button class="btn-outline" data-lesson="${ls.id}">${translateText('View')}</button></div></li>`;
+    });
+    lessonsHtml += '</ul>';
+    const html = `
+      <div class="flex justify-between items-start">
+        <h3 style="font-weight:800;color:var(--gold)">${escapeHtml(c.title[currentLang])}</h3>
+        <button class="close-btn" onclick="closeAllModals()">✕</button>
+      </div>
+      <p class="small mt-3">${escapeHtml(c.summary[currentLang])}</p>
+      <div class="mt-4">
+        <strong class="small">${c.hours}h • ${c.price[currentLang]}</strong>
+      </div>
+      <div class="mt-4">${lessonsHtml}</div>
+      <div class="mt-4 flex gap-3">
+        <button class="btn-gold" id="modal-enroll"> ${translateText('Enroll')} </button>
+        <button class="btn-outline" id="modal-syllabus">${translateText('Syllabus')}</button>
+      </div>
+    `;
+    const {backdrop, modal} = openModal(html);
+    // attach lesson buttons
+    modal.querySelectorAll('[data-lesson]').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const lid = Number(btn.getAttribute('data-lesson'));
+        openLessonModalById(c.id, lid);
+      });
+    });
+    modal.querySelector('#modal-enroll').addEventListener('click', ()=>{
+      backdrop.remove();
+      openEnrollModal(c.id);
+    });
+    modal.querySelector('#modal-syllabus').addEventListener('click', ()=>{
+      openSyllabusModal(c.id);
+    });
+  }
+
+  /* -----------------------
+     Open lesson modal by courseId+lessonId
+     ----------------------- */
+  function openLessonModalById(courseId, lessonId){
+    const c = courses.find(x=>x.id===courseId);
+    if(!c) return;
+    const ls = c.lessons.find(l=>l.id===lessonId);
+    if(!ls) return;
+    openLessonModalContent(c, ls);
+  }
+
+  function openLessonModal(id){
+    // id may be course id; open first lesson of course
+    const c = courses.find(x=>x.id===id);
+    if(!c) return;
+    const ls = c.lessons[0];
+    openLessonModalContent(c, ls);
+  }
+
+  function openLessonModalContent(course, lesson){
+    const html = `
+      <div class="flex justify-between items-start">
+        <div>
+          <h3 style="font-weight:800;color:var(--gold)">${escapeHtml(lesson.title[currentLang])}</h3>
+          <div class="small mt-1">${escapeHtml(course.title[currentLang])}</div>
+        </div>
+        <button class="close-btn" onclick="closeAllModals()">✕</button>
+      </div>
+      <div class="mt-4 small">${escapeHtml(lesson.content[currentLang])}</div>
+      <div class="mt-4 flex gap-3">
+        <button class="btn-outline" id="prev-lesson">Previous</button>
+        <button class="btn-outline" id="next-lesson">Next</button>
+        <button class="btn-gold" id="complete-lesson">${translateText('Mark Complete')}</button>
+      </div>
+    `;
+    const {backdrop, modal} = openModal(html);
+
+    // find indexes for prev/next
+    const idx = course.lessons.findIndex(l=>l.id===lesson.id);
+    modal.querySelector('#prev-lesson').addEventListener('click', ()=>{
+      if(idx > 0) {
+        backdrop.remove();
+        openLessonModalById(course.id, course.lessons[idx-1].id);
+      } else alert(translateText('This is the first lesson.'));
+    });
+    modal.querySelector('#next-lesson').addEventListener('click', ()=>{
+      if(idx < course.lessons.length -1){
+        backdrop.remove();
+        openLessonModalById(course.id, course.lessons[idx+1].id);
+      } else alert(translateText('This is the last lesson.'));
+    });
+    modal.querySelector('#complete-lesson').addEventListener('click', ()=>{
+      alert(translateText('Lesson marked as complete (simulation).'));
+      backdrop.remove();
+    });
+  }
+
+  /* -----------------------
+     Enroll modal (quick form)
+     ----------------------- */
+  function openEnrollModal(courseId){
+    const c = courses.find(x=>x.id===courseId);
+    const html = `
+      <div class="flex justify-between items-start">
+        <h3 style="font-weight:800;color:var(--gold)">${escapeHtml(c.title[currentLang])}</h3>
+        <button class="close-btn" onclick="closeAllModals()">✕</button>
+      </div>
+      <form id="enroll-mini" class="mt-3 space-y-3">
+        <input id="mini-name" placeholder="${translateText('Full name')}" required />
+        <input id="mini-email" type="email" placeholder="${translateText('Email')}" required />
+        <div class="flex gap-3">
+          <button type="submit" class="btn-gold">${translateText('Confirm')}</button>
+          <button type="button" class="btn-outline" id="cancel-enroll">${translateText('Cancel')}</button>
+        </div>
+      </form>
+    `;
+    const {backdrop, modal} = openModal(html);
+    modal.querySelector('#cancel-enroll').addEventListener('click', ()=>backdrop.remove());
+    modal.querySelector('#enroll-mini').addEventListener('submit', (e)=>{
       e.preventDefault();
-      alert('Download simulado — neste exemplo não há PDF real.');
-    }
-
-    // Search & filter
-    document.getElementById('filter').addEventListener('change', (e)=>{
-      applyFilters();
+      const name = document.getElementById('mini-name').value.trim();
+      const email = document.getElementById('mini-email').value.trim();
+      if(!name || !email) { alert(translateText('Please fill in name and email')); return; }
+      alert(translateText('Enrollment confirmed — you will receive an email (simulation).'));
+      backdrop.remove();
     });
-    document.getElementById('search').addEventListener('input', (e)=>{
-      applyFilters();
+  }
+
+  /* -----------------------
+     Syllabus modal
+     ----------------------- */
+  function openSyllabusModal(courseId){
+    const c = courses.find(x=>x.id===courseId);
+    let html = `<div class="flex justify-between items-start"><h3 style="font-weight:800;color:var(--gold)">${escapeHtml(c.title[currentLang])}</h3><button class="close-btn" onclick="closeAllModals()">✕</button></div><ul class="mt-3 small">`;
+    c.lessons.forEach(ls=>{
+      html += `<li><strong>${escapeHtml(ls.title[currentLang])}</strong> — ${escapeHtml(ls.content[currentLang].slice(0,100))}</li>`;
     });
+    html += `</ul><div class="mt-4 text-right"><button class="btn-outline" onclick="closeAllModals()">${translateText('Close')}</button></div>`;
+    openModal(html);
+  }
 
-    function applyFilters(){
-      const f = document.getElementById('filter').value;
-      const s = document.getElementById('search').value.toLowerCase().trim();
-      let list = courses.filter(c=> (f==='all' || c.category===f));
-      if(s) list = list.filter(c=> c.title.toLowerCase().includes(s) || c.summary.toLowerCase().includes(s));
-      renderCourses(list);
-    }
+  /* -----------------------
+     Small message modal used by modal items
+     ----------------------- */
+  function openMessageModal(message){
+    const html = `<div class="flex justify-between items-start"><h3 style="font-weight:800;color:var(--gold)">${escapeHtml(message)}</h3><button class="close-btn" onclick="closeAllModals()">✕</button></div><div class="mt-3 small">${translateText('You clicked a modality item. This could link to curated courses or content.')}</div>`;
+    openModal(html);
+  }
 
-    // initial render
-    renderCourses(courses);
-
-    // small behaviour for sample button
-    document.getElementById('btn-sample').addEventListener('click', ()=>{
-      const sampleModal = document.createElement('div');
-      sampleModal.className = 'fixed inset-0 bg-black/50 flex items-center justify-center z-50';
-      sampleModal.innerHTML = `
-        <div class="bg-white w-11/12 md:w-2/3 rounded-lg p-6">
-          <h3 class="text-xl font-bold">Programa: Carregamento Ineficiente — Diagnóstico</h3>
-          <ul class="mt-3 text-sm text-gray-600 list-disc list-inside">
-            <li>Módulo 1 — Conceitos e impactos</li>
-            <li>Módulo 2 — Processos de carga e documentos</li>
-            <li>Módulo 3 — Segurança e equipamentos</li>
-            <li>Módulo 4 — Ferramentas e automação</li>
-            <li>Módulo 5 — Projeto prático (estudo de caso)</li>
-          </ul>
-          <div class="mt-4 text-right"><button class="px-4 py-2 border rounded" id="close-sample">Fechar</button></div>
+  /* -----------------------
+     Login / Register (localStorage)
+     ----------------------- */
+  function showAuthModal(mode='login'){
+    const title = mode === 'register' ? translateText('Register') : translateText('Login');
+    const html = `
+      <div class="flex justify-between items-start">
+        <h3 style="font-weight:800;color:var(--gold)">${title}</h3>
+        <button class="close-btn" onclick="closeAllModals()">✕</button>
+      </div>
+      <form id="auth-form" class="mt-3 space-y-3">
+        ${ mode === 'register' ? '<input id="reg-name" placeholder="'+translateText('Full name')+'" required />' : '' }
+        <input id="reg-email" type="email" placeholder="${translateText('Email')}" required />
+        <input id="reg-password" type="password" placeholder="${translateText('Password')}" required />
+        <div class="flex gap-3">
+          <button type="submit" class="btn-gold">${mode === 'register' ? translateText('Create account') : translateText('Enter')}</button>
+          <button type="button" class="btn-outline" id="auth-cancel">${translateText('Cancel')}</button>
         </div>
-      `;
-      sampleModal.querySelector('#close-sample').addEventListener('click', ()=>sampleModal.remove());
-      document.body.appendChild(sampleModal);
+      </form>
+      <div class="mt-3 small">
+        ${ mode === 'register' ? translateText('Already have an account?') + ' <a href="#" id="to-login">'+translateText('Login')+'</a>' : translateText('No account?') + ' <a href="#" id="to-register">'+translateText('Register')+'</a>' }
+      </div>
+    `;
+    const {backdrop, modal} = openModal(html);
+    modal.querySelector('#auth-cancel').addEventListener('click', ()=>backdrop.remove());
+    modal.querySelector('#auth-form').addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const email = document.getElementById('reg-email').value.trim().toLowerCase();
+      const pwd = document.getElementById('reg-password').value;
+      const name = document.getElementById('reg-name') ? document.getElementById('reg-name').value.trim() : null;
+      if(!email || !pwd) return alert(translateText('Please enter email and password.'));
+      if(mode === 'register'){
+        registerUser({email,name,password:pwd});
+      } else {
+        loginUser({email,password:pwd});
+      }
+      backdrop.remove();
     });
+
+    // toggle quick links
+    modal.querySelector('#to-login')?.addEventListener('click',(e)=>{ e.preventDefault(); backdrop.remove(); showAuthModal('login'); });
+    modal.querySelector('#to-register')?.addEventListener('click',(e)=>{ e.preventDefault(); backdrop.remove(); showAuthModal('register'); });
+  }
+
+  function registerUser({email, name, password}){
+    const users = JSON.parse(localStorage.getItem('procargas_users') || '[]');
+    if(users.find(u=>u.email === email)) { alert(translateText('User already exists. Please login.')); return; }
+    users.push({email, name, password});
+    localStorage.setItem('procargas_users', JSON.stringify(users));
+    // set session
+    localStorage.setItem('procargas_session', JSON.stringify({email,name}));
+    alert(translateText('Account created and logged in (simulation).'));
+    updateAuthUI();
+  }
+
+  function loginUser({email, password}){
+    const users = JSON.parse(localStorage.getItem('procargas_users') || '[]');
+    const u = users.find(x=>x.email === email && x.password === password);
+    if(!u) { alert(translateText('Invalid credentials.')); return; }
+    localStorage.setItem('procargas_session', JSON.stringify({email:u.email,name:u.name||u.email}));
+    alert(translateText('Logged in (simulation).'));
+    updateAuthUI();
+  }
+
+  function logout(){
+    localStorage.removeItem('procargas_session');
+    updateAuthUI();
+  }
+
+  function updateAuthUI(){
+    const authArea = document.getElementById('auth-area');
+    const session = JSON.parse(localStorage.getItem('procargas_session') || 'null');
+    if(session){
+      authArea.innerHTML = `
+        <div class="small"> ${escapeHtml(session.name || session.email)} </div>
+        <button id="btn-logout" class="btn-outline">Logout</button>
+      `;
+      document.getElementById('btn-logout').addEventListener('click', logout);
+    } else {
+      authArea.innerHTML = `<button id="btn-login" class="btn-outline">${translateText('Login')}</button><button id="btn-register" class="btn-gold">${translateText('Register')}</button>`;
+      document.getElementById('btn-login').addEventListener('click', ()=>showAuthModal('login'));
+      document.getElementById('btn-register').addEventListener('click', ()=>showAuthModal('register'));
+    }
+  }
+
+  /* -----------------------
+     Small utility functions
+     ----------------------- */
+  function translateText(txt){
+    // minimal translation map for small UI strings not in i18n object
+    const map = {
+      'Full name': {pt:'Nome completo',en:'Full name',es:'Nombre completo'},
+      'Email': {pt:'E-mail',en:'Email',es:'Correo electrónico'},
+      'Password': {pt:'Senha',en:'Password',es:'Contraseña'},
+      'Confirm': {pt:'Confirmar',en:'Confirm',es:'Confirmar'},
+      'Cancel': {pt:'Cancelar',en:'Cancel',es:'Cancelar'},
+      'Close': {pt:'Fechar',en:'Close',es:'Cerrar'},
+      'View': {pt:'Ver',en:'View',es:'Ver'},
+      'Syllabus': {pt:'Programa',en:'Syllabus',es:'Programa'},
+      'Enroll': {pt:'Inscrever',en:'Enroll',es:'Inscribirse'},
+      'This is the first lesson.': {pt:'Esta é a primeira aula.',en:'This is the first lesson.',es:'Esta es la primera lección.'},
+      'This is the last lesson.': {pt:'Esta é a última aula.',en:'This is the last lesson.',es:'Esta es la última lección.'},
+      'Lesson marked as complete (simulation).': {pt:'Aula marcada como concluída (simulação).',en:'Lesson marked as complete (simulation).',es:'Lección marcada como completada (simulación).'},
+      'Please fill in name and email': {pt:'Preencha nome e e-mail',en:'Please fill in name and email',es:'Por favor complete nombre y correo'},
+      'You clicked a modality item. This could link to curated courses or content.': {
+        pt:'Você clicou em uma modalidade. Aqui poderia abrir cursos ou conteúdo relacionado.',
+        en:'You clicked a modality item. This could link to curated courses or content.',
+        es:'Has hecho clic en una modalidad. Aquí podría enlazar a cursos o contenido relacionado.'
+      },
+      'Login':{pt:'Login',en:'Login',es:'Login'},
+      'Register':{pt:'Registrar',en:'Register',es:'Registrarse'},
+      'Create account':{pt:'Criar conta',en:'Create account',es:'Crear cuenta'},
+      'Enter':{pt:'Entrar',en:'Enter',es:'Entrar'},
+      'No account?':{pt:'Não tem conta?',en:'No account?',es:'¿No tienes cuenta?'},
+      'Already have an account?':{pt:'Já tem conta?',en:'Already have an account?',es:'¿Ya tienes cuenta?'},
+      'Account created and logged in (simulation).':{pt:'Conta criada e autenticada (simulação).',en:'Account created and logged in (simulation).',es:'Cuenta creada e iniciada (simulación).'},
+      'Invalid credentials.':{pt:'Credenciais inválidas.',en:'Invalid credentials.',es:'Credenciales inválidas.'},
+      'Logged in (simulation).':{pt:'Autenticado (simulação).',en:'Logged in (simulation).',es:'Conectado (simulación).'},
+      'User already exists. Please login.':{pt:'Usuário já existe. Faça login.',en:'User already exists. Please login.',es:'El usuario ya existe. Inicia sesión.'},
+      'Please enter email and password.':{pt:'Por favor informe e-mail e senha.',en:'Please enter email and password.',es:'Por favor informe correo y contraseña.'},
+      'Enrollment confirmed — you will receive an email (simulation).':{pt:'Inscrição confirmada — você receberá um e-mail (simulação).',en:'Enrollment confirmed — you will receive an email (simulation).',es:'Inscripción confirmada — recibirá un correo (simulación).'}
+    };
+    return map[txt] ? map[txt][currentLang] : txt;
+  }
+
+  function escapeHtml(s){
+    if(!s) return '';
+    return String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+  }
+
+  /* -----------------------
+     Events, initial render
+     ----------------------- */
+  document.addEventListener('DOMContentLoaded', ()=>{
+
+    // language switch
+    document.getElementById('lang').addEventListener('change', (e)=>{
+      currentLang = e.target.value;
+      localStorage.setItem('procargas_lang', currentLang);
+      applyTranslations();
+      updateAuthUI();
+    });
+
+    // mobile toggle
+    document.getElementById('mobile-menu-toggle').addEventListener('click', ()=>{
+      const mm = document.getElementById('mobile-menu');
+      mm.classList.toggle('hidden');
+    });
+
+    // modalities desktop toggle
+    document.getElementById('modalities-btn').addEventListener('click', (e)=>{
+      e.preventDefault();
+      const menu = document.getElementById('modalities-menu');
+      const visible = menu.style.display === 'block';
+      menu.style.display = visible ? 'none' : 'block';
+    });
+
+    // mobile modalities
+    document.getElementById('mobile-modalities').addEventListener('click', ()=>{
+      // show a simple list modal
+      openModal('<div class="flex justify-between items-start"><h3 style="font-weight:800;color:var(--gold)">'+t('menu.modalities')+'</h3><button class="close-btn" onclick="closeAllModals()">✕</button></div><div class="mt-3">'+ translations[currentLang].modalities.map(m=>'<div class="small mb-2">'+m+'</div>').join('') +'</div>');
+    });
+
+    // hero buttons
+    document.getElementById('see-courses').addEventListener('click', ()=>{ location.hash = '#courses'; });
+    document.getElementById('how-it-works').addEventListener('click', ()=>{ openModal('<div class="flex justify-between items-start"><h3 style="font-weight:800;color:var(--gold)">'+t('hero.cta_how')+'</h3><button class="close-btn" onclick="closeAllModals()">✕</button></div><div class="mt-3 small">'+t('hero.desc')+'</div>'); });
+
+    // search & filter
+    document.getElementById('search').addEventListener('input', ()=> renderCourses());
+    document.getElementById('filter').addEventListener('change', ()=> renderCourses());
+
+    // enroll form (main)
+    document.getElementById('enroll-form').addEventListener('submit',(e)=>{
+      e.preventDefault();
+      const name = document.getElementById('enroll-name').value.trim();
+      const email = document.getElementById('enroll-email').value.trim();
+      const courseId = Number(document.getElementById('enroll-course').value);
+      if(!name || !email) { alert(translateText('Please fill in name and email')); return; }
+      alert(translateText('Enrollment confirmed — you will receive an email (simulation).'));
+      document.getElementById('enroll-form').reset();
+    });
+
+    document.getElementById('btn-syllabus').addEventListener('click', ()=>{
+      const courseId = Number(document.getElementById('enroll-course').value);
+      openSyllabusModal(courseId);
+    });
+
+    // login/register initial hooks
+    document.getElementById('btn-login').addEventListener('click', ()=> showAuthModal('login'));
+    document.getElementById('btn-register').addEventListener('click', ()=> showAuthModal('register'));
+
+    // initial renders
+    applyTranslations();
+    updateAuthUI();
+  });
+
+  /* -----------------------
+     Render logo SVG fallback
+     ----------------------- */
+  function renderSVGLogo(){
+    const box = document.getElementById('logo-box');
+    if(!box) return;
+    box.innerHTML = `
+      <svg width="48" height="48" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="Procargas logo">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0" stop-color="#e5c46a"/>
+            <stop offset="1" stop-color="#b19137"/>
+          </linearGradient>
+        </defs>
+        <rect rx="12" width="100" height="100" fill="url(#g1)"/>
+        <g transform="translate(14,18)" fill="#071018">
+          <path d="M10 58 L20 10 L36 58 Z"></path>
+          <circle cx="62" cy="50" r="10"></circle>
+        </g>
+      </svg>
+    `;
+  }
+
+  /* -----------------------
+     Helper: small language-safe texts for some UI bits
+     ----------------------- */
+  // Provide a fallback for tiny UI words used inside dynamic modals
+  function smallUi(key){
+    const map = {
+      'View': {pt:'Ver',en:'View',es:'Ver'},
+      'Enroll': {pt:'Inscrever',en:'Enroll',es:'Inscribirse'},
+      'Syllabus': {pt:'Programa',en:'Syllabus',es:'Programa'},
+      'Confirm': {pt:'Confirmar',en:'Confirm',es:'Confirmar'},
+      'Cancel': {pt:'Cancelar',en:'Cancel',es:'Cancelar'}
+    };
+    return map[key] ? map[key][currentLang] : key;
+  }
+
+  // fallback global translate for words not in main translations
+  function translateWord(k){
+    return translateText(k);
+  }
+
+  // expose closeAllModals to inline onclicks
+  window.closeAllModals = closeAllModals;
+  window.openLessonModal = openLessonModal;
 
   </script>
 </body>
