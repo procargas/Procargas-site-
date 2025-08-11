@@ -1,41 +1,49 @@
-<!DOCTYPE html>
-<html lang="pt">
+<!doctype html>
+<html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Procargas Academy — Portfólio & Aulas</title>
+<title>Procargas Academy — Demo</title>
+
+<!-- jsPDF para gerar PDF de certificado -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
 <style>
-  :root { --bg:#0f1113; --panel:#151617; --muted:#bfc3c7; --gold:#FFD700; --card: rgba(255,255,255,0.03); }
+  :root{--bg:#0f1113;--panel:#151617;--muted:#bfc3c7;--gold:#FFD700;--card:rgba(255,255,255,0.03)}
   *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;background:var(--bg);color:#fff;display:flex;min-height:100vh}
+  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:#fff;display:flex;min-height:100vh}
   a{color:inherit}
+  /* Sidebar */
   .sidebar{width:240px;background:#101214;border-right:1px solid rgba(255,255,255,0.03);position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;padding:1rem 0}
   .brand{padding:0 1rem;margin-bottom:.5rem}
-  .brand h1{font-size:1.05rem;margin:.25rem 0;color:var(--gold)}
+  .brand h1{font-size:1rem;margin:.25rem 0;color:var(--gold)}
+  .small{color:var(--muted);font-size:.9rem}
   .nav{display:flex;flex-direction:column;gap:0.25rem;padding:0 0.5rem}
   .tab-btn{background:transparent;border:none;color:#dfe3e6;text-align:left;padding:.65rem .9rem;cursor:pointer;font-weight:600;font-size:.95rem;border-left:4px solid transparent}
   .tab-btn:hover{background:rgba(255,255,255,0.02)}
   .tab-btn.active{background:#202224;border-left-color:var(--gold);color:var(--gold)}
   .sidebar-footer{margin-top:auto;padding:1rem .9rem;font-size:.85rem;color:var(--muted)}
+  /* Main */
   .main{margin-left:240px;flex:1;padding:1.25rem;min-height:100vh}
   .header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
   .hero{display:flex;gap:1rem;align-items:center}
   h2{color:var(--gold);margin:0 0 .75rem 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin-top:1rem}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
   .card{background:var(--card);padding:1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-  .small{color:var(--muted);font-size:.9rem}
-  .pill{display:inline-block;background:rgba(0,0,0,0.25);padding:.25rem .5rem;border-radius:999px;font-weight:700;color:var(--gold)}
-  .course-title{font-weight:700;margin:0 0 .5rem 0}
-  .btn{display:inline-block;padding:.45rem .7rem;border-radius:6px;border:none;cursor:pointer;font-weight:600}
+  .pill{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-weight:700;color:var(--gold);background:rgba(0,0,0,0.25)}
+  .btn{display:inline-block;padding:.45rem .7rem;border-radius:6px;border:none;cursor:pointer;font-weight:700}
   .btn-gold{background:var(--gold);color:#111}
   .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--gold)}
-  /* Aula accordion */
+  .muted{color:var(--muted)}
+  /* forms */
+  .form-row{display:flex;gap:.5rem;align-items:center}
+  input, select, textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:.5rem;border-radius:6px;color:#fff;width:100%}
+  label{font-size:.9rem;color:var(--muted);display:block;margin-bottom:.25rem}
+  /* lessons */
   .lesson{border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
   .lesson-head{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;cursor:pointer}
-  .lesson-head h4{margin:0;font-size:1rem}
-  .lesson-body{padding:1rem;border-top:1px solid rgba(255,255,255,0.02);display:none;background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-  .lesson-body p{margin:.5rem 0;color:var(--muted);line-height:1.45}
-  .meta{font-size:.85rem;color:var(--muted)}
+  .lesson-body{padding:1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
+  .lesson-body p{margin:.45rem 0;color:var(--muted);line-height:1.45}
   /* responsive */
   @media(max-width:880px){
     .sidebar{position:relative;width:100%;display:flex;flex-direction:row;gap:.5rem;overflow:auto;height:auto;padding:.5rem}
@@ -43,6 +51,10 @@
     .nav{flex-direction:row}
     .tab-btn{white-space:nowrap;padding:.5rem .65rem;font-size:.9rem}
   }
+  /* small helpers */
+  .mt-1{margin-top:.6rem}
+  .mb-1{margin-bottom:.6rem}
+  .right{display:flex;gap:.5rem;align-items:center}
 </style>
 </head>
 <body>
@@ -51,16 +63,21 @@
   <aside class="sidebar" role="navigation" aria-label="Navegação principal">
     <div class="brand">
       <h1>Procargas Academy</h1>
-      <div class="small">Capacitação em logística & operações</div>
+      <div class="small">Cursos práticos em logística</div>
     </div>
 
     <nav class="nav" aria-label="tabs">
       <button class="tab-btn active" data-tab="home">🏠 Home</button>
       <button class="tab-btn" data-tab="aulas">📘 Aulas</button>
-      <button class="tab-btn" data-tab="cursos">📚 Cursos</button>
-      <button class="tab-btn" data-tab="trails">🛤 Trilhas</button>
+      <button class="tab-btn" data-tab="trails">🧭 Trilhas</button>
       <button class="tab-btn" data-tab="certificates">📜 Certificados</button>
       <button class="tab-btn" data-tab="about">ℹ️ Sobre</button>
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.02);margin:.6rem 0"/>
+      <div style="padding:.5rem">
+        <div id="auth-area" class="small">
+          <!-- login/register or user info -->
+        </div>
+      </div>
     </nav>
 
     <div class="sidebar-footer small">
@@ -71,403 +88,553 @@
   <!-- Main -->
   <main class="main">
 
-    <!-- HOME / PORTFOLIO -->
+    <!-- INFO / alert about demo -->
+    <div class="card mb-1">
+      <strong>Atenção (demo):</strong>
+      <span class="muted">Este é um protótipo full front-end. Usuários, progresso e certificados são salvos no seu navegador (localStorage). Não use para dados sensíveis em produção — peça integração com backend para produção.</span>
+    </div>
+
+    <!-- HOME: cursos disponíveis (nos quais usuário NÃO está inscrito) -->
     <section id="home" class="tab-panel active" aria-live="polite">
       <div class="header">
         <div class="hero">
           <div>
-            <h2>Portfólio — Cursos em Logística</h2>
-            <div class="small">Coleção de cursos práticos e microcursos cobrindo toda a operação de carga e descarga, pátio e docas.</div>
+            <h2>Home — Cursos disponíveis</h2>
+            <div class="small">Cursos nos quais você ainda <strong>não</strong> está inscrito. Inscreva-se para acessar as aulas.</div>
           </div>
+        </div>
+
+        <div class="right">
+          <button id="btn-create-demo-user" class="btn btn-outline" title="Criar usuário demo">Criar usuário demo</button>
         </div>
       </div>
 
-      <div class="grid" style="margin-top:1rem">
-        <!-- Course cards: each links to the Aulas section -->
-        <article class="card">
-          <div class="course-title">Operações de Carga e Descarga — Essentials</div>
-          <div class="small">Controle do processo, segurança e fluxos básicos. Ideal para supervisores.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="course-title">Gestão de Pátio e Docas</div>
-          <div class="small">Layout de pátio, sistemas de agendamento e controle de filas.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="course-title">Segurança e Prevenção de Danos</div>
-          <div class="small">Boas práticas, inspeções, proteções e redução de avarias.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="course-title">Tecnologia & Automação de Docas</div>
-          <div class="small">WMS, sensores IoT, telemetria e integração com transportadoras.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="course-title">Lean Logistics & KPIs</div>
-          <div class="small">Eliminação de desperdício, VSM, KPIs operacionais e dashboards.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <div class="course-title">Manuseio de Perecíveis</div>
-          <div class="small">Cuidados térmicos, rotas e tempos máximos de exposição.</div>
-          <div style="margin-top:.75rem">
-            <a class="btn btn-outline" href="#" data-goto="aulas">Ver aulas relacionadas</a>
-          </div>
-        </article>
-      </div>
+      <div id="courses-list" class="grid mt-1"></div>
     </section>
 
-    <!-- AULAS (15 detalhadas) -->
-    <section id="aulas" class="tab-panel" aria-live="polite">
-      <h2>Aulas — Otimização de Carregamento e Descarregamento (15 módulos)</h2>
-      <p class="small">Cada aula traz: objetivo, tópicos centrais, atividades práticas e link para vídeos no YouTube (buscas prontas).</p>
-
-      <div style="margin-top:1rem;display:grid;gap:.75rem">
-        <!-- Aula 1 -->
-        <div class="lesson" id="lesson-1">
-          <div class="lesson-head" tabindex="0">
-            <h4>1 — Introdução à Logística na Distribuição</h4>
-            <div class="meta">Objetivo: contextualizar | <span class="pill">Básico</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> panorama da cadeia de suprimentos, papel do carregamento e descarregamento na performance logística, custos diretos e indiretos afetados por gargalos (piso do pátio, mão-de-obra, tempos de espera).</p>
-            <p><strong>Atividade prática:</strong> mapear o processo de carga/descarga atual de uma unidade (fluxograma simples).</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Introduction+to+Logistics+and+Supply+Chain+Management">Buscar no YouTube: "Introduction to Logistics and Supply Chain Management"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 2 -->
-        <div class="lesson" id="lesson-2">
-          <div class="lesson-head" tabindex="0">
-            <h4>2 — Principais Desafios no Pátio e nas Docas</h4>
-            <div class="meta">Objetivo: identificar falhas comuns | <span class="pill">Básico</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> estacionamento inadequado, filas, risco ergonômico, layout ineficiente e como estes fatores se traduzem em custos e risco operacional.</p>
-            <p><strong>Atividade prática:</strong> checklist de inspeção do pátio — segurança, sinalização e fluxo de entrada/saída.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Dockyard+Safety+and+Efficiency+in+Logistics">Buscar: "Dockyard Safety and Efficiency in Logistics"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 3 -->
-        <div class="lesson" id="lesson-3">
-          <div class="lesson-head" tabindex="0">
-            <h4>3 — Segurança e Infraestrutura do Pátio</h4>
-            <div class="meta">Objetivo: projetar um pátio eficiente | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> layout otimizado, iluminação, retirada de pontos cegos, sinalização, faixas e ergonomia para operadores e motoristas.</p>
-            <p><strong>Atividade prática:</strong> desenhar um layout otimizado da doca para reduzir cruzamentos e retrabalhos.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Designing+Safe+Loading+Dock+Layouts">Buscar: "Designing Safe Loading Dock Layouts"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 4 -->
-        <div class="lesson" id="lesson-4">
-          <div class="lesson-head" tabindex="0">
-            <h4>4 — Gestão de Filas e Tempo de Espera</h4>
-            <div class="meta">Objetivo: reduzir tempos ociosos | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> sistemas de agendamento (appointments), zona de espera, sinalização dinâmica e trackers de chegada.</p>
-            <p><strong>Atividade prática:</strong> projeto de um sistema de agendamento simples (planilha + regras).</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Appointment+Scheduling+for+Loading+Docks">Buscar: "Appointment Scheduling for Loading Docks"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 5 -->
-        <div class="lesson" id="lesson-5">
-          <div class="lesson-head" tabindex="0">
-            <h4>5 — Treinamento de Equipe e Boas Práticas</h4>
-            <div class="meta">Objetivo: padronizar operações | <span class="pill">Básico</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> elaboração de SOPs, instruções visuais, comunicação entre motorista e operador, briefing diário e reciclagem.</p>
-            <p><strong>Atividade prática:</strong> criar um SOP para procedimento de acoplamento e travamento de carga.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Standard+Operating+Procedures+in+Logistics">Buscar: "Standard Operating Procedures in Logistics"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 6 -->
-        <div class="lesson" id="lesson-6">
-          <div class="lesson-head" tabindex="0">
-            <h4>6 — Uso de Tecnologia e Automação</h4>
-            <div class="meta">Objetivo: conhecer soluções tecnológicas | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> WMS, WCS, sensores IoT, telemetria, dock levelers automáticos e integração com TMS.</p>
-            <p><strong>Atividade prática:</strong> esboçar requisitos para integração WMS ↔ TMS para controle de docas.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Warehouse+Management+Systems+in+Modern+Supply+Chains">Buscar: "Warehouse Management Systems in Modern Supply Chains"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 7 -->
-        <div class="lesson" id="lesson-7">
-          <div class="lesson-head" tabindex="0">
-            <h4>7 — Monitoramento e KPIs Operacionais</h4>
-            <div class="meta">Objetivo: medir para melhorar | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> métricas essenciais: tempo na doca, tempo de ciclo, tempo de espera, produtividade por operador, % avarias, OTIF.</p>
-            <p><strong>Atividade prática:</strong> montar um dashboard simples (planilha) com 5 KPIs chave.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Logistics+KPI+Tracking+and+Dashboards">Buscar: "Logistics KPI Tracking and Dashboards"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 8 -->
-        <div class="lesson" id="lesson-8">
-          <div class="lesson-head" tabindex="0">
-            <h4>8 — Fluxo Contínuo e Lean Logistics</h4>
-            <div class="meta">Objetivo: eliminar desperdícios | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> VSM para docas, 5S, setup rápido, Kanban aplicado à expedição e melhoria contínua.</p>
-            <p><strong>Atividade prática:</strong> realizar um VSM da operação de expedição e identificar 3 desperdícios.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Lean+Approach+to+Loading+Dock+Operations">Buscar: "Lean Approach to Loading Dock Operations"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 9 -->
-        <div class="lesson" id="lesson-9">
-          <div class="lesson-head" tabindex="0">
-            <h4>9 — Prevenção de Danos a Veículos e Cargas</h4>
-            <div class="meta">Objetivo: reduzir avarias | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> estudios sobre amarração, proteção de lateral, rampas, cordoalhas, uso correto de equipamentos de movimentação.</p>
-            <p><strong>Atividade prática:</strong> checklist pré e pós-operação para reduzir avarias.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=How+to+Prevent+Cargo+Damage+During+Loading">Buscar: "How to Prevent Cargo Damage During Loading"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 10 -->
-        <div class="lesson" id="lesson-10">
-          <div class="lesson-head" tabindex="0">
-            <h4>10 — Redução de Perdas de Produtos e Perecíveis</h4>
-            <div class="meta">Objetivo: proteger perecíveis | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> cadeia de frio, embalagem de proteção, tempo máximo de exposição e rotinas de inventário rotativo.</p>
-            <p><strong>Atividade prática:</strong> montar um fluxo de manipulação de um produto perecível desde a doca até a saída.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Handling+Perishables+in+Logistics+Loading">Buscar: "Handling Perishables in Logistics Loading"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 11 -->
-        <div class="lesson" id="lesson-11">
-          <div class="lesson-head" tabindex="0">
-            <h4>11 — Compliance e Multas</h4>
-            <div class="meta">Objetivo: evitar penalidades | <span class="pill">Básico</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> normas, regras de trânsito interno, responsabilidade civil, documentação exigida e prevenção de autuações.</p>
-            <p><strong>Atividade prática:</strong> checklist de conformidade documental e de segurança.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=ILO+Safety+Regulations+at+Loading+Areas">Buscar: "ILO Safety Regulations at Loading Areas"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 12 -->
-        <div class="lesson" id="lesson-12">
-          <div class="lesson-head" tabindex="0">
-            <h4>12 — Simulações e Cenários de Casos</h4>
-            <div class="meta">Objetivo: testar soluções | <span class="pill">Avançado</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> modelagem de gargalos, simulação de filas (discrete event), análise de cenários e estudo de caso com indicadores antes/depois.</p>
-            <p><strong>Atividade prática:</strong> simular 1 turno com recursos atuais e com melhoria proposta (planilha/simulador simples).</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Case+Study+Logistics+Bottleneck+Simulation">Buscar: "Case Study: Logistics Bottleneck Simulation"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 13 -->
-        <div class="lesson" id="lesson-13">
-          <div class="lesson-head" tabindex="0">
-            <h4>13 — Planejamento Estratégico de Carga e Descarga</h4>
-            <div class="meta">Objetivo: desenhar planos robustos | <span class="pill">Avançado</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> balanceamento de docas, roteirização, políticas de priorização, simulação de demanda e planejamento de capacidade.</p>
-            <p><strong>Atividade prática:</strong> criar um plano de capacidade para picos semanais.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Strategic+Dock+and+Yard+Planning+in+Logistics">Buscar: "Strategic Dock and Yard Planning in Logistics"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 14 -->
-        <div class="lesson" id="lesson-14">
-          <div class="lesson-head" tabindex="0">
-            <h4>14 — Uso de Relatórios e Feedback Contínuo</h4>
-            <div class="meta">Objetivo: transformar dados em ações | <span class="pill">Intermediário</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> como coletar dados, montar relatórios executivos e operacionais, ciclos de feedback com times e caminhoneiros.</p>
-            <p><strong>Atividade prática:</strong> construir um relatório semanal de performance com 5 ações recomendadas.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Operational+Reporting+Tools+for+Loading+Efficiency">Buscar: "Operational Reporting Tools for Loading Efficiency"</a></p>
-          </div>
-        </div>
-
-        <!-- Aula 15 -->
-        <div class="lesson" id="lesson-15">
-          <div class="lesson-head" tabindex="0">
-            <h4>15 — Plano de Ação e Melhoria Contínua (PDCA)</h4>
-            <div class="meta">Objetivo: implementar mudanças | <span class="pill">Avançado</span></div>
-          </div>
-          <div class="lesson-body">
-            <p><strong>Conteúdo:</strong> ciclo PDCA aplicado a pátio/docas, roadmap de implantação, gestão de mudanças e KPIs de sucesso.</p>
-            <p><strong>Atividade prática:</strong> montar um plano 90 dias com 3 iniciativas prioritárias e métricas de sucesso.</p>
-            <p><strong>Vídeo:</strong> <a target="_blank" rel="noopener" href="https://www.youtube.com/results?search_query=Continuous+Improvement+in+Logistics+Operations">Buscar: "Continuous Improvement in Logistics Operations"</a></p>
-          </div>
-        </div>
-
-      </div>
+    <!-- AULAS: somente cursos em que usuário está inscrito -->
+    <section id="aulas" class="tab-panel" aria-live="polite" style="display:none">
+      <h2>Aulas — seus cursos</h2>
+      <div class="small">Apenas cursos em que você está inscrito aparecem aqui. Marque aulas como concluídas para registrar tempo estudado.</div>
+      <div id="enrolled-list" class="grid mt-1"></div>
     </section>
 
-    <!-- CURSOS (sinopse / lista) -->
-    <section id="cursos" class="tab-panel" aria-live="polite">
-      <h2>Catálogo de Cursos</h2>
-      <div class="small">Cursos oferecidos e microcursos focados em competências práticas.</div>
-
-      <div class="grid" style="margin-top:1rem">
-        <article class="card">
-          <h3 class="course-title">Curso: Carregamento Eficiente (60h)</h3>
-          <p class="small">Aulas passo-a-passo, simulações e certificado digital. Abrange técnicas de amarração, sequência de leitura de cargas e planejamento de docas.</p>
-          <div style="margin-top:.6rem">
-            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3 class="course-title">Curso: Gestão de Pátio e Operações</h3>
-          <p class="small">Foco em layout, controle de fluxo, agendamento de chegada e segurança.</p>
-          <div style="margin-top:.6rem">
-            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
-          </div>
-        </article>
-
-        <article class="card">
-          <h3 class="course-title">Microcurso: Manuseio de Perecíveis</h3>
-          <p class="small">Protocolos, tempo de exposição e proteções especiais para produtos sensíveis.</p>
-          <div style="margin-top:.6rem">
-            <a class="btn btn-gold" href="#" data-goto="aulas">Ver Aulas (módulos)</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <!-- TRILHAS -->
-    <section id="trails" class="tab-panel" aria-live="polite">
-      <h2>Trilhas de Aprendizado</h2>
-      <div class="small">Combina cursos e aulas para trajetórias: Operador, Supervisor e Gerente de Pátio.</div>
-      <div style="margin-top:1rem" class="grid">
-        <div class="card">
-          <h3 class="course-title">Trilha: Operador de Docas</h3>
-          <p class="small">Aulas 1,2,5,9 — foco operacional e segurança.</p>
-        </div>
-        <div class="card">
-          <h3 class="course-title">Trilha: Supervisor de Pátio</h3>
-          <p class="small">Aulas 3,4,7,13 — planejamento e medição.</p>
-        </div>
-        <div class="card">
-          <h3 class="course-title">Trilha: Gestão Estratégica</h3>
-          <p class="small">Aulas 6,8,12,15 — tecnologia, lean e melhoria contínua.</p>
-        </div>
-      </div>
+    <!-- TRILHAS: tempo total estudado por curso -->
+    <section id="trails" class="tab-panel" aria-live="polite" style="display:none">
+      <h2>Trilhas — seu progresso</h2>
+      <div class="small">Tempo estudado por curso (baseado em aulas concluídas). Você também pode simular estudo.</div>
+      <div id="progress-list" class="grid mt-1"></div>
     </section>
 
     <!-- CERTIFICADOS -->
-    <section id="certificates" class="tab-panel" aria-live="polite">
+    <section id="certificates" class="tab-panel" aria-live="polite" style="display:none">
       <h2>Certificados</h2>
-      <div class="card">
-        <h3 style="margin-top:0">Como emitir seu certificado</h3>
-        <ol class="small">
-          <li>Concluir todos os módulos e avaliações.</li>
-          <li>Aguardar validação do projeto final.</li>
-          <li>Gerar certificado na área do aluno — disponível em PDF.</li>
-        </ol>
-      </div>
+      <div class="small">Cursos concluídos. Clique em "Gerar PDF" para baixar seu certificado.</div>
+      <div id="cert-list" class="grid mt-1"></div>
     </section>
 
     <!-- ABOUT -->
-    <section id="about" class="tab-panel" aria-live="polite">
-      <h2>Sobre a Academia</h2>
+    <section id="about" class="tab-panel" aria-live="polite" style="display:none">
+      <h2>Sobre</h2>
       <div class="card">
-        <p class="small">Plataforma institucional voltada para qualificação técnica e desenvolvimento profissional. Especialistas em gestão de pátio e docas (ex.: Fretefy).</p>
-        <ul class="small">
-          <li>Instrutores certificados</li>
-          <li>Conteúdo atualizado</li>
-          <li>Material de apoio e estudos de caso</li>
-        </ul>
+        <p class="small"><strong>Criadores:</strong> Equipe Procargas / Fretefy (Exemplo): João Silva, Maria Pereira, Lucas Costa.</p>
+        <p class="small"><strong>Data de criação:</strong> 01 de Agosto de 2025 (exemplo)</p>
+        <p class="small"><strong>Linguagem / Stack demonstrada:</strong> HTML, CSS, JavaScript (front-end), uso de jsPDF para geração de PDF. Para produção, recomendamos Node/Express ou outra API com DB.</p>
       </div>
     </section>
+
+    <!-- AUTH modals / forms (simple inline) -->
+    <div id="auth-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);align-items:center;justify-content:center">
+      <div style="background:var(--panel);padding:1rem;border-radius:8px;max-width:420px;width:92%;margin:auto">
+        <h3 id="auth-title">Login</h3>
+        <div id="auth-content">
+          <div style="margin-bottom:.6rem">
+            <label>Email</label>
+            <input id="auth-email" type="email" />
+          </div>
+          <div style="margin-bottom:.6rem">
+            <label>Senha</label>
+            <input id="auth-password" type="password" />
+          </div>
+          <div style="display:flex;gap:.5rem;justify-content:flex-end">
+            <button id="auth-cancel" class="btn btn-outline">Cancelar</button>
+            <button id="auth-submit" class="btn btn-gold">Entrar</button>
+          </div>
+          <div style="margin-top:.6rem" class="small muted">Não tem conta? <a href="#" id="switch-to-register">Registrar</a></div>
+        </div>
+      </div>
+    </div>
 
   </main>
 
 <script>
-  // Tab navigation
-  const tabs = document.querySelectorAll('.tab-btn');
-  const panels = document.querySelectorAll('.tab-panel');
+/* ============================
+   Demo data model (client-side)
+   - users stored in localStorage.users array
+   - courses predefined
+   - per-user enrollments and progress saved in user object
+   Note: This is a front-end demo. For production use a backend + DB.
+   ============================ */
 
-  function showTab(name){
-    tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===name));
-    panels.forEach(p=> p.classList.toggle('active', p.id===name));
-    // scroll to top of main for better UX
-    document.querySelector('.main').scrollTop = 0;
+// Util
+const uid = ()=> 'u_' + Math.random().toString(36).slice(2,9);
+
+// Initial demo dataset of courses (15-module layout mapped to each course as lessons)
+const COURSES = [
+  { id:'c1', title:'Operações de Carga e Descarga — Essentials', hours:60, description:'Curso prático com estudos de caso, simulações e certificado digital.', lessons:15 },
+  { id:'c2', title:'Gestão de Pátio e Docas', hours:40, description:'Layout de pátio, controle de fluxo e agendamento.', lessons:12 },
+  { id:'c3', title:'Segurança e Prevenção de Danos', hours:20, description:'Boas práticas, inspeções e redução de avarias.', lessons:8 },
+  { id:'c4', title:'Tecnologia & Automação de Docas', hours:30, description:'WMS, IoT e integração com transportadoras.', lessons:10 },
+  { id:'c5', title:'Manuseio de Perecíveis', hours:16, description:'Protocolos e tempos de exposição para perecíveis.', lessons:6 }
+];
+
+// Local storage helpers
+const STORAGE_KEY = 'procargas_demo_v1';
+function readState(){
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if(raw) return JSON.parse(raw);
+  // initialize
+  const state = { users: [], courses: COURSES, currentUserId: null, createdAt: new Date().toISOString() };
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  return state;
+}
+function writeState(s){ localStorage.setItem(STORAGE_KEY, JSON.stringify(s)); }
+
+// load state
+let state = readState();
+
+// helper: save state var and localStorage
+function saveAndRefresh(newState){
+  state = newState;
+  writeState(state);
+}
+
+// Auth helpers
+function getCurrentUser(){
+  if(!state.currentUserId) return null;
+  return state.users.find(u=>u.id===state.currentUserId) || null;
+}
+
+function renderAuthArea(){
+  const el = document.getElementById('auth-area');
+  el.innerHTML = '';
+  const user = getCurrentUser();
+  if(user){
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div><strong>${escapeHtml(user.name)}</strong></div>
+                      <div class="small muted">E-mail: ${escapeHtml(user.email)}</div>
+                      <div style="margin-top:.5rem"><button id="btn-logout" class="btn btn-outline">Sair</button></div>`;
+    el.appendChild(wrap);
+    document.getElementById('btn-logout').addEventListener('click', ()=>{ state.currentUserId = null; saveAndRefresh(state); renderAll(); showTab('home'); });
+  } else {
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div style="display:flex;gap:.5rem"><button id="btn-login" class="btn btn-outline">Login</button><button id="btn-register" class="btn btn-gold">Registrar</button></div>`;
+    el.appendChild(wrap);
+    document.getElementById('btn-login').addEventListener('click', openLogin);
+    document.getElementById('btn-register').addEventListener('click', openRegister);
   }
+}
 
-  tabs.forEach(t=>{
-    t.addEventListener('click', ()=> showTab(t.dataset.tab));
+// escape simple
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, c=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+
+// UI: tab navigation
+const tabs = document.querySelectorAll('.tab-btn');
+const panels = document.querySelectorAll('.tab-panel');
+function showTab(name){
+  tabs.forEach(t=> t.classList.toggle('active', t.dataset.tab===name));
+  panels.forEach(p=> p.style.display = (p.id===name ? 'block' : 'none'));
+  // render panels when shown (to refresh data)
+  if(name==='home') renderHome();
+  if(name==='aulas') renderAulas();
+  if(name==='trails') renderTrails();
+  if(name==='certificates') renderCertificates();
+}
+tabs.forEach(t=> t.addEventListener('click', ()=> showTab(t.dataset.tab)));
+
+// Auth modal
+const authModal = document.getElementById('auth-modal');
+const authTitle = document.getElementById('auth-title');
+const authEmail = document.getElementById('auth-email');
+const authPassword = document.getElementById('auth-password');
+const authSubmit = document.getElementById('auth-submit');
+const authCancel = document.getElementById('auth-cancel');
+const switchToRegister = document.getElementById('switch-to-register');
+
+function openLogin(){
+  authModal.style.display='flex';
+  authTitle.textContent='Login';
+  authEmail.value=''; authPassword.value='';
+  authSubmit.textContent='Entrar';
+  authSubmit.onclick = doLogin;
+}
+function openRegister(){
+  authModal.style.display='flex';
+  authTitle.textContent='Registrar';
+  authEmail.value=''; authPassword.value='';
+  authSubmit.textContent='Criar conta';
+  authSubmit.onclick = doRegister;
+}
+authCancel.addEventListener('click', ()=> authModal.style.display='none');
+switchToRegister.addEventListener('click', (e)=>{ e.preventDefault(); openRegister(); });
+
+// simple login/register functions (client-side)
+function doRegister(){
+  const email = authEmail.value.trim().toLowerCase();
+  const password = authPassword.value.trim();
+  if(!email || !password){ alert('Preencha e-mail e senha.'); return; }
+  if(state.users.some(u=>u.email===email)){ alert('E-mail já cadastrado. Faça login.'); return; }
+  const newUser = {
+    id: uid(),
+    name: email.split('@')[0],
+    email,
+    password, // note: insecure storage for demo only
+    enrolled: {}, // courseId -> { enrolledAt, lessonsCompleted: Set, timeStudiedMinutes }
+    createdAt: new Date().toISOString()
+  };
+  state.users.push(newUser);
+  state.currentUserId = newUser.id;
+  saveAndRefresh(state);
+  authModal.style.display='none';
+  renderAll();
+  showTab('home');
+}
+
+function doLogin(){
+  const email = authEmail.value.trim().toLowerCase();
+  const password = authPassword.value.trim();
+  const user = state.users.find(u=>u.email===email && u.password===password);
+  if(!user){ alert('Usuário/senha inválidos.'); return; }
+  state.currentUserId = user.id;
+  saveAndRefresh(state);
+  authModal.style.display='none';
+  renderAll();
+  showTab('home');
+}
+
+// Demo user creation
+document.getElementById('btn-create-demo-user').addEventListener('click', ()=>{
+  const demoEmail = 'demo@procargas.local';
+  if(state.users.some(u=>u.email===demoEmail)){
+    alert('Usuário demo já existe. Faça login com demo@procargas.local / senha: demo123');
+    return;
+  }
+  const demo = {
+    id: uid(),
+    name: 'usuario_demo',
+    email: demoEmail,
+    password: 'demo123',
+    enrolled: {}, // will auto-enroll in c1 for demo convenience
+    createdAt: new Date().toISOString()
+  };
+  // enroll demo in c1
+  demo.enrolled['c1'] = { enrolledAt: new Date().toISOString(), lessonsCompleted: [], timeStudiedMinutes: 0 };
+  state.users.push(demo);
+  state.currentUserId = demo.id;
+  saveAndRefresh(state);
+  renderAll();
+  showTab('home');
+  alert('Usuário demo criado. Use demo@procargas.local / demo123 ou apenas explore logado.');
+});
+
+// Render home: show courses where user not enrolled
+function renderHome(){
+  const container = document.getElementById('courses-list');
+  container.innerHTML = '';
+  const user = getCurrentUser();
+  state.courses.forEach(c=>{
+    const enrolled = user && user.enrolled && user.enrolled[c.id];
+    if(enrolled) return; // only show not-enrolled courses
+    const card = document.createElement('article');
+    card.className='card';
+    card.innerHTML = `<div style="font-weight:700">${escapeHtml(c.title)}</div>
+                      <div class="small muted mt-1">${escapeHtml(c.description)}</div>
+                      <div class="mt-1 small muted">Carga horária: ${c.hours}h • ${c.lessons} aulas</div>
+                      <div style="margin-top:.8rem">
+                        <button class="btn btn-gold" data-enroll="${c.id}">Inscrever-se</button>
+                        <button class="btn btn-outline" data-preview="${c.id}">Ver programa</button>
+                      </div>`;
+    container.appendChild(card);
   });
-
-  // Links that point from cards to aulas
-  document.querySelectorAll('[data-goto]').forEach(el=>{
-    el.addEventListener('click', e=>{
-      e.preventDefault();
-      const target = el.dataset.goto;
-      showTab(target);
-      // focus first lesson for convenience
-      const firstLesson = document.querySelector('#aulas .lesson-head');
-      if(firstLesson) firstLesson.focus();
+  // attach events
+  container.querySelectorAll('[data-enroll]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const cid = e.currentTarget.dataset.enroll;
+      if(!getCurrentUser()){ if(confirm('Você precisa estar logado para se inscrever. Deseja entrar agora?')) openLogin(); return; }
+      enrollInCourse(getCurrentUser().id, cid);
+      renderHome();
+      showTab('aulas');
+    });
+  });
+  container.querySelectorAll('[data-preview]').forEach(btn=>{
+    btn.addEventListener('click', (e)=>{
+      const cid = e.currentTarget.dataset.preview;
+      const c = state.courses.find(x=>x.id===cid);
+      alert(`Programa do curso "${c.title}":\n\nQuantidade de aulas: ${c.lessons}\nCarga horária estimada: ${c.hours}h\n\nResumo: ${c.description}`);
     });
   });
 
-  // Accordion for lessons
-  document.querySelectorAll('.lesson-head').forEach(head=>{
-    head.addEventListener('click', ()=>{
-      const body = head.nextElementSibling;
-      const opened = body.style.display === 'block';
-      // close all
-      document.querySelectorAll('.lesson-body').forEach(b=> b.style.display = 'none');
-      if(!opened) body.style.display = 'block';
-      // smooth scroll into view
-      head.scrollIntoView({behavior:'smooth',block:'center'});
-    });
-    // allow keyboard toggle (Enter/Space)
-    head.addEventListener('keydown', (ev)=>{
-      if(ev.key === 'Enter' || ev.key === ' '){ ev.preventDefault(); head.click(); }
-    });
+  if(container.children.length===0){
+    container.innerHTML = `<div class="card"><div class="small">Você já está inscrito em todos os cursos disponíveis (ou não há cursos). Use a aba "Aulas" para acessar o conteúdo.</div></div>`;
+  }
+}
+
+// enroll helper
+function enrollInCourse(userId, courseId){
+  const u = state.users.find(x=>x.id===userId);
+  if(!u) return;
+  if(!u.enrolled) u.enrolled = {};
+  if(u.enrolled[courseId]) return;
+  u.enrolled[courseId] = { enrolledAt: new Date().toISOString(), lessonsCompleted: [], timeStudiedMinutes: 0 };
+  saveAndRefresh(state);
+}
+
+// render AULAS: show only enrolled courses and their lessons
+function renderAulas(){
+  const container = document.getElementById('enrolled-list');
+  container.innerHTML = '';
+  const user = getCurrentUser();
+  if(!user){
+    container.innerHTML = `<div class="card"><div class="small">Você precisa fazer login para ver suas aulas. <button class="btn btn-outline" id="go-login">Entrar</button></div></div>`;
+    document.getElementById('go-login').addEventListener('click', openLogin);
+    return;
+  }
+  const enrolledIds = Object.keys(user.enrolled || {});
+  if(enrolledIds.length===0){
+    container.innerHTML = `<div class="card"><div class="small">Você não está inscrito em nenhum curso. Vá até a Home e inscreva-se.</div></div>`;
+    return;
+  }
+  enrolledIds.forEach(cid=>{
+    const course = state.courses.find(c=>c.id===cid);
+    const userCourse = user.enrolled[cid];
+    const card = document.createElement('article');
+    card.className='card';
+    let lessonsHtml = '';
+    // render lessons list
+    for(let i=1;i<=course.lessons;i++){
+      const done = userCourse.lessonsCompleted.includes(i);
+      lessonsHtml += `<div style="display:flex;align-items:center;justify-content:space-between;padding:.35rem 0">
+                        <div><strong>Aula ${i}</strong> <span class="muted">— tópico relacionado</span></div>
+                        <div style="display:flex;gap:.4rem">
+                          <button class="btn btn-outline" data-video="${cid}|${i}">Vídeo</button>
+                          <button class="btn ${done?'btn-outline':'btn-gold'}" data-toggle="${cid}|${i}">${done? 'Concluída' : 'Marcar conclusão'}</button>
+                        </div>
+                      </div>`;
+    }
+    card.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center">
+                        <div>
+                          <div style="font-weight:700">${escapeHtml(course.title)}</div>
+                          <div class="small muted">Inscrito em: ${new Date(userCourse.enrolledAt).toLocaleString()}</div>
+                        </div>
+                        <div>
+                          <button class="btn btn-outline" data-unenroll="${cid}">Cancelar inscrição</button>
+                        </div>
+                      </div>
+                      <div style="margin-top:.8rem">${lessonsHtml}</div>
+                      <div style="margin-top:.6rem" class="small muted">Tempo estudado (estimado): ${Math.round(userCourse.timeStudiedMinutes)} min</div>
+                      <div style="margin-top:.4rem" class="small">
+                        <button class="btn btn-outline" data-addtime="${cid}">Simular +30min estudo</button>
+                      </div>`;
+    container.appendChild(card);
   });
 
-  // make first panel visible by default
-  document.addEventListener('DOMContentLoaded', ()=>{
-    showTab('home');
+  // events inside enrolled list
+  container.querySelectorAll('[data-toggle]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const [cid, li] = e.currentTarget.dataset.toggle.split('|');
+      toggleLessonDone(getCurrentUser().id, cid, parseInt(li,10));
+      renderAulas();
+      renderTrails(); // update progress
+      renderCertificates();
+    });
   });
+  container.querySelectorAll('[data-video]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const [cid, li] = e.currentTarget.dataset.video.split('|');
+      const course = state.courses.find(x=>x.id===cid);
+      // open YouTube search for the lesson topic - user can pick a video
+      const q = encodeURIComponent(`${course.title} aula ${li} carregamento descarregamento logística`);
+      window.open(`https://www.youtube.com/results?search_query=${q}`, '_blank');
+    });
+  });
+  container.querySelectorAll('[data-unenroll]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      if(!confirm('Deseja cancelar sua inscrição neste curso? Progresso será perdido.')) return;
+      const cid = e.currentTarget.dataset.unenroll;
+      const user = getCurrentUser();
+      delete user.enrolled[cid];
+      saveAndRefresh(state);
+      renderAulas();
+      renderHome();
+      renderTrails();
+      renderCertificates();
+    });
+  });
+  container.querySelectorAll('[data-addtime]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const cid = e.currentTarget.dataset.addtime;
+      const user = getCurrentUser();
+      user.enrolled[cid].timeStudiedMinutes += 30;
+      saveAndRefresh(state);
+      renderAulas();
+      renderTrails();
+    });
+  });
+}
+
+// toggle lesson completion and update time estimate
+function toggleLessonDone(userId, courseId, lessonNumber){
+  const u = state.users.find(x=>x.id===userId);
+  if(!u) return;
+  const enc = u.enrolled[courseId];
+  if(!enc) return;
+  const idx = enc.lessonsCompleted.indexOf(lessonNumber);
+  if(idx === -1){
+    enc.lessonsCompleted.push(lessonNumber);
+    // estimate time per lesson = course.hours*60 / lessons
+    const course = state.courses.find(c=>c.id===courseId);
+    const perLesson = (course.hours*60)/course.lessons;
+    enc.timeStudiedMinutes += perLesson;
+  } else {
+    enc.lessonsCompleted.splice(idx,1);
+    const course = state.courses.find(c=>c.id===courseId);
+    const perLesson = (course.hours*60)/course.lessons;
+    enc.timeStudiedMinutes = Math.max(0, enc.timeStudiedMinutes - perLesson);
+  }
+  saveAndRefresh(state);
+}
+
+// render Trails: time studied per enrolled course
+function renderTrails(){
+  const container = document.getElementById('progress-list');
+  container.innerHTML = '';
+  const user = getCurrentUser();
+  if(!user){ container.innerHTML = `<div class="card"><div class="small">Faça login para ver seu progresso.</div></div>`; return; }
+  const enrolledIds = Object.keys(user.enrolled || {});
+  if(enrolledIds.length===0){ container.innerHTML = `<div class="card"><div class="small">Sem cursos. Inscreva-se na Home.</div></div>`; return; }
+  enrolledIds.forEach(cid=>{
+    const course = state.courses.find(c=>c.id===cid);
+    const enc = user.enrolled[cid];
+    const percent = Math.round((enc.lessonsCompleted.length / course.lessons) * 100);
+    const hoursStudied = Math.round(enc.timeStudiedMinutes / 60);
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `<div style="font-weight:700">${escapeHtml(course.title)}</div>
+                      <div class="small muted">Aulas completadas: ${enc.lessonsCompleted.length}/${course.lessons} • Progresso: ${percent}%</div>
+                      <div class="small muted mt-1">Tempo estudado: ${hoursStudied}h (${Math.round(enc.timeStudiedMinutes)} min)</div>
+                      <div style="margin-top:.6rem">
+                        <button class="btn btn-outline" data-reset="${cid}">Resetar progresso</button>
+                        <button class="btn btn-gold" data-simulate="${cid}">Simular +1 aula concluída</button>
+                      </div>`;
+    container.appendChild(card);
+  });
+  // events
+  container.querySelectorAll('[data-reset]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      if(!confirm('Resetar progresso deste curso?')) return;
+      const cid = e.currentTarget.dataset.reset;
+      const u = getCurrentUser();
+      u.enrolled[cid].lessonsCompleted = [];
+      u.enrolled[cid].timeStudiedMinutes = 0;
+      saveAndRefresh(state);
+      renderTrails(); renderAulas(); renderCertificates();
+    });
+  });
+  container.querySelectorAll('[data-simulate]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const cid = e.currentTarget.dataset.simulate;
+      const u = getCurrentUser();
+      const course = state.courses.find(c=>c.id===cid);
+      const nextLesson = (u.enrolled[cid].lessonsCompleted.length || 0) + 1;
+      if(nextLesson > course.lessons){ alert('Todas as aulas já concluídas.'); return; }
+      toggleLessonDone(u.id, cid, nextLesson);
+      renderTrails(); renderAulas(); renderCertificates();
+    });
+  });
+}
+
+// render Certificates: list completed courses and allow PDF download
+function renderCertificates(){
+  const container = document.getElementById('cert-list');
+  container.innerHTML = '';
+  const user = getCurrentUser();
+  if(!user){ container.innerHTML = `<div class="card"><div class="small">Faça login para ver seus certificados.</div></div>`; return; }
+  const completed = [];
+  Object.keys(user.enrolled || {}).forEach(cid=>{
+    const course = state.courses.find(c=>c.id===cid);
+    const enc = user.enrolled[cid];
+    if(enc.lessonsCompleted.length >= course.lessons) completed.push({course, enc});
+  });
+  if(completed.length===0){
+    container.innerHTML = `<div class="card"><div class="small">Nenhum curso concluído ainda. Complete todas as aulas para gerar seu certificado.</div></div>`; return;
+  }
+  completed.forEach(item=>{
+    const card = document.createElement('div');
+    card.className='card';
+    card.innerHTML = `<div style="font-weight:700">${escapeHtml(item.course.title)}</div>
+                      <div class="small muted">Concluído em: ${new Date().toLocaleString()}</div>
+                      <div style="margin-top:.6rem">
+                        <button class="btn btn-gold" data-genpdf="${item.course.id}">Gerar PDF</button>
+                      </div>`;
+    container.appendChild(card);
+  });
+  container.querySelectorAll('[data-genpdf]').forEach(b=>{
+    b.addEventListener('click', (e)=>{
+      const cid = e.currentTarget.dataset.genpdf;
+      generateCertificatePDF(getCurrentUser(), state.courses.find(c=>c.id===cid));
+    });
+  });
+}
+
+// PDF generation via jsPDF
+async function generateCertificatePDF(user, course){
+  // Using jsPDF
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+  const title = 'Certificado de Conclusão';
+  doc.setFillColor(13,13,13);
+  doc.rect(0,0, doc.internal.pageSize.getWidth(), doc.internal.pageSize.getHeight(), 'F');
+  doc.setTextColor(255,215,0);
+  doc.setFontSize(28);
+  doc.text(title, doc.internal.pageSize.getWidth()/2, 110, { align: 'center' });
+  doc.setTextColor(255,255,255);
+  doc.setFontSize(16);
+  doc.text(`${course.title}`, doc.internal.pageSize.getWidth()/2, 160, { align: 'center' });
+  doc.setFontSize(12);
+  doc.text(`Certificamos que ${user.name} (${user.email}) concluiu o curso "${course.title}".`, doc.internal.pageSize.getWidth()/2, 200, { align: 'center' });
+  doc.text(`Data: ${new Date().toLocaleDateString()}`, doc.internal.pageSize.getWidth()/2, 230, { align: 'center' });
+  doc.setFontSize(10);
+  doc.text('Procargas Academy — Certificado gerado (demo)', doc.internal.pageSize.getWidth()/2, doc.internal.pageSize.getHeight()-60, { align: 'center' });
+
+  const filename = `${course.title.replace(/\s+/g,'_')}_certificado_${user.name}.pdf`;
+  doc.save(filename);
+}
+
+// initial render
+function renderAll(){
+  renderAuthArea();
+  renderHome();
+  renderAulas();
+  renderTrails();
+  renderCertificates();
+}
+
+// helper to find course by id
+function getCourse(id){ return state.courses.find(c=>c.id===id); }
+
+// initial wiring
+renderAll();
+showTab('home');
+
+/* ============================
+   Extra: small utilities
+   ============================ */
+
+// Close auth modal when clicking outside content
+document.getElementById('auth-modal').addEventListener('click', (e)=>{
+  if(e.target.id === 'auth-modal') e.currentTarget.style.display = 'none';
+});
 </script>
 
 </body>
-              </html>
+</html>
