@@ -1,230 +1,118 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Procargas Academy — Melhorado</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
-  <!-- jsPDF para gerar PDF de certificado -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-  <style>
-    :root {
-      --bg: #0e1217;
-      --panel: #181c22;
-      --muted: #a6b0bf;
-      --gold: #ffc107;
-      --primary: #1f2d3d;
-      --card: rgba(255, 255, 255, 0.03);
-      --border: rgba(255, 255, 255, 0.06);
-      --radius: 8px;
-      --shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: 'Poppins', system-ui, sans-serif;
-      background: var(--bg);
-      color: #fff;
-      display: flex;
-      min-height: 100vh;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: underline;
-    }
-
-    .sidebar {
-      width: 240px;
-      background: var(--primary);
-      border-right: 1px solid var(--border);
-      position: fixed;
-      inset: 0 auto 0 0;
-      display: flex;
-      flex-direction: column;
-      padding: 1rem 0;
-    }
-
-    .brand {
-      padding: 0 1rem;
-      margin-bottom: 1rem;
-    }
-
-    .brand h1 {
-      font-size: 1.2rem;
-      margin: 0;
-      color: var(--gold);
-    }
-
-    .nav {
-      display: flex;
-      flex-direction: column;
-      gap: 0.25rem;
-      padding: 0 0.5rem;
-    }
-
-    .tab-btn {
-      background: transparent;
-      border: none;
-      color: var(--muted);
-      text-align: left;
-      padding: .7rem .9rem;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: .95rem;
-      border-left: 4px solid transparent;
-      transition: background .3s, color .3s;
-    }
-
-    .tab-btn:hover {
-      background: rgba(255, 255, 255, 0.04);
-    }
-
-    .tab-btn.active {
-      background: #23272f;
-      border-left-color: var(--gold);
-      color: var(--gold);
-    }
-
-    .sidebar-footer {
-      margin-top: auto;
-      padding: 1rem .9rem;
-      font-size: .85rem;
-      color: var(--muted);
-    }
-
-    .main {
-      margin-left: 240px;
-      flex: 1;
-      padding: 1.5rem;
-      min-height: 100vh;
-    }
-
-    h2 {
-      color: var(--gold);
-      margin: 0 0 1rem 0;
-    }
-
-    .card {
-      background: var(--panel);
-      padding: 1.25rem;
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid var(--border);
-      transition: transform .2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-2px);
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.25rem;
-      margin-top: 1rem;
-    }
-
-    .btn {
-      display: inline-block;
-      padding: .5rem .9rem;
-      border-radius: var(--radius);
-      font-weight: 600;
-      cursor: pointer;
-      font-size: .9rem;
-      transition: background .2s ease, color .2s;
-    }
-
-    .btn-gold {
-      background: var(--gold);
-      color: #111;
-      border: none;
-    }
-
-    .btn-gold:hover {
-      background: #e6b800;
-    }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid var(--gold);
-      color: var(--gold);
-    }
-
-    .btn-outline:hover {
-      background: var(--gold);
-      color: #111;
-    }
-
-    .small {
-      font-size: .9rem;
-      color: var(--muted);
-    }
-
-    .muted {
-      color: var(--muted);
-    }
-
-    input, select, textarea {
-      background: #1d232b;
-      border: 1px solid var(--border);
-      padding: .5rem;
-      border-radius: var(--radius);
-      color: #fff;
-      width: 100%;
-    }
-
-    label {
-      font-size: .85rem;
-      margin-bottom: .25rem;
-      display: block;
-    }
-
-    .form-row {
-      display: flex;
-      gap: .5rem;
-      align-items: center;
-    }
-
-    .mt-1 { margin-top: 1rem; }
-    .mb-1 { margin-bottom: 1rem; }
-    .right { display: flex; gap: .75rem; align-items: center; }
-
-    /* Responsivo */
-    @media(max-width: 880px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-        flex-direction: row;
-        overflow-x: auto;
-        gap: .5rem;
-      }
-
-      .main {
-        margin-left: 0;
-        padding: 1rem;
-      }
-
-      .nav {
-        flex-direction: row;
-      }
-
-      .tab-btn {
-        white-space: nowrap;
-      }
-    }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Curso com Certificado + QR Code</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+<style>
+  body { font-family: Arial, sans-serif; padding: 20px; background: #f0f0f0; }
+  .lesson { margin-bottom: 10px; }
+  label { cursor: pointer; }
+  #totalTime { font-weight: bold; margin-top: 15px; }
+  button { margin-top: 20px; padding: 10px 20px; font-size: 16px; cursor: pointer; }
+</style>
 </head>
 <body>
-  <!-- ... o restante do conteúdo continua igual (estrutura das seções, renderizações, script JS) ... -->
 
-  <!-- Adicione aqui o seu restante do HTML e scripts JS -->
+<h1>Curso: Programação em JavaScript</h1>
+
+<div id="lessons">
+  <div class="lesson">
+    <input type="checkbox" id="lesson1" data-time="30" />
+    <label for="lesson1">Aula 1 - Introdução (30 min)</label>
+  </div>
+  <div class="lesson">
+    <input type="checkbox" id="lesson2" data-time="45" />
+    <label for="lesson2">Aula 2 - Variáveis e Tipos (45 min)</label>
+  </div>
+  <div class="lesson">
+    <input type="checkbox" id="lesson3" data-time="40" />
+    <label for="lesson3">Aula 3 - Funções (40 min)</label>
+  </div>
+</div>
+
+<div id="totalTime">Tempo total estimado assistido: 0 min</div>
+
+<button id="generateCert">Gerar Certificado PDF</button>
+
+<!-- Div oculta para gerar o QR code -->
+<div id="qr_temp" style="display:none;"></div>
+
+<script>
+  const lessons = document.querySelectorAll('#lessons input[type=checkbox]');
+  const totalTimeEl = document.getElementById('totalTime');
+
+  function atualizarTempoTotal() {
+    let total = 0;
+    lessons.forEach(l => {
+      if (l.checked) total += Number(l.dataset.time);
+    });
+    totalTimeEl.textContent = `Tempo total estimado assistido: ${total} min`;
+    return total;
+  }
+
+  lessons.forEach(l => l.addEventListener('change', atualizarTempoTotal));
+
+  async function generateCertificatePDF() {
+    const user = { id: 123, name: "João Silva", email: "joao@email.com" };
+    const course = { id: 456, title: "Programação em JavaScript" };
+    const { jsPDF } = window.jspdf;
+
+    // Gera QR code com link de validação (exemplo)
+    const qrContainer = document.getElementById('qr_temp');
+    qrContainer.innerHTML = '';
+    new QRCode(qrContainer, {
+      text: `https://seusite.com/validar?user=${user.id}&curso=${course.id}`,
+      width: 100,
+      height: 100,
+      colorDark: "#000000",
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.H
+    });
+
+    // Aguarda a geração do QR code
+    await new Promise(r => setTimeout(r, 300));
+
+    const img = qrContainer.querySelector('img').src;
+
+    const doc = new jsPDF({ orientation: 'landscape', unit: 'pt', format: 'a4' });
+    const width = doc.internal.pageSize.getWidth();
+    const height = doc.internal.pageSize.getHeight();
+
+    doc.setFillColor(13,13,13);
+    doc.rect(0, 0, width, height, 'F');
+
+    doc.setTextColor(255, 215, 0);
+    doc.setFontSize(28);
+    doc.text("Certificado de Conclusão", width/2, 110, { align: 'center' });
+
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(16);
+    doc.text(course.title, width/2, 160, { align: 'center' });
+
+    doc.setFontSize(12);
+    doc.text(`Certificamos que ${user.name} (${user.email}) concluiu o curso "${course.title}".`, width/2, 200, { align: 'center' });
+
+    doc.text(`Data: ${new Date().toLocaleDateString()}`, width/2, 230, { align: 'center' });
+
+    // Inserir QR Code na parte inferior central do certificado
+    const qrSize = 80;
+    doc.addImage(img, 'PNG', width/2 - qrSize/2, height - qrSize - 40, qrSize, qrSize);
+
+    doc.setFontSize(10);
+    doc.text('Escaneie o QR para verificar este certificado online.', width/2, height - 20, { align: 'center' });
+
+    const filename = `${course.title.replace(/\s+/g,'_')}_certificado_${user.name.replace(/\s+/g,'_')}.pdf`;
+    doc.save(filename);
+  }
+
+  document.getElementById('generateCert').addEventListener('click', generateCertificatePDF);
+
+  // Inicializa o tempo total
+  atualizarTempoTotal();
+</script>
+
 </body>
 </html>
