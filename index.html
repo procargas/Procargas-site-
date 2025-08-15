@@ -1,585 +1,159 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>Procargas Academy — Demo</title>
-
-<!-- jsPDF para gerar PDF de certificado -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
-<style>
-  :root{--bg:#0f1113;--panel:#151617;--muted:#bfc3c7;--gold:#FFD700;--card:rgba(255,255,255,0.03)}
-  *{box-sizing:border-box}
-  body{margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,Arial;background:var(--bg);color:#fff;display:flex;min-height:100vh}
-  a{color:inherit}
-  /* Sidebar */
-  .sidebar{width:240px;background:#101214;border-right:1px solid rgba(255,255,255,0.03);position:fixed;inset:0 auto 0 0;display:flex;flex-direction:column;padding:1rem 0}
-  .brand{padding:0 1rem;margin-bottom:.5rem}
-  .brand h1{font-size:1rem;margin:.25rem 0;color:var(--gold)}
-  .small{color:var(--muted);font-size:.9rem}
-  .nav{display:flex;flex-direction:column;gap:0.25rem;padding:0 0.5rem}
-  .tab-btn{background:transparent;border:none;color:#dfe3e6;text-align:left;padding:.65rem .9rem;cursor:pointer;font-weight:600;font-size:.95rem;border-left:4px solid transparent}
-  .tab-btn:hover{background:rgba(255,255,255,0.02)}
-  .tab-btn.active{background:#202224;border-left-color:var(--gold);color:var(--gold)}
-  .sidebar-footer{margin-top:auto;padding:1rem .9rem;font-size:.85rem;color:var(--muted)}
-  /* Main */
-  .main{margin-left:240px;flex:1;padding:1.25rem;min-height:100vh}
-  .header{display:flex;align-items:center;justify-content:space-between;gap:1rem}
-  .hero{display:flex;gap:1rem;align-items:center}
-  h2{color:var(--gold);margin:0 0 .75rem 0}
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;margin-top:1rem}
-  .card{background:var(--card);padding:1rem;border-radius:8px;border:1px solid rgba(255,255,255,0.02)}
-  .pill{display:inline-block;padding:.25rem .5rem;border-radius:999px;font-weight:700;color:var(--gold);background:rgba(0,0,0,0.25)}
-  .btn{display:inline-block;padding:.45rem .7rem;border-radius:6px;border:none;cursor:pointer;font-weight:700}
-  .btn-gold{background:var(--gold);color:#111}
-  .btn-outline{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--gold)}
-  .muted{color:var(--muted)}
-  /* forms */
-  .form-row{display:flex;gap:.5rem;align-items:center}
-  input, select, textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:.5rem;border-radius:6px;color:#fff;width:100%}
-  label{font-size:.9rem;color:var(--muted);display:block;margin-bottom:.25rem}
-  /* lessons */
-  .lesson{border-radius:6px;overflow:hidden;border:1px solid rgba(255,255,255,0.03);background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent)}
-  .lesson-head{display:flex;align-items:center;justify-content:space-between;padding:.8rem 1rem;cursor:pointer}
-  .lesson-body{padding:1rem;border-top:1px solid rgba(255,255,255,0.02);display:none}
-  .lesson-body p{margin:.45rem 0;color:var(--muted);line-height:1.45}
-  /* responsive */
-  @media(max-width:880px){
-    .sidebar{position:relative;width:100%;display:flex;flex-direction:row;gap:.5rem;overflow:auto;height:auto;padding:.5rem}
-    .main{margin-left:0;padding:.75rem}
-    .nav{flex-direction:row}
-    .tab-btn{white-space:nowrap;padding:.5rem .65rem;font-size:.9rem}
-  }
-  /* small helpers */
-  .mt-1{margin-top:.6rem}
-  .mb-1{margin-bottom:.6rem}
-  .right{display:flex;gap:.5rem;align-items:center}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Materiais dos Cursos Mais Procurados</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
+      background: #f0f2f5;
+      color: #333;
+    }
+    header {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    header img {
+      max-width: 160px;
+      height: auto;
+    }
+    header h1 {
+      margin-top: 15px;
+      font-size: 32px;
+      color: #1a237e;
+    }
+    section {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 35px;
+    }
+    section h2 {
+      color: #0d47a1;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #0d47a1;
+      padding-bottom: 8px;
+    }
+    .material-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .material-item {
+      background: #e8eaf6;
+      margin-bottom: 15px;
+      padding: 15px 20px;
+      border-radius: 6px;
+      transition: background 0.3s;
+    }
+    .material-item:hover {
+      background: #c5cae9;
+    }
+    .material-title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 6px;
+      color: #1a237e;
+    }
+    .material-desc {
+      font-size: 14px;
+      margin-bottom: 8px;
+      color: #3a3a3a;
+    }
+    .material-link a {
+      color: #0d47a1;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .material-link a:hover {
+      text-decoration: underline;
+    }
+    .material-type {
+      font-size: 13px;
+      color: #555;
+      margin-left: 8px;
+      font-style: italic;
+    }
+  </style>
 </head>
 <body>
 
-  <!-- Sidebar -->
-  <aside class="sidebar" role="navigation" aria-label="Navegação principal">
-    <div class="brand">
-      <h1>Procargas Academy</h1>
-      <div class="small">Cursos práticos em logística</div>
-    </div>
+  <header>
+    <!-- Logo -->
+    <img src="https://cdn-icons-png.flaticon.com/512/847/847969.png" alt="Logo da Empresa" />
+    <h1>Plataforma de Cursos Online</h1>
+  </header>
 
-    <nav class="nav" aria-label="tabs">
-      <button class="tab-btn active" data-tab="home">🏠 Home</button>
-      <button class="tab-btn" data-tab="aulas">📘 Aulas</button>
-      <button class="tab-btn" data-tab="trails">🧭 Trilhas</button>
-      <button class="tab-btn" data-tab="certificates">📜 Certificados</button>
-      <button class="tab-btn" data-tab="about">ℹ️ Sobre</button>
-      <hr style="border:none;border-top:1px solid rgba(255,255,255,0.02);margin:.6rem 0"/>
-      <div style="padding:.5rem">
-        <div id="auth-area" class="small">
-          <!-- login/register or user info -->
-        </div>
-      </div>
-    </nav>
+  <main>
 
-    <div class="sidebar-footer small">
-      contato@procargas.com<br/>0800-123-456
-    </div>
-  </aside>
-
-  <!-- Main -->
-  <main class="main">
-
-    <!-- INFO / alert about demo -->
-    <div class="card mb-1">
-      <strong>Atenção (demo):</strong>
-      <span class="muted">Este é um protótipo full front-end. Usuários, progresso e certificados são salvos no seu navegador (localStorage). Não use para dados sensíveis em produção — peça integração com backend para produção.</span>
-    </div>
-
-    <!-- HOME: cursos disponíveis (nos quais usuário NÃO está inscrito) -->
-    <section id="home" class="tab-panel active" aria-live="polite">
-      <div class="header">
-        <div class="hero">
-          <div>
-            <h2>Home — Cursos disponíveis</h2>
-            <div class="small">Cursos nos quais você ainda <strong>não</strong> está inscrito. Inscreva-se para acessar as aulas.</div>
-          </div>
-        </div>
-
-        <div class="right">
-          <button id="btn-create-demo-user" class="btn btn-outline" title="Criar usuário demo">Criar usuário demo</button>
-        </div>
-      </div>
-
-      <div id="courses-list" class="grid mt-1"></div>
+    <section aria-labelledby="logistica-title">
+      <h2 id="logistica-title">Curso de Logística</h2>
+      <ul class="material-list">
+        <li class="material-item">
+          <div class="material-title">Guia Básico de Logística</div>
+          <div class="material-desc">Um PDF com conceitos fundamentais de logística, transporte e distribuição.</div>
+          <div class="material-link"><a href="#" target="_blank">Baixar material</a><span class="material-type">PDF</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Vídeo: Introdução à Logística</div>
+          <div class="material-desc">Vídeo aula com uma visão geral sobre logística e cadeia de suprimentos.</div>
+          <div class="material-link"><a href="#" target="_blank">Assistir vídeo</a><span class="material-type">Vídeo</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Estudo de Caso: Otimização de Estoques</div>
+          <div class="material-desc">Relatório detalhado sobre técnicas para melhorar a gestão de estoques em empresas.</div>
+          <div class="material-link"><a href="#" target="_blank">Ler estudo</a><span class="material-type">PDF</span></div>
+        </li>
+      </ul>
     </section>
 
-    <!-- AULAS: somente cursos em que usuário está inscrito -->
-    <section id="aulas" class="tab-panel" aria-live="polite" style="display:none">
-      <h2>Aulas — seus cursos</h2>
-      <div class="small">Apenas cursos em que você está inscrito aparecem aqui. Marque aulas como concluídas para registrar tempo estudado.</div>
-      <div id="enrolled-list" class="grid mt-1"></div>
+    <section aria-labelledby="transporte-title">
+      <h2 id="transporte-title">Curso de Transporte</h2>
+      <ul class="material-list">
+        <li class="material-item">
+          <div class="material-title">Mapeamento de Rotas Eficientes</div>
+          <div class="material-desc">Artigo explicando métodos para escolher rotas mais rápidas e econômicas.</div>
+          <div class="material-link"><a href="#" target="_blank">Ler artigo</a><span class="material-type">Artigo</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Planilhas de Cálculo de Frete</div>
+          <div class="material-desc">Planilhas Excel para calcular custos e simular diferentes cenários de transporte.</div>
+          <div class="material-link"><a href="#" target="_blank">Baixar planilha</a><span class="material-type">Excel</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Vídeo: Gestão de Frota</div>
+          <div class="material-desc">Vídeo explicativo com dicas práticas para manter uma frota de veículos eficiente.</div>
+          <div class="material-link"><a href="#" target="_blank">Assistir vídeo</a><span class="material-type">Vídeo</span></div>
+        </li>
+      </ul>
     </section>
 
-    <!-- TRILHAS: tempo total estudado por curso -->
-    <section id="trails" class="tab-panel" aria-live="polite" style="display:none">
-      <h2>Trilhas — seu progresso</h2>
-      <div class="small">Tempo estudado por curso (baseado em aulas concluídas). Você também pode simular estudo.</div>
-      <div id="progress-list" class="grid mt-1"></div>
-    </section>
-
-    <!-- CERTIFICADOS -->
-    <section id="certificates" class="tab-panel" aria-live="polite" style="display:none">
-      <h2>Certificados</h2>
-      <div class="small">Cursos concluídos. Clique em "Gerar PDF" para baixar seu certificado.</div>
-      <div id="cert-list" class="grid mt-1"></div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="tab-panel" aria-live="polite" style="display:none">
-      <h2>Sobre</h2>
-      <p>Procargas Academy é uma plataforma fictícia de cursos práticos em logística, criada para demonstração de interface e funcionalidades front-end.</p>
-      <p>O sistema salva todos os dados localmente no navegador, sem backend real.</p>
-      <p>Use o botão <strong>Criar usuário demo</strong> para iniciar rapidamente e explorar a plataforma.</p>
-    </section>
-
-    <!-- LOGIN / REGISTER AREA -->
-    <section id="auth-section" class="tab-panel" aria-live="polite" style="display:none">
-      <h2>Login / Cadastro</h2>
-      <form id="form-login" style="margin-bottom:1rem">
-        <label for="login-email">E-mail</label>
-        <input type="email" id="login-email" required autocomplete="username"/>
-        <label for="login-password">Senha</label>
-        <input type="password" id="login-password" required autocomplete="current-password"/>
-        <button type="submit" class="btn btn-gold mt-1">Entrar</button>
-      </form>
-      <hr/>
-      <form id="form-register" style="margin-top:1rem">
-        <label for="register-email">E-mail</label>
-        <input type="email" id="register-email" required autocomplete="email"/>
-        <label for="register-password">Senha</label>
-        <input type="password" id="register-password" required autocomplete="new-password"/>
-        <button type="submit" class="btn btn-outline mt-1">Cadastrar</button>
-      </form>
+    <section aria-labelledby="armazenagem-title">
+      <h2 id="armazenagem-title">Curso de Armazenagem</h2>
+      <ul class="material-list">
+        <li class="material-item">
+          <div class="material-title">Controle de Estoque - Manual Prático</div>
+          <div class="material-desc">Manual para organizar, controlar e otimizar o estoque de forma eficiente.</div>
+          <div class="material-link"><a href="#" target="_blank">Baixar manual</a><span class="material-type">PDF</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Vídeo: Segurança no Armazém</div>
+          <div class="material-desc">Aulas em vídeo com práticas de segurança para ambientes de armazenagem.</div>
+          <div class="material-link"><a href="#" target="_blank">Assistir vídeo</a><span class="material-type">Vídeo</span></div>
+        </li>
+        <li class="material-item">
+          <div class="material-title">Checklist de Inspeção de Armazém</div>
+          <div class="material-desc">Documento para garantir que todos os itens de segurança e organização estejam cumpridos.</div>
+          <div class="material-link"><a href="#" target="_blank">Baixar checklist</a><span class="material-type">Documento</span></div>
+        </li>
+      </ul>
     </section>
 
   </main>
-
-<script>
-(() => {
-  // Utilidades
-  const $ = (s, el=document) => el.querySelector(s);
-  const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
-  const saveData = (key, data) => localStorage.setItem(key, JSON.stringify(data));
-  const loadData = (key, def=null) => {
-    try {return JSON.parse(localStorage.getItem(key)) || def}
-    catch(e){return def}
-  };
-
-  // Dados estáticos de cursos e aulas
-  const cursos = [
-    {
-      id: "curso1",
-      nome: "Logística Básica",
-      descricao: "Introdução aos conceitos básicos da logística.",
-      aulas: [
-        {id:"a1", titulo:"O que é logística?", duracao:10},
-        {id:"a2", titulo:"Tipos de logística", duracao:15},
-        {id:"a3", titulo:"Processos logísticos", duracao:20},
-      ],
-    },
-    {
-      id: "curso2",
-      nome: "Transporte e Distribuição",
-      descricao: "Gestão de transporte e distribuição de cargas.",
-      aulas: [
-        {id:"a1", titulo:"Modais de transporte", duracao:12},
-        {id:"a2", titulo:"Planejamento de rotas", duracao:18},
-        {id:"a3", titulo:"Tecnologia no transporte", duracao:25},
-      ],
-    },
-    {
-      id: "curso3",
-      nome: "Armazenagem",
-      descricao: "Princípios e práticas de armazenagem eficaz.",
-      aulas: [
-        {id:"a1", titulo:"Tipos de armazenagem", duracao:8},
-        {id:"a2", titulo:"Controle de estoque", duracao:14},
-        {id:"a3", titulo:"Segurança no armazém", duracao:22},
-      ],
-    },
-  ];
-
-  // Estado da aplicação
-  let state = {
-    users: loadData("users", []), // array {email, password}
-    currentUser: null, // email
-    inscritos: loadData("enrolled", {}), // {email: [cursoId,...]}
-    progresso: loadData("progress", {}), // {email: {cursoId: {aulasConcluidas: [idAula], tempoEstudado}}}
-    certificados: loadData("certificates", {}), // {email: [cursoId,...]}
-  };
-
-  // Salvar estado em localStorage
-  function saveAll(){
-    saveData("users", state.users);
-    saveData("enrolled", state.inscritos);
-    saveData("progress", state.progresso);
-    saveData("certificates", state.certificados);
-  }
-
-  // Login / Logout / Register
-  function login(email, password){
-    const user = state.users.find(u => u.email === email);
-    if(user && user.password === password){
-      state.currentUser = email;
-      updateUI();
-      return true;
-    }
-    return false;
-  }
-  function logout(){
-    state.currentUser = null;
-    updateUI();
-  }
-  function register(email, password){
-    if(state.users.find(u=>u.email === email)) return false;
-    state.users.push({email,password});
-    saveAll();
-    return true;
-  }
-
-  // UI helpers
-  function setActiveTab(tab){
-    $$(".tab-btn").forEach(b=>{
-      b.classList.toggle("active", b.dataset.tab === tab);
-    });
-    $$(".tab-panel").forEach(p=>{
-      p.style.display = p.id === tab ? "block" : "none";
-    });
-  }
-
-  // Atualizar área de autenticação
-  function renderAuthArea(){
-    const area = $("#auth-area");
-    area.innerHTML = "";
-    if(state.currentUser){
-      const div = document.createElement("div");
-      div.textContent = "Logado como " + state.currentUser;
-      const btn = document.createElement("button");
-      btn.textContent = "Sair";
-      btn.className = "btn btn-outline";
-      btn.style.marginLeft = "0.5rem";
-      btn.onclick = () => logout();
-      div.appendChild(btn);
-      area.appendChild(div);
-    } else {
-      const btnLogin = document.createElement("button");
-      btnLogin.textContent = "Entrar / Cadastrar";
-      btnLogin.className = "btn btn-outline";
-      btnLogin.onclick = () => {
-        setActiveTab("auth-section");
-      };
-      area.appendChild(btnLogin);
-    }
-  }
-
-  // Render lista de cursos (Home) - apenas cursos onde usuário NÃO está inscrito
-  function renderCoursesList(){
-    const container = $("#courses-list");
-    container.innerHTML = "";
-    if(!state.currentUser){
-      container.innerHTML = "<p class='muted'>Faça login para ver os cursos.</p>";
-      return;
-    }
-    const inscritos = state.inscritos[state.currentUser] || [];
-    cursos.forEach(curso => {
-      if(inscritos.includes(curso.id)) return; // não mostrar cursos já inscritos
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <h3>${curso.nome}</h3>
-        <p class="muted">${curso.descricao}</p>
-        <button class="btn btn-gold">Inscrever-se</button>
-      `;
-      card.querySelector("button").onclick = () => {
-        // Inscrever usuário
-        if(!state.inscritos[state.currentUser]) state.inscritos[state.currentUser] = [];
-        state.inscritos[state.currentUser].push(curso.id);
-        saveAll();
-        alert(`Inscrito no curso: ${curso.nome}`);
-        renderCoursesList();
-        renderEnrolledList();
-      };
-      container.appendChild(card);
-    });
-    if(container.children.length === 0){
-      container.innerHTML = "<p class='muted'>Nenhum curso disponível para inscrição.</p>";
-    }
-  }
-
-  // Render lista de cursos em que usuário está inscrito (Aulas)
-  function renderEnrolledList(){
-    const container = $("#enrolled-list");
-    container.innerHTML = "";
-    if(!state.currentUser){
-      container.innerHTML = "<p class='muted'>Faça login para ver seus cursos.</p>";
-      return;
-    }
-    const inscritos = state.inscritos[state.currentUser] || [];
-    if(inscritos.length === 0){
-      container.innerHTML = "<p class='muted'>Você não está inscrito em nenhum curso.</p>";
-      return;
-    }
-    inscritos.forEach(cursoId => {
-      const curso = cursos.find(c => c.id === cursoId);
-      if(!curso) return;
-      const card = document.createElement("div");
-      card.className = "card";
-      const progressoCurso = (state.progresso[state.currentUser] && state.progresso[state.currentUser][cursoId]) || {aulasConcluidas: [], tempoEstudado: 0};
-
-      // Montar lista aulas
-      let aulasHtml = "";
-      curso.aulas.forEach(aula => {
-        const concluida = progressoCurso.aulasConcluidas.includes(aula.id);
-        aulasHtml += `
-          <div class="lesson">
-            <div class="lesson-head" tabindex="0" role="button" aria-expanded="false" aria-controls="${cursoId}-${aula.id}-body" data-toggle="lesson">
-              <span>${aula.titulo}</span>
-              <input type="checkbox" ${concluida ? "checked" : ""} aria-label="Marcar aula como concluída" data-curso="${cursoId}" data-aula="${aula.id}" />
-            </div>
-            <div id="${cursoId}-${aula.id}-body" class="lesson-body" hidden>
-              <p>Duração: ${aula.duracao} minutos.</p>
-              <p>Conteúdo prático e teórico.</p>
-            </div>
-          </div>
-        `;
-      });
-
-      card.innerHTML = `
-        <h3>${curso.nome}</h3>
-        <div class="small mb-1">Progresso: ${progressoCurso.aulasConcluidas.length} / ${curso.aulas.length} aulas concluídas</div>
-        <div>${aulasHtml}</div>
-      `;
-      container.appendChild(card);
-    });
-  }
-
-  // Render progresso (Trilhas)
-  function renderProgressList(){
-    const container = $("#progress-list");
-    container.innerHTML = "";
-    if(!state.currentUser){
-      container.innerHTML = "<p class='muted'>Faça login para ver seu progresso.</p>";
-      return;
-    }
-    const inscritos = state.inscritos[state.currentUser] || [];
-    if(inscritos.length === 0){
-      container.innerHTML = "<p class='muted'>Você não está inscrito em nenhum curso.</p>";
-      return;
-    }
-    inscritos.forEach(cursoId => {
-      const curso = cursos.find(c => c.id === cursoId);
-      if(!curso) return;
-      const progressoCurso = (state.progresso[state.currentUser] && state.progresso[state.currentUser][cursoId]) || {aulasConcluidas: [], tempoEstudado: 0};
-
-      // Calcular tempo total
-      const tempoTotal = curso.aulas.reduce((acc, aula) => acc + aula.duracao, 0);
-
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <h3>${curso.nome}</h3>
-        <p>Tempo estudado: <strong>${progressoCurso.tempoEstudado || 0}</strong> minutos</p>
-        <p>Tempo total do curso: <strong>${tempoTotal}</strong> minutos</p>
-        <button class="btn btn-outline" data-curso="${cursoId}">Simular +5 min estudo</button>
-      `;
-      card.querySelector("button").onclick = () => {
-        if(!state.progresso[state.currentUser]) state.progresso[state.currentUser] = {};
-        if(!state.progresso[state.currentUser][cursoId]) state.progresso[state.currentUser][cursoId] = {aulasConcluidas: [], tempoEstudado: 0};
-        state.progresso[state.currentUser][cursoId].tempoEstudado += 5;
-        saveAll();
-        renderProgressList();
-      };
-      container.appendChild(card);
-    });
-  }
-
-  // Render certificados
-  function renderCertificates(){
-    const container = $("#cert-list");
-    container.innerHTML = "";
-    if(!state.currentUser){
-      container.innerHTML = "<p class='muted'>Faça login para ver seus certificados.</p>";
-      return;
-    }
-    const certificadosUser = state.certificados[state.currentUser] || [];
-    if(certificadosUser.length === 0){
-      container.innerHTML = "<p class='muted'>Você ainda não concluiu nenhum curso.</p>";
-      return;
-    }
-    certificadosUser.forEach(cursoId => {
-      const curso = cursos.find(c => c.id === cursoId);
-      if(!curso) return;
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <h3>${curso.nome}</h3>
-        <button class="btn btn-gold" data-curso="${cursoId}">Gerar PDF</button>
-      `;
-      card.querySelector("button").onclick = () => gerarCertificadoPDF(state.currentUser, curso);
-      container.appendChild(card);
-    });
-  }
-
-  // Gerar PDF certificado usando jsPDF
-  function gerarCertificadoPDF(email, curso){
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-
-    doc.setFontSize(20);
-    doc.setTextColor(255, 215, 0);
-    doc.text("Certificado de Conclusão", 105, 30, null, null, "center");
-
-    doc.setFontSize(14);
-    doc.setTextColor(0);
-    doc.text(`Certificamos que`, 105, 50, null, null, "center");
-    doc.setFontSize(16);
-    doc.setTextColor(40, 40, 40);
-    doc.text(email, 105, 60, null, null, "center");
-    doc.setFontSize(14);
-    doc.text(`concluiu o curso`, 105, 70, null, null, "center");
-    doc.setFontSize(18);
-    doc.setTextColor(255, 215, 0);
-    doc.text(curso.nome, 105, 80, null, null, "center");
-
-    const data = new Date();
-    doc.setFontSize(12);
-    doc.setTextColor(0);
-    doc.text(`Data: ${data.toLocaleDateString()}`, 105, 100, null, null, "center");
-
-    doc.save(`certificado_${curso.id}.pdf`);
-  }
-
-  // Atualizar UI geral
-  function updateUI(){
-    renderAuthArea();
-    renderCoursesList();
-    renderEnrolledList();
-    renderProgressList();
-    renderCertificates();
-  }
-
-  // Eventos UI
-
-  // Tabs
-  $$(".tab-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      setActiveTab(btn.dataset.tab);
-    });
-  });
-
-  // Toggle aulas (expansão)
-  document.body.addEventListener("click", e => {
-    if(e.target.matches(".lesson-head, .lesson-head *")){
-      let el = e.target.closest(".lesson-head");
-      const body = el.nextElementSibling;
-      const expanded = el.getAttribute("aria-expanded") === "true";
-      el.setAttribute("aria-expanded", !expanded);
-      if(body){
-        body.hidden = expanded;
-      }
-    }
-  });
-
-  // Marcar aula como concluída
-  document.body.addEventListener("change", e => {
-    if(e.target.matches("input[type=checkbox][data-curso][data-aula]")){
-      const cursoId = e.target.dataset.curso;
-      const aulaId = e.target.dataset.aula;
-      if(!state.progresso[state.currentUser]) state.progresso[state.currentUser] = {};
-      if(!state.progresso[state.currentUser][cursoId]) state.progresso[state.currentUser][cursoId] = {aulasConcluidas: [], tempoEstudado: 0};
-      let progressoCurso = state.progresso[state.currentUser][cursoId];
-
-      if(e.target.checked){
-        if(!progressoCurso.aulasConcluidas.includes(aulaId)){
-          progressoCurso.aulasConcluidas.push(aulaId);
-          // Aumentar tempo estudado com a duração da aula
-          const curso = cursos.find(c => c.id === cursoId);
-          const aula = curso.aulas.find(a => a.id === aulaId);
-          progressoCurso.tempoEstudado += aula.duracao;
-        }
-      } else {
-        const idx = progressoCurso.aulasConcluidas.indexOf(aulaId);
-        if(idx > -1){
-          progressoCurso.aulasConcluidas.splice(idx,1);
-          // Reduzir tempo estudado
-          const curso = cursos.find(c => c.id === cursoId);
-          const aula = curso.aulas.find(a => a.id === aulaId);
-          progressoCurso.tempoEstudado -= aula.duracao;
-        }
-      }
-
-      // Verificar se curso concluído (todas aulas marcadas)
-      const curso = cursos.find(c => c.id === cursoId);
-      if(progressoCurso.aulasConcluidas.length === curso.aulas.length){
-        if(!state.certificados[state.currentUser]) state.certificados[state.currentUser] = [];
-        if(!state.certificados[state.currentUser].includes(cursoId)){
-          state.certificados[state.currentUser].push(cursoId);
-          alert(`Parabéns! Você concluiu o curso "${curso.nome}". Vá na aba Certificados para gerar seu certificado.`);
-        }
-      }
-
-      saveAll();
-      renderEnrolledList();
-      renderProgressList();
-      renderCertificates();
-    }
-  });
-
-  // Form login
-  $("#form-login").addEventListener("submit", e => {
-    e.preventDefault();
-    const email = $("#login-email").value.trim().toLowerCase();
-    const password = $("#login-password").value;
-    if(login(email,password)){
-      alert("Login bem-sucedido!");
-      $("#form-login").reset();
-      setActiveTab("home");
-    } else {
-      alert("Usuário ou senha inválidos.");
-    }
-    updateUI();
-  });
-
-  // Form register
-  $("#form-register").addEventListener("submit", e => {
-    e.preventDefault();
-    const email = $("#register-email").value.trim().toLowerCase();
-    const password = $("#register-password").value;
-    if(register(email,password)){
-      alert("Cadastro realizado! Faça login.");
-      $("#form-register").reset();
-      setActiveTab("auth-section");
-    } else {
-      alert("Usuário já existe.");
-    }
-  });
-
-  // Criar usuário demo
-  $("#btn-create-demo-user").addEventListener("click", () => {
-    const demoEmail = "demo@procargas.com";
-    const demoPassword = "123456";
-    if(!state.users.find(u => u.email === demoEmail)){
-      state.users.push({email: demoEmail, password: demoPassword});
-      saveAll();
-      alert(`Usuário demo criado.\nEmail: ${demoEmail}\nSenha: ${demoPassword}`);
-    } else {
-      alert(`Usuário demo já existe.\nEmail: ${demoEmail}\nSenha: ${demoPassword}`);
-    }
-  });
-
-  // Inicialização
-  updateUI();
-})();
-</script>
 
 </body>
 </html>
